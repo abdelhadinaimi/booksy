@@ -1,0 +1,22 @@
+{
+  "name": "booksy",
+  "version": "0.0.1",
+  "description": "Booksy a social cataloging application that allows its users to find books and gives personalized suggestions. Users can sign up and add books to their reading lists called shelves and track their advancement.",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdelhadinaimi/booksy.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/abdelhadinaimi/booksy/issues"
+  },
+  "homepage": "https://github.com/abdelhadinaimi/booksy#readme",
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  }
+}
