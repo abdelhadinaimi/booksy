@@ -2,10 +2,12 @@ import winston = require('winston');
 
 const Logger = winston.createLogger({
   level: 'info',
-  format: winston.format.json(),
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json(),
+  ),
   defaultMeta: { service: 'user-service' },
   transports: [
-    new winston.transports.Console(),
     new winston.transports.File({ filename: 'combined.log' }),
   ],
 });
@@ -16,7 +18,7 @@ const Logger = winston.createLogger({
 //
 if (process.env.NODE_ENV !== 'production') {
   Logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
+    format: winston.format.cli(),
   }));
 }
 
