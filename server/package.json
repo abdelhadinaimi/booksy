@@ -5,17 +5,18 @@
   "main": "app.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "node ./dist/app.js",
+    "start": "npm run prod",
+    "start:prod": "node ./dist/app.js",
     "start:dev": "ts-node-dev --respawn --transpileOnly ./app.ts",
     "prod": "tsc && node ./dist/app.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "debug": "node --inspect app.js"
   },
   "author": "",
   "license": "GPL-3.0",
   "dependencies": {
     "@types/express": "^4.17.2",
+    "@types/mongoose": "^5.5.30",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

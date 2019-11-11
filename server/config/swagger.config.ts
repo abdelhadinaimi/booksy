@@ -8,7 +8,7 @@ const swaggerOptions = {
       title: 'Booksy',
       version: 'alpha-0.0.1',
       description: 'Booksy a social cataloging application that allows its users to find books and gives personalized suggestions. Users can sign up and add books to their reading lists called shelves and track their advancement.',
-      servers: ['http://localhost:3000/api/v1'],
+      servers: ['/api/v1'],
     },
     basePath: '/api/v1',
   },
