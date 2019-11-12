@@ -7,7 +7,7 @@ const route = Router();
  * @swagger
  * /bookshelves/:
  *  get:
- *    description: Hello Hello
+ *    description: gets all the bookshelves
  *    responses:
  *      '200':
  *        description: Success!
