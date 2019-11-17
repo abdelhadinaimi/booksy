@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import bookModel from './book.model';
+import bookModel from '../models/book.model';
 
-const BookshelfSchema = new Schema(
+const BookshelfSchema: Schema = new Schema(
   {
     name: {
       type: String,
@@ -11,6 +11,7 @@ const BookshelfSchema = new Schema(
       book: {
         type: Schema.Types.ObjectId,
         ref: bookModel.name,
+        unique: true,
       },
       numberOfReadPages: Number,
     }],

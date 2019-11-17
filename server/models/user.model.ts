@@ -1,6 +1,4 @@
 import { Schema } from 'mongoose';
-import bookshelfModel from './bookshelf.model';
-
 const UserSchema = new Schema(
   {
     firstname: {
@@ -17,10 +15,13 @@ const UserSchema = new Schema(
       maxlength: 256,
       required: true,
     },
-    bookshelves: [bookshelfModel.schema],
     genres: [String],
   },
   { timestamps: true },
 );
 
 export default { name: 'User', schema: UserSchema };
+
+// To avoid circular dependency
+import bookshelfModel from './bookshelf.model';
+UserSchema.add({ bookshelves: [bookshelfModel.schema]});

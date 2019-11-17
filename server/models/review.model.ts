@@ -1,5 +1,6 @@
 import { Schema } from 'mongoose';
 import userModel from './user.model';
+import Logger from '../config/logger.config';
 
 const ReviewSchema = new Schema(
   {
@@ -20,6 +21,5 @@ const ReviewSchema = new Schema(
     },
   },
   { timestamps: true },
-);
-
+  );
 export default { name: 'Review', schema: ReviewSchema };

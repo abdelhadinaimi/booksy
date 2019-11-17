@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import userModel from '../models/user.model';
-import bookshelfModel from '../models/bookshelf.model';
 import bookModel from '../models/book.model';
 
 export const buildConnection = () => {
@@ -18,5 +17,4 @@ export const buildConnection = () => {
 
 // register schemas
 mongoose.model(userModel.name, userModel.schema);
-mongoose.model(bookshelfModel.name, bookshelfModel.schema);
 mongoose.model(bookModel.name, bookModel.schema);

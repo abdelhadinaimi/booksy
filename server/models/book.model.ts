@@ -13,12 +13,7 @@ const BookSchema = new Schema(
     },
     authors: [String],
     thumbnail: String,
-    reviews: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: reviewModel.name,
-      },
-    ],
+    reviews: [reviewModel.schema],
     rating: {
       type: Number,
       min: 0,
