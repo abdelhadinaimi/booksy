@@ -1,4 +1,4 @@
-import { Review } from './review';
+import { Review } from './Review';
 
 export class Book {
     id: string;

@@ -1,4 +1,4 @@
-import { Book } from './book';
+import { Book } from './Book';
 
 export class BookShelf{
     name:string;
