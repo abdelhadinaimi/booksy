@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 import Logger from './config/logger.config';
 import swagger from './config/swagger.config';
 import bookshelfRoutes from './routes/bookshelf.routes';
+import userRoutes from './routes/user.routes';
 import { buildConnection } from './config/database.config';
 import { loadEnvVariables } from './config/dotenv.config';
 
@@ -12,7 +13,7 @@ loadEnvVariables();
 const app = express();
 const routes = Router();
 routes.use('/bookshelves', bookshelfRoutes);
-
+routes.use('/user', userRoutes);
 app.use('/api-docs', swagger);
 app.use('/api/v1/', routes);
 

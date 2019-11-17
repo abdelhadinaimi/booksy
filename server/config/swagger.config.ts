@@ -10,6 +10,43 @@ const swaggerOptions = {
       description: 'Booksy a social cataloging application that allows its users to find books and gives personalized suggestions. Users can sign up and add books to their reading lists called shelves and track their advancement.',
       servers: ['/api/v1'],
     },
+    tags: [{
+      name: 'user',
+      description: 'Operations about user',
+    }, {
+      name: 'bookshelf',
+      description: 'Operations about bookshelves',
+    }],
+    definitions: {
+      User: {
+        type: 'object',
+        properties: {
+          firstname: {
+            type: 'string',
+          },
+          lastname: {
+            type: 'string',
+          },
+          email: {
+            type: 'string',
+          },
+          password: {
+            type: 'string',
+          },
+        },
+      },
+      UserLogging: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+          },
+          password: {
+            type: 'string',
+          },
+        },
+      },
+    },
     basePath: '/api/v1',
   },
   apis: ['./routes/*.ts'],
