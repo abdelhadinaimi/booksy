@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { BooksComponent } from './components/books/books.component';
 import { ShelvesComponent } from './components/shelves/shelves.component';
+import { CallbackComponent } from './components/callback/callback.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     BooksComponent,
-    ShelvesComponent
+    ShelvesComponent,
+    CallbackComponent,
   ],
   imports: [
     BrowserModule,
