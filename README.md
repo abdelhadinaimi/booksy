@@ -1,4 +1,5 @@
 # Booksy
+<img src=https://github.com/abdelhadinaimi/booksy/workflows/Node%20CI/badge.svg/>
 
 Group 2 Team 3
 
