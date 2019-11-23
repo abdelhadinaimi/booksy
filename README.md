@@ -7,6 +7,7 @@ flex-direction: row";
 </p>
 
 # Booksy
+<img src=https://github.com/abdelhadinaimi/booksy/workflows/build/badge.svg/>
 
 Group 2 Team 3
 

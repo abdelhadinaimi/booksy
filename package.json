@@ -7,7 +7,7 @@
     "node": "12.x"
   },
   "scripts": {
-    "postinstall": "npm install --prefix server && npm install --prefix client",
+    "install": "npm install --prefix server && npm install --prefix client",
     "start": "cd server && npm run prod",
     "tsc": "tsc"
   },
