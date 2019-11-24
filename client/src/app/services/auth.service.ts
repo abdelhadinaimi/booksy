@@ -14,6 +14,7 @@ export class AuthService {
     createAuth0Client({
       domain: 'dev-ohvjdegt.eu.auth0.com',
       client_id: 'I67fLdffMBUg0VceI5Uv7nDnrxosWXAT',
+      audience: 'https://booksy-api.herokuapp.com/',
       redirect_uri: `${window.location.origin}`
     })
   ) as Observable<Auth0Client>).pipe(
@@ -121,6 +122,12 @@ export class AuthService {
         returnTo: `${window.location.origin}`
       });
     });
+  }
+
+  getTokenSilently$(options?): Observable<string> {
+    return this.auth0Client$.pipe(
+      concatMap((client: Auth0Client) => from(client.getTokenSilently(options)))
+    );
   }
 
 }

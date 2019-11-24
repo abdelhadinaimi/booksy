@@ -11,7 +11,7 @@ export const searchBooks = async (req: Request, res: Response) => {
   if (result.errors) {
     return res.status(400).json({ errors: result.errors });
   }
-  return result;
+  return res.json(result);
 };
 
 export const getBook = async (req: Request, res: Response) => {
