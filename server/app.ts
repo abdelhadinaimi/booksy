@@ -17,6 +17,12 @@ routes.use('/user', userRoutes);
 app.use('/api-docs', swagger);
 app.use('/api/v1/', routes);
 
+// Serve built angular app
+app.get('*.*', express.static('public/', { maxAge: '1y' }));
+app.all('*', (req, res) => {
+  res.status(200).sendFile('/', { root: 'public/' });
+});
+
 const PORT = process.env.PORT || 3000;
 
 buildConnection()

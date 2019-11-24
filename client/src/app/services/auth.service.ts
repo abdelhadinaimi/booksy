@@ -12,9 +12,9 @@ export class AuthService {
   // Create an observable of Auth0 instance of client
   auth0Client$ = (from(
     createAuth0Client({
-      domain: "dev-ohvjdegt.eu.auth0.com",
-      client_id: "I67fLdffMBUg0VceI5Uv7nDnrxosWXAT",
-      redirect_uri: 'http://localhost:4200/callback'
+      domain: 'dev-ohvjdegt.eu.auth0.com',
+      client_id: 'I67fLdffMBUg0VceI5Uv7nDnrxosWXAT',
+      redirect_uri: `${window.location.origin}`
     })
   ) as Observable<Auth0Client>).pipe(
     shareReplay(1), // Every subscription receives the same shared value
@@ -78,7 +78,7 @@ export class AuthService {
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log in
       client.loginWithRedirect({
-        redirect_uri: 'http://localhost:4200/callback',
+        redirect_uri: `${window.location.origin}`,
         appState: { target: redirectPath }
       });
     });
@@ -117,8 +117,8 @@ export class AuthService {
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log out
       client.logout({
-        client_id: "I67fLdffMBUg0VceI5Uv7nDnrxosWXAT",
-        returnTo: 'http://localhost:4200'
+        client_id: 'I67fLdffMBUg0VceI5Uv7nDnrxosWXAT',
+        returnTo: `${window.location.origin}`
       });
     });
   }

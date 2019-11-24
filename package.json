@@ -8,6 +8,10 @@
   },
   "scripts": {
     "install": "npm install --prefix server && npm install --prefix client",
+    "postinstall": "npm run build-front && npm run build-back",
+    "build-front": "mkdir -p server/public && cd client && ng build && cp -r dist/client/* ../server/public/",
+    "build-back": "cd server && npm run tsc",
+    "start:back": "cd server && npm run start:prod",
     "start": "cd server && npm run prod",
     "tsc": "tsc"
   },
