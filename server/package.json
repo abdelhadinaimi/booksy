@@ -23,12 +23,12 @@
     "mongoose": "^5.7.9",
     "swagger-jsdoc": "^3.4.0",
     "swagger-ui-express": "^4.1.2",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
     "nodemon": "^1.19.4",
     "ts-node-dev": "^1.0.0-pre.44",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.2"
+    "tslint": "^5.20.1"
   }
 }

@@ -9,7 +9,7 @@
   "scripts": {
     "install": "npm install --prefix server && npm install --prefix client",
     "postinstall": "npm run build-front && npm run build-back",
-    "build-front": "mkdir -p server/public && cd client && npm run build && cp -r dist/client/* ../server/public/",
+    "build-front": "mkdir -p server/public && cd client && npm run build && cp -r dist/* ../server/public/",
     "build-back": "cd server && npm run tsc",
     "start:back": "cd server && npm run start:prod",
     "start": "cd server && npm run prod",
@@ -24,9 +24,5 @@
   "bugs": {
     "url": "https://github.com/abdelhadinaimi/booksy/issues"
   },
-  "homepage": "https://github.com/abdelhadinaimi/booksy#readme",
-  "dependencies": {
-    "prettier": "^1.19.1",
-    "typescript": "^3.7.2"
-  }
+  "homepage": "https://github.com/abdelhadinaimi/booksy#readme"
 }
