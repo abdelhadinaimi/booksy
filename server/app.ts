@@ -1,8 +1,6 @@
 import express, { Router } from 'express';
 import Logger from './config/logger.config';
 import swagger from './config/swagger.config';
-import bookshelfRoutes from './routes/bookshelf.routes';
-import userRoutes from './routes/user.routes';
 import { buildConnection } from './config/database.config';
 import { loadEnvVariables } from './config/dotenv.config';
 
@@ -11,11 +9,10 @@ loadEnvVariables();
 
 // Create a new express application instance
 const app = express();
-const routes = Router();
-routes.use('/bookshelves', bookshelfRoutes);
-routes.use('/user', userRoutes);
-app.use('/api-docs', swagger);
+
+import routes from './routes/app.routes';
 app.use('/api/v1/', routes);
+app.use('/api-docs', swagger);
 
 // Serve built angular app
 app.get('*.*', express.static('public/', { maxAge: '1y' }));
