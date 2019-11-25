@@ -3,8 +3,17 @@
   "version": "0.0.1",
   "description": "Booksy a social cataloging application that allows its users to find books and gives personalized suggestions. Users can sign up and add books to their reading lists called shelves and track their advancement.",
   "main": "server/app.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm install --prefix server && npm install --prefix client",
+    "postinstall": "npm run build-front && npm run build-back",
+    "build-front": "mkdir -p server/public && cd client && npm run build && cp -r dist/* ../server/public/",
+    "build-back": "cd server && npm run tsc",
+    "start:back": "cd server && npm run start:prod",
+    "start": "cd server && npm run prod",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
@@ -15,8 +24,5 @@
   "bugs": {
     "url": "https://github.com/abdelhadinaimi/booksy/issues"
   },
-  "homepage": "https://github.com/abdelhadinaimi/booksy#readme",
-  "devDependencies": {
-    "prettier": "^1.19.1"
-  }
+  "homepage": "https://github.com/abdelhadinaimi/booksy#readme"
 }

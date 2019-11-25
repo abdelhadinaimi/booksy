@@ -12,7 +12,7 @@ export const buildConnection = () => {
     dbName: process.env.DB_NAME || 'booksy',
   };
 
-  return mongoose.connect(process.env.MONGO_URI, mongooseOptions);
+  return mongoose.connect(process.env.MONGO_URI || 'mongodb://root:example@localhost:27017', mongooseOptions);
 };
 
 // register schemas

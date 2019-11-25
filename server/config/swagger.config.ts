@@ -16,6 +16,9 @@ const swaggerOptions = {
     }, {
       name: 'bookshelf',
       description: 'Operations about bookshelves',
+    }, {
+      name: 'book',
+      description: 'Operations about books',
     }],
     definitions: {
       User: {
