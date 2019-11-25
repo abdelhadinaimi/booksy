@@ -16,8 +16,10 @@
                     <a  (click)="auth.login()" class="nav-link" href="#">Login</a>
                 </li>
                 <li  *ngIf="auth.loggedIn" class="nav-item">
+                        {{ auth.userProfile.name }}
                     <a (click)="auth.logout()" class="nav-link" href="#">Logout</a>
                 </li>
+                
             </ul>
         </div>
     </div>

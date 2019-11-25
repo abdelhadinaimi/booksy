@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorService } from './services/interceptor.service';
 import { HomeComponent } from './components/home/home.component';
 import { BooksComponent } from './components/books/books.component';
 import { ShelvesComponent } from './components/shelves/shelves.component';
@@ -26,10 +24,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InterceptorService,
-      multi: true
-    }]
+   ]
 })
 export class AppRoutingModule { }
