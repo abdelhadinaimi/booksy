@@ -5,6 +5,7 @@ import { BooksComponent } from './components/books/books.component';
 import { ShelvesComponent } from './components/shelves/shelves.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { CallbackComponent } from './components/callback/callback.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   children: [
   {path: 'books', component:BooksComponent},
   {path: 'shelves', component:ShelvesComponent},
+  {path: 'search', component:SearchComponent},
   {path: 'callback', component:CallbackComponent}
   ]}
 ];

@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { BooksComponent } from './components/books/books.component';
 import { ShelvesComponent } from './components/shelves/shelves.component';
 import { CallbackComponent } from './components/callback/callback.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CallbackComponent } from './components/callback/callback.component';
     BooksComponent,
     ShelvesComponent,
     CallbackComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
