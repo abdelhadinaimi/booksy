@@ -49,6 +49,73 @@ const swaggerOptions = {
           },
         },
       },
+      Book: {
+        type: 'object',
+        properties: {
+          title: {
+            type: 'string',
+          },
+          rating: {
+            type: 'number',
+            minimum: 0,
+            maximum: 5,
+          },
+          thumbnail: {
+            type: 'string',
+          },
+          authors: {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+          },
+          reviews: {
+            type: 'array',
+            items: {
+              $ref: '#/definitions/Review',
+            },
+          },
+        },
+      },
+      Bookshelf: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+          },
+          books: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                book: {
+                  $ref: '#/definitions/Book',
+                },
+                numberOfReadPages: {
+                  type: 'number',
+                },
+              },
+            },
+          },
+        },
+      },
+      Review: {
+        type: 'object',
+        properties: {
+          rating: {
+            type: 'number',
+            minimum: 0,
+            maximum: 5,
+          },
+          reviewText: {
+            type: 'string',
+            maxLength: 1000,
+          },
+          writer: {
+            $ref: '#/definitions/User',
+          },
+        },
+      },
     },
     basePath: '/api/v1',
   },

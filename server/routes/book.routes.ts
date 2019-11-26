@@ -9,6 +9,7 @@ const route = Router();
  *  get:
  *    tags:
  *    - "book"
+ *    summary: performs a book search
  *    description: performs a book search
  *    parameters:
  *      - in: query
@@ -40,6 +41,74 @@ const route = Router();
  */
 route.get('/', searchBooks);
 
-route.get('/{:id}', getBook);
+/**
+ * @swagger
+ * /books/{bookId}:
+ *  parameters:
+ *    - in: path
+ *      name: bookId
+ *      schema:
+ *        type: string
+ *  get:
+ *    tags:
+ *    - "book"
+ *    summary: get a book info
+ *    description: get a book info
+ *    parameters:
+ *    responses:
+ *      '200':
+ *        description: Success!
+ *        schema:
+ *          $ref: "#/definitions/Book"
+ */
+route.get('/:id', getBook);
+
+/**
+ * @swagger
+ * /books/{bookId}/{reviewId}:
+ *  parameters:
+ *    - in: path
+ *      name: bookId
+ *      schema:
+ *        type: string
+ *    - in: path
+ *      name: reviewId
+ *      schema:
+ *        type: string
+ *  post:
+ *    parameters:
+ *      - in: body
+ *        name: body
+ *        schema:
+ *          $ref: "#/definitions/Review"
+ *    tags:
+ *    - "book"
+ *    summary: create a new review for the book
+ *    description: create a new review for the book
+ *    responses:
+ *      '200':
+ *        description: Success!
+ *  put:
+ *    parameters:
+ *      - in: body
+ *        name: body
+ *        schema:
+ *          $ref: "#/definitions/Review"
+ *    tags:
+ *    - "book"
+ *    summary: updates review for the book
+ *    description: updates review for the book
+ *    responses:
+ *      '200':
+ *        description: Success!
+ *  delete:
+ *    tags:
+ *    - "book"
+ *    summary: deletes a review for the book
+ *    description: deletes a review for the book
+ *    responses:
+ *      '200':
+ *        description: Success!
+ */
 
 export default route;

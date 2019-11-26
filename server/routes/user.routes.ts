@@ -64,25 +64,25 @@ route.get('/logout', (req, res) => {
 
 /**
  * @swagger
- * /user/:userId:
+ * /user/{userId}:
  *  put:
  *    tags:
  *    - "user"
- *    summary: "Updated user"
+ *    summary: "Updates user info"
  *    description: "This can only be done by the logged in user."
  *    operationId: "updateUser"
  *    parameters:
- *    - name: "userId"
- *      in: "path"
- *      description: "ID of the user that needs to be updated"
- *      required: true
- *      type: "string"
- *    - in: "body"
- *      name: "body"
- *      description: "Updated user object"
- *      required: true
- *      schema:
- *        $ref: "#/definitions/User"
+ *      - in: "path"
+ *        name: userId
+ *        description: "ID of the user that needs to be updated"
+ *        required: true
+ *        type: "string"
+ *      - in: "body"
+ *        name: "body"
+ *        description: "Updated user object"
+ *        required: true
+ *        schema:
+ *          $ref: "#/definitions/User"
  *    responses:
  *      400:
  *        description: "Invalid user supplied"
