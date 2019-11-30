@@ -1,6 +1,6 @@
 import * as booksRepo from '../repositories/googleBooks.repository';
 import { Request, Response } from 'express';
-import { FindBookDto } from '../dto/find-book.dto';
+import { FindBookDto } from '../interfaces/book/dto/find-book.dto';
 
 export const searchBooks = async (req: Request, res: Response) => {
   const params: FindBookDto = req.query;
@@ -8,6 +8,7 @@ export const searchBooks = async (req: Request, res: Response) => {
     return res.status(400).json();
   }
   const result = await booksRepo.findBook(params);
+
   if (result.errors) {
     return res.status(400).json({ errors: result.errors });
   }

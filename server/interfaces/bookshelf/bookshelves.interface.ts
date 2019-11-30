@@ -1,4 +1,4 @@
-import { Book } from './book.interface';
+import { Book } from '../book/book.interface';
 
 export interface Bookshelf {
   readonly _id: string;

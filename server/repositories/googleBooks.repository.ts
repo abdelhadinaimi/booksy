@@ -1,15 +1,16 @@
 import { books, auth } from 'googleapis/build/src/apis/books';
-import { FindBookDto } from '../dto/find-book.dto';
-import { Book } from '../interfaces/book.interface';
-import { Result } from '../dto/result.dto';
+import { FindBookDto } from '../interfaces/book/dto/find-book.dto';
+import { Book } from '../interfaces/book/book.interface';
+import { Result } from '../interfaces/result.interface';
+import { books_v1 } from 'googleapis/build/src/apis/books/v1';
 
 const booksClient = books({
   version: 'v1',
   auth: auth.fromAPIKey(process.env.BOOK_API_KEY),
 });
 
-export const findBook = async (query: FindBookDto): Promise<Result> => {
-  const result: Result = { data: null, errors: null };
+export const findBook = async (query: FindBookDto): Promise<Result<books_v1.Schema$Volumes>> => {
+  const result: Result<books_v1.Schema$Volumes> = { data: null, errors: null };
   try {
     const requestResult = await booksClient.volumes.list(query);
     result.data = requestResult.data;

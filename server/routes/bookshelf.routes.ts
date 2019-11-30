@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAll } from '../controllers/bookshelf.controller';
+import { getAll, postBookshelf, putBookshelf, getBookshelf, deleteBookshelf } from '../controllers/bookshelf.controller';
 
 const route = Router();
 
@@ -36,19 +36,6 @@ route.get('/', getAll);
  *        description: Success!
  *        schema:
  *          $ref: "#/definitions/Bookshelf"
- *  post:
- *    tags:
- *    - "bookshelf"
- *    parameters:
- *      - in: body
- *        name: body
- *        schema:
- *          $ref: "#/definitions/Bookshelf"
- *    summary: creates a bookshelf
- *    description: creates a bookshelf
- *    responses:
- *      '200':
- *        description: Success!
  *  put:
  *    tags:
  *    - "bookshelf"
@@ -71,8 +58,53 @@ route.get('/', getAll);
  *      '200':
  *        description: Success!
  */
-route.get('/:bookshelfId', getAll);
+route.get('/:bookshelfId', getBookshelf);
 
-route.put('/:bookshelfId', getAll);
+route.put('/:bookshelfId', putBookshelf);
+
+route.delete('/:bookshelfId', deleteBookshelf);
+
+/**
+ * @swagger
+ * /bookshelves/:
+ *  post:
+ *    tags:
+ *    - "bookshelf"
+ *    parameters:
+ *      - in: body
+ *        name: body
+ *        schema:
+ *          $ref: "#/definitions/Bookshelf"
+ *    summary: creates a bookshelf
+ *    description: creates a bookshelf
+ *    responses:
+ *      '200':
+ *        description: Success!
+ */
+route.post('/', postBookshelf);
+
+/**
+ * @swagger
+ * /bookshelves/{bookshelfId}/addBook/{bookId}:
+ *  parameters:
+ *    - in: path
+ *      name: bookshelfId
+ *      schema:
+ *        type: string
+ *      description: ID of a bookshelf
+ *    - in: path
+ *      name: bookId
+ *      schema:
+ *        type: string
+ *  post:
+ *    tags:
+ *    - "bookshelf"
+ *    summary: add a book to a bookshelf
+ *    description: creates a bookshelf
+ *    responses:
+ *      '200':
+ *        description: Success!
+ */
+route.post('/', postBookshelf);
 
 export default route;

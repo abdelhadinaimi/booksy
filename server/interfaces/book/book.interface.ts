@@ -1,4 +1,4 @@
-import { Review } from './review.interface';
+import { Review } from '../review/review.interface';
 
 export interface Book {
   readonly id: string;
