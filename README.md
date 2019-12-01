@@ -31,6 +31,7 @@ To run the app on a local developement environement do as follows :
 - run `npm install`.
 - To run the front `cd client` and then `npm start`, then navigate to `http://localhost:4200`.
 - To run the back `cd server` and then `npm run start:dev`, the server is run on port `3000`.
+- You need to have a Google API key linked to the Google Book's API and add to the `.env` file (see `.env.example`).
 
 ## Installation
 To run the app just run `docker-compose up`  (you need to have Docker installed).
