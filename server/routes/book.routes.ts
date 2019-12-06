@@ -38,6 +38,15 @@ const route = Router();
  *    responses:
  *      '200':
  *        description: Success!
+ *        schema:
+ *          type: object
+ *          properties:
+ *            totalItems:
+ *              type: number
+ *            items:
+ *              type: array
+ *              items:
+ *                $ref: "#/definitions/Volume"
  */
 route.get('/', searchBooks);
 

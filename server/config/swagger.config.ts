@@ -52,21 +52,19 @@ const swaggerOptions = {
       Book: {
         type: 'object',
         properties: {
-          title: {
-            type: 'string',
+          volume: {
+            type: 'object',
+            $ref: '#/definitions/Volume',
           },
           rating: {
             type: 'number',
             minimum: 0,
             maximum: 5,
           },
-          thumbnail: {
-            type: 'string',
-          },
-          authors: {
+          recommendations: {
             type: 'array',
             items: {
-              type: 'string',
+              $ref: '#/definitions/Recommendations',
             },
           },
           reviews: {
@@ -77,7 +75,61 @@ const swaggerOptions = {
           },
         },
       },
-      Recommendations: {
+      Volume: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string',
+          },
+          volumeInfo: {
+            type: 'object',
+            properties: {
+              title: {
+                type: 'string',
+              },
+              subtitle: {
+                type: 'string',
+              },
+              publisher: {
+                type: 'string',
+              },
+              description: {
+                type: 'string',
+              },
+              pageCount: {
+                type: 'number',
+              },
+              authors: {
+                type: 'array',
+                items: {
+                  type: 'string',
+                },
+              },
+              categories: {
+                type: 'array',
+                items: {
+                  type: 'string',
+                },
+              },
+              thumbnail: {
+                type: 'string',
+              },
+              imageLinks: {
+                type: 'object',
+                properties: {
+                  thumbnail: {
+                    type: 'string',
+                  },
+                },
+              },
+              publishedDate: {
+                type: 'string',
+              },
+            },
+          },
+        },
+      },
+      Recommendations: { // TODO complete Volume definition
         type: 'object',
         properties: {
           rid: {
@@ -102,8 +154,8 @@ const swaggerOptions = {
             items: {
               type: 'object',
               properties: {
-                book: {
-                  $ref: '#/definitions/Book',
+                volume: {
+                  $ref: '#/definitions/Volume',
                 },
                 numberOfReadPages: {
                   type: 'number',

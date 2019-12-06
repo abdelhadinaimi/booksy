@@ -6,6 +6,7 @@ const BookSchema = new Schema(
     id: {
       type: String,
       required: true,
+      unique: true,
     },
     title: {
       type: String,
@@ -19,7 +20,7 @@ const BookSchema = new Schema(
     categories: [String],
     thumbnail: String,
     publishedDate: String,
-    reviews: [reviewModel.schema],
+    reviews: [reviewModel.schema], // TODO make relational
     rating: {
       type: Number,
       min: 0,

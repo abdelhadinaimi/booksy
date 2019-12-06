@@ -14,7 +14,7 @@ export const searchBooks = async (req: Request, res: Response) => {
   if (result.errors) {
     return res.status(400).json({ errors: result.errors });
   }
-  return res.json(result);
+  return res.json(result.data);
 };
 
 export const getBook = async (req: Request, res: Response) => {
@@ -39,7 +39,8 @@ export const getBook = async (req: Request, res: Response) => {
       // tslint:disable-next-line: no-console
       console.log(error);
     });
-  return res.json({ book: bookResult.data, recommendations: recommendedBooksResult.data });
+  const result = { volume: bookResult.data, recommendations: recommendedBooksResult.data, rating: 1, reviews: [] };
+  return res.json(result); // TODO add rating, reviews
 };
 
 export const getRecommendBooksToUser = async (req: Request, res: Response) => {

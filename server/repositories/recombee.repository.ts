@@ -2,6 +2,7 @@ import * as recombee from 'recombee-api-client';
 import { Book, Volume, BookCore } from '../interfaces/book/book.interface';
 import { books_v1 } from 'googleapis/build/src/apis/books/v1';
 import { Result } from '../interfaces/result.interface';
+import { Recommendations, RecommendedBooks } from '../interfaces/book/recommendation.interface';
 
 const rqs = recombee.requests;
 const client = new recombee.ApiClient(process.env.RECOMBEE_DB_NAME, process.env.RECOMBEE_API_KEY);
@@ -10,16 +11,6 @@ const SCENARIOS = {
   recomendedBooks: 'recomended-books',
   bookToBook: 'book-to-book',
 };
-
-interface Recommendations {
-  recommId: string;
-  recomms: Array<{ id: string, values: BookCore }>;
-}
-
-interface RecommendedBooks {
-  rid: string;
-  volumes: Volume[];
-}
 
 export const sendBook = (book: Volume): Promise<any> => {
   return client.send(new rqs.Batch([
