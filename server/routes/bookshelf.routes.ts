@@ -43,7 +43,10 @@ route.get('/', getAll);
  *      - in: body
  *        name: body
  *        schema:
- *          $ref: "#/definitions/Bookshelf"
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
  *    summary: updates a bookshelf
  *    description: updates a bookshelf
  *    responses:
@@ -74,7 +77,10 @@ route.delete('/:bookshelfId', deleteBookshelf);
  *      - in: body
  *        name: body
  *        schema:
- *          $ref: "#/definitions/Bookshelf"
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
  *    summary: creates a bookshelf
  *    description: creates a bookshelf
  *    responses:

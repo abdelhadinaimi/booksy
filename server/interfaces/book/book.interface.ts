@@ -19,8 +19,14 @@ export interface BookCore {
   thumbnail: string;
   publishedDate: string;
 }
-
+/**
+ * This is used to represent our books in our databases, diffrenet from the google books one
+ */
 export type Book = BookCore & BookMongo;
+
+/**
+ * Individual volume, same as the google books api interface
+ */
 export interface Volume {
   id?: string;
   volumeInfo?: {
@@ -28,4 +34,11 @@ export interface Volume {
       thumbnail?: string;
     },
   } & Partial<BookCore>;
+}
+/**
+ * Used for performing book search
+ */
+export interface Volumes {
+  totalItems?: number;
+  items?: Volume[];
 }

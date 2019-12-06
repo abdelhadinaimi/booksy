@@ -1,13 +1,12 @@
 import * as recombee from 'recombee-api-client';
-import { Book, Volume, BookCore } from '../interfaces/book/book.interface';
-import { books_v1 } from 'googleapis/build/src/apis/books/v1';
+import { Volume } from '../interfaces/book/book.interface';
 import { Result } from '../interfaces/result.interface';
 import { Recommendations, RecommendedBooks } from '../interfaces/book/recommendation.interface';
 
 const rqs = recombee.requests;
 const client = new recombee.ApiClient(process.env.RECOMBEE_DB_NAME, process.env.RECOMBEE_API_KEY);
 
-const SCENARIOS = {
+const scenarios = {
   recomendedBooks: 'recomended-books',
   bookToBook: 'book-to-book',
 };
@@ -49,7 +48,7 @@ export const sendViewInteraction = (userId: string, bookId: string, recommId?: s
 // TODO add favorite genre to filter
 export const getRecommendBooksToUser = (userId: string, count: number): Promise<Result<Recommendations>> => {
   return client.send(new rqs.RecommendItemsToUser(userId, count, {
-    scenario: SCENARIOS.recomendedBooks,
+    scenario: scenarios.recomendedBooks,
     returnProperties: true,
     cascadeCreate: true,
   }));
@@ -59,7 +58,7 @@ export const getRecommendBooksFromBook = async (bookId: string, userId: string, 
   const result: Result<RecommendedBooks> = { data: { rid: null, volumes: [] }, errors: null };
   try {
     const requestResult: Recommendations = await client.send(new rqs.RecommendItemsToItem(bookId, userId, count, {
-      scenario: SCENARIOS.bookToBook,
+      scenario: scenarios.bookToBook,
       returnProperties: true,
       cascadeCreate: true,
     }));
