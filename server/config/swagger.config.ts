@@ -77,6 +77,20 @@ const swaggerOptions = {
           },
         },
       },
+      Recommendations: {
+        type: 'object',
+        properties: {
+          rid: {
+            type: 'string',
+          },
+          volumes: {
+            type: 'array',
+            items: {
+              $ref: '#/definitions/Volume',
+            },
+          },
+        },
+      },
       Bookshelf: {
         type: 'object',
         properties: {

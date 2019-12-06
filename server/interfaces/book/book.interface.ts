@@ -1,12 +1,31 @@
 import { Review } from '../review/review.interface';
 
-export interface Book {
-  readonly id: string;
-  readonly title: string;
-  readonly authors: string[];
-  readonly thumbnail: string;
-  readonly rating: number;
-  readonly reviews: Review[];
-  readonly created_at: string;
-  readonly updated_at: string;
+interface BookMongo {
+  id: string;
+  rating: number;
+  reviews: Review[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BookCore {
+  title: string;
+  subtitle: string;
+  publisher: string;
+  description: string;
+  pageCount: number;
+  authors: string[];
+  categories: string[];
+  thumbnail: string;
+  publishedDate: string;
+}
+
+export type Book = BookCore & BookMongo;
+export interface Volume {
+  id?: string;
+  volumeInfo?: {
+    imageLinks?: {
+      thumbnail?: string;
+    },
+  } & Partial<BookCore>;
 }

@@ -49,6 +49,12 @@ route.get('/', searchBooks);
  *      name: bookId
  *      schema:
  *        type: string
+ *      description: the id of a book
+ *    - in: query
+ *      name: rid
+ *      schema:
+ *        type: string
+ *      description: recommendation id
  *  get:
  *    tags:
  *    - "book"
@@ -61,7 +67,7 @@ route.get('/', searchBooks);
  *        schema:
  *          $ref: "#/definitions/Book"
  */
-route.get('/:id', getBook);
+route.get('/:bookId', getBook);
 
 /**
  * @swagger
