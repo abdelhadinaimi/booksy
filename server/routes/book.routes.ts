@@ -80,17 +80,13 @@ route.get('/:bookId', getBook);
 
 /**
  * @swagger
- * /books/{bookId}/{reviewId}:
+ * /books/{bookId}/reviews/:
  *  parameters:
  *    - in: path
  *      name: bookId
  *      schema:
  *        type: string
- *    - in: path
- *      name: reviewId
- *      schema:
- *        type: string
- *  post:
+ *  put:
  *    parameters:
  *      - in: body
  *        name: body
@@ -103,7 +99,21 @@ route.get('/:bookId', getBook);
  *    responses:
  *      '200':
  *        description: Success!
- *  put:
+ */
+
+/**
+ * @swagger
+ * /books/{bookId}/reviews/{reviewId}:
+ *  parameters:
+ *    - in: path
+ *      name: bookId
+ *      schema:
+ *        type: string
+ *    - in: path
+ *      name: reviewId
+ *      schema:
+ *        type: string
+ *  patch:
  *    parameters:
  *      - in: body
  *        name: body
@@ -125,5 +135,4 @@ route.get('/:bookId', getBook);
  *      '200':
  *        description: Success!
  */
-
 export default route;

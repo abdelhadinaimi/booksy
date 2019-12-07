@@ -65,7 +65,7 @@ route.get('/logout', (req, res) => {
 /**
  * @swagger
  * /user/{userId}:
- *  put:
+ *  patch:
  *    tags:
  *    - "user"
  *    summary: "Updates user info"

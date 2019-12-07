@@ -14,6 +14,10 @@ const route = Router();
  *    responses:
  *      '200':
  *        description: Success!
+ *        schema:
+ *          type: array
+ *          items:
+ *            $ref: "#/definitions/Bookshelf"
  */
 route.get('/', getAll);
 
@@ -36,7 +40,7 @@ route.get('/', getAll);
  *        description: Success!
  *        schema:
  *          $ref: "#/definitions/Bookshelf"
- *  put:
+ *  patch:
  *    tags:
  *    - "bookshelf"
  *    parameters:
@@ -70,7 +74,7 @@ route.delete('/:bookshelfId', deleteBookshelf);
 /**
  * @swagger
  * /bookshelves/:
- *  post:
+ *  put:
  *    tags:
  *    - "bookshelf"
  *    parameters:
@@ -91,7 +95,30 @@ route.post('/', postBookshelf);
 
 /**
  * @swagger
- * /bookshelves/{bookshelfId}/addBook/{bookId}:
+ * /bookshelves/{bookshelfId}/books/:
+ *  parameters:
+ *    - in: path
+ *      name: bookshelfId
+ *      schema:
+ *        type: string
+ *      description: ID of a bookshelf
+ *    - in: path
+ *      name: bookId
+ *      schema:
+ *        type: string
+ *  put:
+ *    tags:
+ *    - "bookshelf"
+ *    summary: add a book to a bookshelf
+ *    description: creates a bookshelf
+ *    responses:
+ *      '200':
+ *        description: Success!
+ */
+
+/**
+ * @swagger
+ * /bookshelves/{bookshelfId}/books/{bookId}:
  *  parameters:
  *    - in: path
  *      name: bookshelfId
@@ -103,14 +130,21 @@ route.post('/', postBookshelf);
  *      schema:
  *        type: string
  *  post:
+ *    parameters:
+ *      - in: body
+ *        name: body
+ *        schema:
+ *          type: object
+ *          properties:
+ *            numberOfReadPages:
+ *              type: number
  *    tags:
  *    - "bookshelf"
- *    summary: add a book to a bookshelf
- *    description: creates a bookshelf
+ *    summary: updates a book reading page
+ *    description: updates a book reading page
  *    responses:
  *      '200':
  *        description: Success!
  */
 route.post('/', postBookshelf);
-
 export default route;
