@@ -4,6 +4,8 @@ import { Request, Response } from 'express';
 import { FindBookDto } from '../interfaces/book/dto/find-book.dto';
 import Logger from '../config/logger.config';
 
+const fillRecommendationDb = process.env.FILL_DB || false;
+
 export const searchBooks = async (req: Request, res: Response) => {
   const params: FindBookDto = req.query;
   if (!params.q) {
@@ -14,6 +16,15 @@ export const searchBooks = async (req: Request, res: Response) => {
   if (result.errors) {
     return res.status(400).json({ errors: result.errors });
   }
+
+  if (fillRecommendationDb) {
+    recombeeRepo.sendInBulk(result.data.items)
+      .catch(error => {
+        // tslint:disable-next-line: no-console
+        console.log(error);
+      });
+  }
+
   return res.json(result.data);
 };
 
@@ -34,7 +45,7 @@ export const getBook = async (req: Request, res: Response) => {
     return res.status(400).json({ errors: recommendedBooksResult.errors });
   }
 
-  Promise.all([recombeeRepo.sendBook(bookResult.data), recombeeRepo.sendViewInteraction(userId, bookId, rid)])
+  Promise.all([recombeeRepo.sendBook(bookResult.data), recombeeRepo.sendViewInteraction({ userId, bookId, recommId: rid })])
     .catch(error => {
       // tslint:disable-next-line: no-console
       console.log(error);

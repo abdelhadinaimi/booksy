@@ -1,4 +1,4 @@
-import { Bookshelf } from '../bookshelf/bookshelves.interface';
+import { Bookshelf } from '../bookshelf/bookshelve.interface';
 
 export interface User {
   readonly _id: string;

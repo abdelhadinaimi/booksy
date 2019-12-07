@@ -1,20 +1,28 @@
-import { Bookshelf } from '../interfaces/bookshelf/bookshelves.interface';
+import { Bookshelf } from '../interfaces/bookshelf/bookshelve.interface';
 import { Result } from '../interfaces/result.interface';
 import { OpBookBookshelfDto } from '../interfaces/bookshelf/dto/op-book-bookshelf.dto';
-import { UpdateBookshelfDto } from '../interfaces/bookshelf/dto/update-bookshelf.dto';
+import { OpBookshelfDto } from '../interfaces/bookshelf/dto/op-bookshelf.dto';
+
+export const getUserBookshelfs = async (userId: string): Promise<Result<Bookshelf[]>> => {
+  return { data: [], errors: [] };
+};
+
+export const getBookshelfById = async (getBookshelfDto: OpBookshelfDto): Promise<Result<Bookshelf>> => {
+  return { data: null, errors: [] };
+};
 
 /**
  * creates a bookshelf and returns its id
  */
-export const createBookshelf = async (name: string): Promise<Result<string>> => {
+export const createBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<string>> => {
   return { data: 'id of the bookshelf', errors: [] };
 };
 
-export const updateBookshelf = async (updateBookshelfDto: UpdateBookshelfDto): Promise<Result<boolean>> => {
+export const updateBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
   return { data: false, errors: [] };
 };
 
-export const deleteBookshelf = async (id: string): Promise<Result<boolean>> => {
+export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
   return { data: false, errors: [] };
 };
 
