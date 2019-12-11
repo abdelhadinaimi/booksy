@@ -48,7 +48,7 @@ export const getBook = async (req: Request, res: Response) => {
   Promise.all([recombeeRepo.sendBook(bookResult.data), recombeeRepo.sendViewInteraction({ userId, bookId, recommId: rid })])
     .catch(error => {
       // tslint:disable-next-line: no-console
-      console.log(error);
+      // console.log(error);
     });
   const result = { volume: bookResult.data, recommendations: recommendedBooksResult.data, rating: 1, reviews: [] };
   return res.json(result); // TODO add rating, reviews

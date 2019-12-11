@@ -14,7 +14,7 @@ export const findBook = async (query: FindBookDto): Promise<Result<Volumes>> => 
     const requestResult = await booksClient.volumes.list(query);
     result.data = requestResult.data;
   } catch (error) {
-    result.errors = error.message.split('\n');
+    result.errors = error.errors;
   }
   return result;
 };
@@ -25,7 +25,7 @@ export const findBookById = async (id: string): Promise<Result<Volume>> => {
     const requestResult = await booksClient.volumes.get({ volumeId: id });
     result.data = requestResult.data;
   } catch (error) {
-    result.errors = error.message.split('\n');
+    result.errors = error.errors;
   }
   return result;
 };

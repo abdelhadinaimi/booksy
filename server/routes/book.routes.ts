@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { searchBooks, getBook } from '../controllers/book.controller';
-
+import { validate, bookSearchValidations, getBookValidations } from '../config/validation.config';
 const route = Router();
 
 /**
@@ -48,7 +48,7 @@ const route = Router();
  *              items:
  *                $ref: "#/definitions/Volume"
  */
-route.get('/', searchBooks);
+route.get('/', bookSearchValidations, validate, searchBooks);
 
 /**
  * @swagger
@@ -76,7 +76,7 @@ route.get('/', searchBooks);
  *        schema:
  *          $ref: "#/definitions/Book"
  */
-route.get('/:bookId', getBook);
+route.get('/:bookId', getBookValidations, validate, getBook);
 
 /**
  * @swagger
