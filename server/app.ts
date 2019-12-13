@@ -3,12 +3,16 @@ import Logger from './config/logger.config';
 import swagger from './config/swagger.config';
 import { buildConnection } from './config/database.config';
 import { loadEnvVariables } from './config/dotenv.config';
+import bodyParser from 'body-parser';
 
 // Load environement variables
 loadEnvVariables();
 
 // Create a new express application instance
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 import routes from './routes/app.routes';
 app.use('/api/v1/', routes);
