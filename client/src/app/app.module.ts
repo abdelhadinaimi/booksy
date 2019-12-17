@@ -10,6 +10,8 @@ import { ShelvesComponent } from './components/shelves/shelves.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
 import { AuthService } from './services/auth.service';
+import { FormsModule} from '@angular/forms'
+
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { AuthService } from './services/auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

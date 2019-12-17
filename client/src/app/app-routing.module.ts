@@ -11,7 +11,8 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent,
     children: [
-      { path: 'books', component: BooksComponent },
+      {path: '', redirectTo: 'home',pathMatch: 'full'},
+      { path: 'home', component: BooksComponent },
       { path: 'shelves', component: ShelvesComponent },
       { path: 'search', component: SearchComponent },
       { path: 'callback', component: CallbackComponent }
