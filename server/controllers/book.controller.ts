@@ -39,18 +39,30 @@ export const getBook = async (req: Request, res: Response) => {
   if (bookResult.errors) {
     return res.status(400).json({ errors: bookResult.errors });
   }
+  if (!bookResult.data._id) {
+    Promise.all([
+      recombeeRepo.sendBook(bookResult.data),
+      booksRepo.saveBook(bookResult.data),
+    ])
+      .catch(error => {
+        // tslint:disable-next-line: no-console
+        console.log(error);
+      });
+  }
 
   const recommendedBooksResult = await recombeeRepo.getRecommendBooksFromBook(bookId, userId, 5);
   if (recommendedBooksResult.errors) {
     return res.status(400).json({ errors: recommendedBooksResult.errors });
   }
 
-  Promise.all([recombeeRepo.sendBook(bookResult.data), recombeeRepo.sendViewInteraction({ userId, bookId, recommId: rid })])
+  Promise.all([
+    recombeeRepo.sendViewInteraction({ userId, bookId, recommId: rid }),
+  ])
     .catch(error => {
       // tslint:disable-next-line: no-console
-      // console.log(error);
+      console.log(error);
     });
-  const result = { volume: bookResult.data, recommendations: recommendedBooksResult.data, rating: 1, reviews: [] };
+  const result = { volume: bookResult.data, recommendations: recommendedBooksResult.data };
   return res.json(result); // TODO add rating, reviews
 };
 
