@@ -1,8 +1,8 @@
-import { Volume, BookCore } from './book.interface';
+import { Volume, VolumeCore } from './book.interface';
 
 export interface Recommendations {
   recommId: string;
-  recomms: Array<{ id: string, values: BookCore }>;
+  recomms: Array<{ id: string, values: VolumeCore }>;
 }
 
 export interface RecommendedBooks {

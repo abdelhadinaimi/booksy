@@ -1,5 +1,16 @@
 import { Review } from '../review/review.interface';
 
+export interface VolumeCore {
+  title?: string;
+  subtitle?: string;
+  publisher?: string;
+  description?: string;
+  pageCount?: number;
+  authors?: string[];
+  categories?: string[];
+  thumbnail?: string;
+  publishedDate?: string;
+}
 /**
  * Individual volume, same as the google books api interface
  */
@@ -12,17 +23,9 @@ export interface Volume {
     imageLinks?: {
       thumbnail?: string;
     },
-    title?: string;
-    subtitle?: string;
-    publisher?: string;
-    description?: string;
-    pageCount?: number;
-    authors?: string[];
-    categories?: string[];
-    thumbnail?: string;
-    publishedDate?: string;
-  };
+  } & VolumeCore;
 }
+
 /**
  * Used for performing book search
  */

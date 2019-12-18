@@ -37,7 +37,7 @@ const createItemValues = (book: Volume) => {
   if (!volumeInfo) {
     return null;
   }
-  const thumbnail = volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail :  null;
+  const thumbnail = volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail : null;
   return new rqs.SetItemValues(book.id, {
     title: volumeInfo.title,
     subtitle: volumeInfo.subtitle,
@@ -112,7 +112,8 @@ export const getRecommendBooksFromBook = async (bookId: string, userId: string, 
       cascadeCreate: true,
     }));
     result.data.rid = requestResult.recommId;
-    result.data.volumes = requestResult.recomms.map(rec => ({ id: rec.id, volumeInfo: rec.values }));
+    result.data.volumes = requestResult.recomms.map(v => ({ id: v.id, volumeInfo: v.values }));
+
   } catch (error) {
     result.errors = error;
   }
