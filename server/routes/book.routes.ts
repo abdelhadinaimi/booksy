@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { searchBooks, getBook } from '../controllers/book.controller';
-import { validate, bookSearchValidations, getBookValidations } from '../config/validation.config';
+import { validate, bookSearchValidations, getBookValidations, putReviewValidations } from '../config/validation.config';
+import { putReview } from '../controllers/review.controller';
 const route = Router();
 
 /**
@@ -91,7 +92,7 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *      - in: body
  *        name: body
  *        schema:
- *          $ref: "#/definitions/Review"
+ *          $ref: "#/definitions/ReviewDto"
  *    tags:
  *    - "book"
  *    summary: create a new review for the book
@@ -100,7 +101,7 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *      '200':
  *        description: Success!
  */
-
+route.put('/:bookId/reviews', putReviewValidations, validate, putReview);
 /**
  * @swagger
  * /books/{bookId}/reviews/{reviewId}:
@@ -118,7 +119,7 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *      - in: body
  *        name: body
  *        schema:
- *          $ref: "#/definitions/Review"
+ *          $ref: "#/definitions/ReviewDto"
  *    tags:
  *    - "book"
  *    summary: updates review for the book

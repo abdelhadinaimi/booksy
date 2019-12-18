@@ -1,4 +1,4 @@
-import { query, validationResult, param } from 'express-validator';
+import { query, validationResult, param, body } from 'express-validator';
 
 export const bookSearchValidations = [
   query('q')
@@ -21,6 +21,14 @@ export const getBookValidations = [
     .isLength({ max: 12, min: 12 }),
   param('rid')
     .optional(),
+];
+
+export const putReviewValidations = [
+  body('rating')
+    .isInt({ min: 0, max: 5 }),
+  body('reviewText')
+    .optional()
+    .isLength({ max: 1000 }),
 ];
 
 export const validate = (req, res, next) => {

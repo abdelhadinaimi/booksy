@@ -62,10 +62,8 @@ const swaggerOptions = {
             maximum: 5,
           },
           recommendations: {
-            type: 'array',
-            items: {
-              $ref: '#/definitions/Recommendations',
-            },
+            type: 'object',
+            $ref: '#/definitions/Recommendations',
           },
           reviews: {
             type: 'array',
@@ -179,6 +177,20 @@ const swaggerOptions = {
           },
           writer: {
             $ref: '#/definitions/User',
+          },
+        },
+      },
+      ReviewDto: {
+        type: 'object',
+        properties: {
+          rating: {
+            type: 'number',
+            minimum: 0,
+            maximum: 5,
+          },
+          reviewText: {
+            type: 'string',
+            maxLength: 1000,
           },
         },
       },
