@@ -1,5 +1,5 @@
 <h1 class="my-4">
-    <small>Search results</small>
+    <small>({{books.length}}) books found</small>
 </h1>
 <form>
     <div class="from row">
@@ -21,66 +21,19 @@
 
         </div>
     </div>
-    <a class="btn btn-secondary" data-toggle="collapse" href="#addIssue" role="button"
-        aria-expanded="false" aria-controls="addIssue">Go!</a>
+    <a class="btn btn-secondary" data-toggle="collapse" href="#addIssue" role="button" aria-expanded="false"
+        aria-controls="addIssue">Go!</a>
 </form>
 <div>
     <hr>
     <div class="row justify-content-center">
-        <div style="margin-bottom: 5%;" class="col-md-3">
+        <div *ngFor="let book of books" style="margin-bottom: 5%;" class="col-md-3">
             <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://books.google.com/books/content?id=1EBKDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div style="margin-bottom: 5%;" class="col-md-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div style="margin-bottom: 5%;" class="col-md-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div style="margin-bottom: 5%;" class="col-md-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div style="margin-bottom: 5%;" class="col-md-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div style="margin-bottom: 5%;" class="col-md-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div style="margin-bottom: 5%;" class="col-md-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div style="margin-bottom: 5%;" class="col-md-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
+                <img style="width: 100%;height: 50%;" *ngIf="book?.volumeInfo?.imageLinks?.thumbnail !== undefined"
+                    src="{{book?.volumeInfo?.thumbnail}}" class="card-img-top" alt="...">
+                <img style="width: 100%;height: 50%;" *ngIf="book?.volumeInfo?.thumbnail == undefined"
+                    src="https://previews.123rf.com/images/ahasoft2000/ahasoft20001806/ahasoft2000180605137/102524627-question-mark-mosaic-created-from-gear-integration-components-vector-gear-integration-icons-are-grou.jpg"
+                    class="card-img-top" alt="...">
             </div>
         </div>
 
