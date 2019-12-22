@@ -25,6 +25,7 @@
     "express-validator": "^6.3.0",
     "googleapis": "^45.0.0",
     "jwks-rsa": "^1.6.0",
+    "method-override": "^3.0.0",
     "mongoose": "^5.7.9",
     "recombee-api-client": "^2.4.1",
     "swagger-jsdoc": "^3.4.0",

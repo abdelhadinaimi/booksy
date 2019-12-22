@@ -23,7 +23,7 @@ export const getBookValidations = [
     .optional(),
 ];
 
-export const putReviewValidations = [
+export const reviewValidations = [
   body('rating')
     .isInt({ min: 0, max: 5 }),
   body('reviewText')

@@ -13,6 +13,8 @@ import { AuthService } from './services/auth.service';
 import { FormsModule, NgForm} from '@angular/forms'
 import { BookService } from './services/book.service/book.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BookdetailsComponent } from './components/books/bookdetails/bookdetails.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ShelvesComponent,
     CallbackComponent,
     SearchComponent,
+    BookdetailsComponent
   ],
   imports: [
     BrowserModule,

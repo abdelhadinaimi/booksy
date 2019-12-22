@@ -1,10 +1,11 @@
 import express, { Router } from 'express';
 import Logger from './config/logger.config';
 import swagger from './config/swagger.config';
+import methodOverride from 'method-override';
 import { buildConnection } from './config/database.config';
 import { loadEnvVariables } from './config/dotenv.config';
 import bodyParser from 'body-parser';
-import cors from "cors";
+import cors from 'cors';
 
 // Load environement variables
 loadEnvVariables();
@@ -12,8 +13,9 @@ loadEnvVariables();
 // Create a new express application instance
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 
 import routes from './routes/app.routes';
