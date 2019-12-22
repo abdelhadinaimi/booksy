@@ -13,12 +13,19 @@
                     </a>
                 </li>
                 <li *ngIf="!auth.loggedIn" class="nav-item">
-                    <a  (click)="auth.login()" class="nav-link" href="javascript:void(0)">Login</a>
+                    <a (click)="auth.login()" class="nav-link" href="javascript:void(0)">Login</a>
                 </li>
-                <li  *ngIf="auth.loggedIn" class="nav-item">
-                    <a (click)="auth.logout()" class="nav-link" href="javascript:void(0)">Logout</a>
+                <li *ngIf="auth.loggedIn" class="nav-item">
+                    <div class="dropdown">
+                        <button style="background-color:transparent;color:#007bff;border: none;margin-top: 2px;" type="button"
+                            class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            {{ auth.userProfile.name }}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a (click)="auth.logout()" class="nav-link" href="javascript:void(0)">Logout</a>
+                        </div>
+                    </div>
                 </li>
-                
             </ul>
         </div>
     </div>

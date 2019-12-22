@@ -31,7 +31,10 @@ export class SearchComponent implements OnInit {
   }
 
   searchBooks(q) {
+    this.waiting = true;
+    this.currentIndex = 0;
     this.bookService.getBooks(q).subscribe(data => {
+      this.waiting = false;
       this.books = data['items'];
       this.numberItems = data['totalItems']
       this.pages = Math.ceil(parseInt(this.numberItems) / 10);

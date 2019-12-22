@@ -1,14 +1,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="card my-4">
-                <h5 *ngIf="auth.loggedIn === true" class="card-header">{{ auth.userProfile.name }}</h5>
-                <h5 *ngIf="auth.loggedIn === undefined" class="card-header">Do you have an account ?</h5>
-                <div class="card-body">
-                    <a *ngIf="auth.loggedIn === true" (click)="auth.logout()" class="nav-link" href="javascript:void(0)">Logout</a>
-                    <a *ngIf="auth.loggedIn === undefined" (click)="auth.login()" class="nav-link" href="javascript:void(0)">Sign-in or sign-up</a>
-                </div>
-            </div>
             <div class="card my-4" style="margin-bottom: 10px;">
                 <h5 class="card-header">Search for books</h5>
                 <div class="card-body">

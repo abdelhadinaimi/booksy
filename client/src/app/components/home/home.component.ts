@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit {
   contentSearch : any;
-  constructor(private auth: AuthService) { }
+  constructor() { }
 
   ngOnInit() {
   }
