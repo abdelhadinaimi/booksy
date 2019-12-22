@@ -2,9 +2,11 @@
     <div class="row">
         <div class="col-md-4">
             <div class="card my-4">
-                <h5 class="card-header">Do you have an account ?</h5>
+                <h5 *ngIf="auth.loggedIn === true" class="card-header">{{ auth.userProfile.name }}</h5>
+                <h5 *ngIf="auth.loggedIn === undefined" class="card-header">Do you have an account ?</h5>
                 <div class="card-body">
-                    <a href="#">Sign-in or sign-up</a>
+                    <a *ngIf="auth.loggedIn === true" (click)="auth.logout()" class="nav-link" href="javascript:void(0)">Logout</a>
+                    <a *ngIf="auth.loggedIn === undefined" (click)="auth.login()" class="nav-link" href="javascript:void(0)">Sign-in or sign-up</a>
                 </div>
             </div>
             <div class="card my-4" style="margin-bottom: 10px;">
@@ -13,7 +15,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" [(ngModel)]="contentSearch" placeholder="Search for...">
                         <span class="input-group-btn">
-                            <button routerLink='/search' [queryParams]="{q: contentSearch}" class="btn btn-secondary" type="button">Go!</button>
+                            <button routerLink='/search' [queryParams]="{q: contentSearch}" class="btn btn-secondary"
+                                type="button">Go!</button>
                         </span>
                     </div>
                 </div>

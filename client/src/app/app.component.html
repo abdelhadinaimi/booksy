@@ -13,11 +13,10 @@
                     </a>
                 </li>
                 <li *ngIf="!auth.loggedIn" class="nav-item">
-                    <a  (click)="auth.login()" class="nav-link" href="#">Login</a>
+                    <a  (click)="auth.login()" class="nav-link" href="javascript:void(0)">Login</a>
                 </li>
                 <li  *ngIf="auth.loggedIn" class="nav-item">
-                        {{ auth.userProfile.name }}
-                    <a (click)="auth.logout()" class="nav-link" href="#">Logout</a>
+                    <a (click)="auth.logout()" class="nav-link" href="javascript:void(0)">Logout</a>
                 </li>
                 
             </ul>
