@@ -60,10 +60,10 @@
     <div>
         <hr>
         <div class="row justify-content-center">
-            <div *ngFor="let book of books" style="margin-bottom: 5%;" class="col-md-3">
-                <div class="card">
+            <div *ngFor="let book of books" style="margin-bottom: 5%;" class="col-md-2">
+                <div style="cursor: pointer;" class="card">
                     <img (mouseover)="print(book.id)" [ngbTooltip]="tipContent" tooltipClass="class" placement="right"
-                        style="width: 100%;height: 250px;" src="{{book?.volumeInfo?.thumbnail}}" class="card-img-top"
+                        style="width: 100%;height: 160px;" src="{{book?.volumeInfo?.thumbnail}}" class="card-img-top"
                         alt="...">
 
                 </div>
@@ -74,16 +74,16 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item" [ngClass]="{'disabled': currentIndex === 0}">
                     <a class="page-link" href="javascript:void(0)"
-                        (click)="advancedSearchBooks(searchBook,currentIndex-1)">Previous</a>
+                        (click)="advancedSearchBooks(searchBook,currentIndex-18)">Previous</a>
                 </li>
                 <li *ngFor="let in of counter(10) ;let i = index" class="page-item"><a class="page-link active"
                         href="javascript:void(0)"
-                        [ngStyle]="currentIndex === i && { 'background': '#007bff','color':'white'}"
-                        (click)="advancedSearchBooks(searchBook,i);setCurrentIndex(i)">{{i+1}}</a>
+                        [ngStyle]="(currentIndex / 18 === i) && { 'background': '#007bff','color':'white'}"
+                        (click)="advancedSearchBooks(searchBook,i*18);setCurrentIndex(i*18)">{{i+1}}</a>
                 </li>
                 <li class="page-item">
                     <a class="page-link" href="javascript:void(0)"
-                        (click)="advancedSearchBooks(searchBook,currentIndex+1)">Next</a>
+                        (click)="advancedSearchBooks(searchBook,currentIndex+18)">Next</a>
                 </li>
             </ul>
         </nav>
@@ -91,9 +91,10 @@
 </ng-template>
 <ng-template #tipContent>
     <div class="card" style="width: 18rem;">
-        <div style="background-color: gray;" class="card-body">
-            <h5 class="card-title">{{test.volumeInfo.title}}</h5>
-            <p>{{test.volumeInfo.description}}</p>
+        <div style="background-color: black;" class="card-body">
+            <h5 class="card-title">{{test.volumeInfo?.title}}</h5>
+            <p>Author(s): {{test.volumeInfo?.authors.join(',')}}</p>
+            <p>{{test.volumeInfo?.description?.substring(0,200)}}...</p>
         </div>
     </div>
 </ng-template>

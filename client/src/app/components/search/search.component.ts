@@ -44,13 +44,13 @@ export class SearchComponent implements OnInit {
   advancedSearchBooks(form: NgForm, startIndex) {
     this.waiting = true;
     this.currentIndex = startIndex;
-    console.log(this.currentIndex);
     let content = (form.value.content === "") ? "" : form.value.content
     let author = (form.value.author === "") ? "" : "+inauthor:" + form.value.author;
     let subject = (form.value.subject === "") ? "" : "+subject:" + form.value.subject;
     let editor = (form.value.publisher === "") ? "" : "+inpublisher:" + form.value.publisher;
+    let maxResults = "&maxResults=18";
     let index = "&startIndex=" + startIndex;
-    let query = content + author + subject + editor + index;
+    let query = content + author + subject + editor + index + maxResults;
     this.bookService.getBooks(query).subscribe(data => {
       this.waiting = false;
       this.books = data['items'];
