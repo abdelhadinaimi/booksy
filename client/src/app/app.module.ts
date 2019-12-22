@@ -10,6 +10,8 @@ import { ShelvesComponent } from './components/shelves/shelves.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
 import { AuthService } from './services/auth.service';
+import { FormsModule, NgForm} from '@angular/forms'
+import { BookService } from './services/book.service/book.service';
 import { BookdetailsComponent } from './components/books/bookdetails/bookdetails.component';
 
 @NgModule({
@@ -20,14 +22,15 @@ import { BookdetailsComponent } from './components/books/bookdetails/bookdetails
     ShelvesComponent,
     CallbackComponent,
     SearchComponent,
-    BookdetailsComponent,
+    BookdetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService,BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

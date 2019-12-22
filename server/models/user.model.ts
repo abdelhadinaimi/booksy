@@ -1,27 +1,35 @@
-import { Schema } from 'mongoose';
+import { Schema, Model, model } from 'mongoose';
+import { IUser } from '../interfaces/user/user.interface';
+
 const UserSchema = new Schema(
   {
-    firstname: {
-      type: String,
-      maxlength: 20,
-    },
-    lastname: {
-      type: String,
-      maxlength: 20,
-    },
-    email: {
+    userId: {
       type: String,
       unique: true,
-      maxlength: 256,
-      required: true,
     },
-    genres: [String],
+    familyName: {
+      type: String,
+      maxlength: 50,
+    },
+    givenName: {
+      type: String,
+      maxlength: 50,
+    },
+    picture: String,
+    email: {
+      type: String,
+      maxlength: 256,
+    },
+    genres: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true },
 );
 
-export default { name: 'User', schema: UserSchema };
+export const User: Model<IUser> = model<IUser>('User', UserSchema);
 
 // To avoid circular dependency
 import bookshelfModel from './bookshelf.model';
-UserSchema.add({ bookshelves: [bookshelfModel.schema]});
+UserSchema.add({ bookshelves: [bookshelfModel.schema] });

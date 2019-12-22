@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { searchBooks, getBook } from '../controllers/book.controller';
-
+import { validate, bookSearchValidations, getBookValidations, reviewValidations } from '../config/validation.config';
+import { putReview } from '../controllers/review.controller';
 const route = Router();
 
 /**
@@ -48,7 +49,7 @@ const route = Router();
  *              items:
  *                $ref: "#/definitions/Volume"
  */
-route.get('/', searchBooks);
+route.get('/', bookSearchValidations, validate, searchBooks);
 
 /**
  * @swagger
@@ -76,7 +77,7 @@ route.get('/', searchBooks);
  *        schema:
  *          $ref: "#/definitions/Book"
  */
-route.get('/:bookId', getBook);
+route.get('/:bookId', getBookValidations, validate, getBook);
 
 /**
  * @swagger
@@ -91,7 +92,7 @@ route.get('/:bookId', getBook);
  *      - in: body
  *        name: body
  *        schema:
- *          $ref: "#/definitions/Review"
+ *          $ref: "#/definitions/ReviewDto"
  *    tags:
  *    - "book"
  *    summary: create a new review for the book
@@ -100,17 +101,13 @@ route.get('/:bookId', getBook);
  *      '200':
  *        description: Success!
  */
-
+route.put('/:bookId/reviews', reviewValidations, validate, putReview);
 /**
  * @swagger
- * /books/{bookId}/reviews/{reviewId}:
+ * /books/{bookId}/reviews/:
  *  parameters:
  *    - in: path
  *      name: bookId
- *      schema:
- *        type: string
- *    - in: path
- *      name: reviewId
  *      schema:
  *        type: string
  *  patch:
@@ -118,7 +115,7 @@ route.get('/:bookId', getBook);
  *      - in: body
  *        name: body
  *        schema:
- *          $ref: "#/definitions/Review"
+ *          $ref: "#/definitions/ReviewDto"
  *    tags:
  *    - "book"
  *    summary: updates review for the book
@@ -135,4 +132,6 @@ route.get('/:bookId', getBook);
  *      '200':
  *        description: Success!
  */
+route.patch('/:bookId/reviews', reviewValidations, validate, putReview);
+
 export default route;

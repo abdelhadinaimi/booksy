@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import { postRegisterUser, patchUpdateUserGenres } from '../controllers/user.controller';
 const route = Router();
 
 /**
@@ -40,9 +40,7 @@ route.post('/login', (req, res) => {
  *      schema:
  *        $ref: '#/definitions/User'
  */
-route.post('/register', (req, res) => {
-  res.send('register');
-});
+route.post('/register', postRegisterUser);
 
 /**
  * @swagger
@@ -89,8 +87,6 @@ route.get('/logout', (req, res) => {
  *      404:
  *        description: "User not found"
  */
-route.put('/:userId', (req, res) => {
-  res.send('update');
-});
+route.patch('/:userId', patchUpdateUserGenres);
 
 export default route;

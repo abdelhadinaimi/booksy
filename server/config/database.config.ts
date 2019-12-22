@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import userModel from '../models/user.model';
 import bookModel from '../models/book.model';
 
 export const buildConnection = () => {
@@ -16,5 +15,4 @@ export const buildConnection = () => {
 };
 
 // register schemas
-mongoose.model(userModel.name, userModel.schema);
 mongoose.model(bookModel.name, bookModel.schema);

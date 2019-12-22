@@ -1,5 +1,4 @@
 import { Schema } from 'mongoose';
-import userModel from './user.model';
 import Logger from '../config/logger.config';
 
 const ReviewSchema = new Schema(
@@ -16,7 +15,7 @@ const ReviewSchema = new Schema(
     },
     writer: {
       type: Schema.Types.ObjectId,
-      ref: userModel.name,
+      ref: 'User',
       required: true,
     },
   },

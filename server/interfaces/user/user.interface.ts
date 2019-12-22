@@ -1,12 +1,12 @@
 import { Bookshelf } from '../bookshelf/bookshelve.interface';
+import { Document } from 'mongoose';
 
-export interface User {
-  readonly _id: string;
-  readonly firstname: string;
-  readonly lastname: string;
+export interface IUser extends Document {
+  readonly userId: string;
+  readonly familyName?: string;
+  readonly givenName?: string;
+  readonly picture?: string;
   readonly email: string;
-  readonly genres: string[];
-  readonly bookshelves: Bookshelf[];
-  readonly created_at: string;
-  readonly updated_at: string;
+  readonly genres?: string[];
+  readonly bookshelves?: Bookshelf[];
 }
