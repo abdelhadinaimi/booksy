@@ -10,6 +10,7 @@ import { ShelvesComponent } from './components/shelves/shelves.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
 import { AuthService } from './services/auth.service';
+import { BookdetailsComponent } from './components/books/bookdetails/bookdetails.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AuthService } from './services/auth.service';
     ShelvesComponent,
     CallbackComponent,
     SearchComponent,
+    BookdetailsComponent,
   ],
   imports: [
     BrowserModule,

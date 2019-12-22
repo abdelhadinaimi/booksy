@@ -6,7 +6,7 @@ import { ShelvesComponent } from './components/shelves/shelves.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
-
+import { BookdetailsComponent } from './components/books/bookdetails/bookdetails.component';
 const routes: Routes = [
   {
     path: '', component: HomeComponent,
@@ -14,7 +14,8 @@ const routes: Routes = [
       { path: 'books', component: BooksComponent },
       { path: 'shelves', component: ShelvesComponent },
       { path: 'search', component: SearchComponent },
-      { path: 'callback', component: CallbackComponent }
+      { path: 'callback', component: CallbackComponent },
+      { path: 'bookdetails', component: BookdetailsComponent }
     ]
   }
 ];
