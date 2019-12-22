@@ -93,6 +93,11 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *        name: body
  *        schema:
  *          $ref: "#/definitions/ReviewDto"
+ *      - in: query
+ *        name: rid
+ *        schema:
+ *          type: string
+ *        description: recommendation id
  *    tags:
  *    - "book"
  *    summary: create a new review for the book
@@ -112,6 +117,11 @@ route.put('/:bookId/reviews', reviewValidations, validate, putReview);
  *        type: string
  *  patch:
  *    parameters:
+ *      - in: query
+ *        name: rid
+ *        schema:
+ *          type: string
+ *        description: recommendation id
  *      - in: body
  *        name: body
  *        schema:
