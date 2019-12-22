@@ -1,5 +1,5 @@
 <h1 class="my-4">
-    <small>({{numberItems}}) books found</small>
+    <small>Search result</small>
 </h1>
 <form #searchBook="ngForm" (ngSubmit)="advancedSearchBooks(searchBook,0)">
     <div class="from row">
@@ -60,6 +60,7 @@
     <div>
         <hr>
         <div class="row justify-content-center">
+            <div *ngIf="numberItems === 0"><h5>No books found</h5></div>
             <div *ngFor="let book of books" style="margin-bottom: 5%;" class="col-md-2">
                 <div style="cursor: pointer;" class="card">
                     <img (mouseover)="print(book.id)" [ngbTooltip]="tipContent" tooltipClass="class" placement="right"
@@ -76,12 +77,12 @@
                     <a class="page-link" href="javascript:void(0)"
                         (click)="advancedSearchBooks(searchBook,currentIndex-18)">Previous</a>
                 </li>
-                <li *ngFor="let in of counter(10) ;let i = index" class="page-item"><a class="page-link active"
-                        href="javascript:void(0)"
+                <li *ngFor="let in of counter(pagination) ;let i = index;" class="page-item"><a
+                        class="page-link active" href="javascript:void(0)"
                         [ngStyle]="(currentIndex / 18 === i) && { 'background': '#007bff','color':'white'}"
-                        (click)="advancedSearchBooks(searchBook,i*18);setCurrentIndex(i*18)">{{i+1}}</a>
+                        (click)="advancedSearchBooks(searchBook,i*18);setCurrentIndex(i*18);">{{i+1}}</a>
                 </li>
-                <li class="page-item">
+                <li class="page-item" [ngClass]="{'disabled': currentIndex + 18 >= numberItems}">
                     <a class="page-link" href="javascript:void(0)"
                         (click)="advancedSearchBooks(searchBook,currentIndex+18)">Next</a>
                 </li>
@@ -93,7 +94,12 @@
     <div class="card" style="width: 18rem;">
         <div style="background-color: black;" class="card-body">
             <h5 class="card-title">{{test.volumeInfo?.title}}</h5>
-            <p>Author(s): {{test.volumeInfo?.authors.join(',')}}</p>
+            <h6> <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span></h6>
+            <p>Author(s): {{test.volumeInfo?.authors?.join(',')}}</p>
             <p>{{test.volumeInfo?.description?.substring(0,200)}}...</p>
         </div>
     </div>
