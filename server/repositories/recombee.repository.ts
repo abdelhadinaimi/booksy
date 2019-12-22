@@ -46,6 +46,7 @@ const createItemValues = (book: Volume) => {
     pageCount: volumeInfo.pageCount,
     authors: volumeInfo.authors,
     categories: volumeInfo.categories,
+    publishedDate: volumeInfo.publishedDate,
     thumbnail,
   }, {
     cascadeCreate: true,

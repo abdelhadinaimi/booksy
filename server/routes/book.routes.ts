@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { searchBooks, getBook } from '../controllers/book.controller';
-import { validate, bookSearchValidations, getBookValidations, putReviewValidations } from '../config/validation.config';
+import { validate, bookSearchValidations, getBookValidations, reviewValidations } from '../config/validation.config';
 import { putReview } from '../controllers/review.controller';
 const route = Router();
 
@@ -101,17 +101,13 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *      '200':
  *        description: Success!
  */
-route.put('/:bookId/reviews', putReviewValidations, validate, putReview);
+route.put('/:bookId/reviews', reviewValidations, validate, putReview);
 /**
  * @swagger
- * /books/{bookId}/reviews/{reviewId}:
+ * /books/{bookId}/reviews/:
  *  parameters:
  *    - in: path
  *      name: bookId
- *      schema:
- *        type: string
- *    - in: path
- *      name: reviewId
  *      schema:
  *        type: string
  *  patch:
@@ -136,4 +132,6 @@ route.put('/:bookId/reviews', putReviewValidations, validate, putReview);
  *      '200':
  *        description: Success!
  */
+route.patch('/:bookId/reviews', reviewValidations, validate, putReview);
+
 export default route;

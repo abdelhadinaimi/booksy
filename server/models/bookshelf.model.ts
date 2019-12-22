@@ -11,7 +11,6 @@ const BookshelfSchema: Schema = new Schema(
       book: {
         type: Schema.Types.ObjectId,
         ref: bookModel.name,
-        unique: true,
       },
       numberOfReadPages: Number,
     }],
