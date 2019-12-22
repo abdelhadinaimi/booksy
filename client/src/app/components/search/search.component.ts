@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   pages: Number;
   currentIndex;
   numberItems;
+  test;
   waiting: boolean = false;
   constructor(private route: ActivatedRoute, private bookService: BookService) { }
 
@@ -66,7 +67,8 @@ export class SearchComponent implements OnInit {
     this.currentIndex = parseInt(i);
   }
 
-  print(id){
-    console.log(id);
+  print(test){
+    let book = this.books.find(b => b.id === test);
+    this.test = book;
   }
 }
