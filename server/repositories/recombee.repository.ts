@@ -3,7 +3,7 @@ import { Volume } from '../interfaces/book/book.interface';
 import { Result } from '../interfaces/result.interface';
 import { Recommendations, RecommendedBooks } from '../interfaces/book/recommendation.interface';
 
-interface UserInteractionDto {
+export interface UserInteractionDto {
   userId: string;
   bookId: string;
   recommId?: string;
