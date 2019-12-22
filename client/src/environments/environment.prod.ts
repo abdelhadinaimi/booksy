@@ -6,5 +6,6 @@ export const environment = {
     AUDIENCE: 'https://booksy-api.herokuapp.com/',
     BASE_URL: 'https://booksy-api.herokuapp.com',
     SCOPE: 'openid profile email'
-  }
+  },
+  API_URL: "https://booksy-api.herokuapp.com/api/v1/"
 };

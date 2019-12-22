@@ -2,10 +2,10 @@ import express, { Router } from 'express';
 import Logger from './config/logger.config';
 import swagger from './config/swagger.config';
 import methodOverride from 'method-override';
-import cors from 'cors';
 import { buildConnection } from './config/database.config';
 import { loadEnvVariables } from './config/dotenv.config';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 // Load environement variables
 loadEnvVariables();
