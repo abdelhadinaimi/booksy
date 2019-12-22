@@ -1,4 +1,6 @@
-import { Schema } from 'mongoose';
+import { Schema, Model, model } from 'mongoose';
+import { IUser } from '../interfaces/user/user.interface';
+
 const UserSchema = new Schema(
   {
     userId: {
@@ -26,7 +28,7 @@ const UserSchema = new Schema(
   { timestamps: true },
 );
 
-export default { name: 'User', schema: UserSchema };
+export const User: Model<IUser> = model<IUser>('User', UserSchema);
 
 // To avoid circular dependency
 import bookshelfModel from './bookshelf.model';

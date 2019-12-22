@@ -31,7 +31,7 @@ export const searchBooks = async (req: Request, res: Response) => {
 export const getBook = async (req: Request, res: Response) => {
   const { bookId } = req.params;
   const { rid } = req.query; // recommendation Id
-  const userId = '507f191e810c19729de860ea';
+  const userId = '5df3d7070d77d5621f584081';
   const result = { reviews: [], rating: 0, volume: { id: '', volumeInfo: {} }, recommendations: {} };
   if (!bookId) {
     return res.status(400).json();
