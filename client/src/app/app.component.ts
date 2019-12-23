@@ -7,7 +7,8 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'client';
+  title = 'Booksy';
+  contentSearch;
   constructor(public auth: AuthService){}
 }
 

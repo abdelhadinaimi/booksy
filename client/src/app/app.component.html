@@ -7,6 +7,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item active" style="margin-right: 50px;">
+                    <div class="input-group">
+                        <input style="width: 300px;" type="text" class="form-control" [(ngModel)]="contentSearch" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button routerLink='/search' [queryParams]="{q: contentSearch}" class="btn btn-secondary"
+                                type="button">Go!</button>
+                        </span>
+                    </div>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" routerLink="home" href="javascript:void(0)">Home
                         <span class="sr-only">(current)</span>
@@ -17,8 +26,8 @@
                 </li>
                 <li *ngIf="auth.loggedIn" class="nav-item">
                     <div class="dropdown">
-                        <button style="background-color:transparent;color:#007bff;border: none;margin-top: 2px;" type="button"
-                            class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <button style="background-color:transparent;color:#007bff;border: none;margin-top: 2px;"
+                            type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             {{ auth.userProfile.name }}
                         </button>
                         <div class="dropdown-menu">
