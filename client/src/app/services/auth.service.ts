@@ -77,7 +77,9 @@ export class AuthService {
     // Update login status in loggedIn$ stream
     this.setLoggedIn(true);
     this.loggingIn = false;
-    this.sendAuth();
+    this.sendAuth(profile).then(data => {
+      console.log(data);
+    });
   }
 
   private _clearExpiration() {
@@ -115,9 +117,10 @@ export class AuthService {
     return `Bearer ${this.accessToken}`;
   }
 
-  sendAuth() {
-    return this.httpClient.get(environment.API_URL + 'auth', {
+  sendAuth(profile) {
+    console.log('sendAuth');
+    return this.httpClient.post(environment.API_URL + 'auth', profile, {
       headers: new HttpHeaders().set('Authorization', this._authHeader)
-    });
+    }).toPromise();
   }
 }

@@ -3,7 +3,7 @@ import { books_v1 } from 'googleapis/build/src/apis/books/v1';
 
 export const parseGoogleApiVolume = (data: books_v1.Schema$Volume): Volume => {
   const images = data.volumeInfo.imageLinks;
-  const noImagelink = '/img/no_book_cover.jpg';
+  const noImagelink = 'assets/img/no_book_cover.jpg';
   const imageLink = images ? images.extraLarge || images.large || images.medium || images.thumbnail : noImagelink;
   return {
     id: data.id,
