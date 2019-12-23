@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.model.content = params['q'];
+      this.model.content = params['q'] || "";
       this.model.author = params['inauthor'];
       this.model.subject = params['subject'];
       this.model.publisher = params['inpublisher'];
@@ -41,23 +41,30 @@ export class SearchComponent implements OnInit {
   searchBooks(q) {
     this.waiting = true;
     this.currentIndex = 0;
-    let content = ( this.model.content === "") ? "" :  this.model.content
+    let content = (this.model.content === "") ? "" : this.model.content
     let author = (this.model.author === undefined || this.model.author === "") ? "" : "+inauthor:" + this.model.author;
     let subject = (this.model.subject === undefined || this.model.subject === "") ? "" : "+subject:" + this.model.subject;
-    let editor = ( this.model.publisher === undefined ||  this.model.publisher === "") ? "" : "+inpublisher:" +  this.model.publisher;
+    let editor = (this.model.publisher === undefined || this.model.publisher === "") ? "" : "+inpublisher:" + this.model.publisher;
     let maxResults = "&maxResults=18";
     let index = "&startIndex=" + 0;
     let query = content + author + subject + editor + index + maxResults;
     let urlQuery = query.replace(/\+/g, '&')
     this.location.replaceState('search?q=' + urlQuery.replace(/\:/g, '='));
-    this.bookService.getBooks(query).subscribe(data => {
-      this.waiting = false;
-      this.books = data['items'];
-      this.numberItems = data['totalItems']
-      this.pages = Math.floor(parseInt(this.numberItems + this.currentIndex) / 18);
-      this.pagination = this.pages < 10 ? this.pages : 10
+    this.bookService.getBooks(query).subscribe(
+      res => {
+        this.waiting = false;
+        this.books = res['items'];
+        this.numberItems = res['totalItems']
+        this.pages = Math.floor(parseInt(this.numberItems + this.currentIndex) / 18);
+        this.pagination = this.pages < 10 ? this.pages : 10
 
-    });
+      },
+      err => {
+        this.books = [];
+        this.numberItems = 0;
+        this.waiting = false;
+        this.pagination = 0;
+      });
   }
   advancedSearchBooks(form: NgForm, startIndex) {
     this.waiting = true;
@@ -71,20 +78,27 @@ export class SearchComponent implements OnInit {
     let query = content + author + subject + editor + index + maxResults;
     let urlQuery = query.replace(/\+/g, '&')
     this.location.replaceState('search?q=' + urlQuery.replace(/\:/g, '='));
-    this.bookService.getBooks(query).subscribe(data => {
-      this.waiting = false;
-      this.books = data['items'];
-      this.numberItems = data['totalItems']
-      this.pages = Math.floor(parseInt(this.numberItems + this.currentIndex) / 18);
-      this.pagination = this.pages < 10 ? this.pages : 10
+    this.bookService.getBooks(query).subscribe(
+      res => {
+        this.waiting = false;
+        this.books = res['items'];
+        this.numberItems = res['totalItems']
+        this.pages = Math.floor(parseInt(this.numberItems + this.currentIndex) / 18);
+        this.pagination = this.pages < 10 ? this.pages : 10
 
-    });
+      },
+      err => {
+        this.books = [];
+        this.numberItems = 0;
+        this.waiting = false;
+        this.pagination = 0;
+      });
   }
 
   counter(i: number) {
     return new Array(i);
   }
-  
+
   setCurrentIndex(i) {
     this.currentIndex = parseInt(i);
   }

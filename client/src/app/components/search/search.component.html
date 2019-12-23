@@ -1,6 +1,6 @@
-<h1 class="my-4">
-    <small>Search result</small>
-</h1>
+<h2 class="my-4">
+    <small>Search results</small>
+</h2>
 <form #searchBook="ngForm" (ngSubmit)="advancedSearchBooks(searchBook,0)">
     <div class="from row">
         <div class="form-group col  ">
@@ -100,6 +100,7 @@
                 <span class="fa fa-star"></span>
                 <span class="fa fa-star"></span></h6>
             <p>Author(s): {{test.volumeInfo?.authors?.join(',')}}</p>
+            <p>Publisher: {{test.volumeInfo?.publisher}}</p>
             <p>{{test.volumeInfo?.description?.substring(0,200)}}...</p>
         </div>
     </div>
