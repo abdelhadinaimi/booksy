@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Booksy';
+  contentSearch;
   constructor(public auth: AuthService,private router : Router){}
 
   searchBooks(form : NgForm){
