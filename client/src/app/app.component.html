@@ -6,15 +6,18 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto" style="align-items: center;">
                 <li class="nav-item active" style="margin-right: 50px;">
-                    <div class="input-group">
-                        <input style="width: 300px;" type="text" class="form-control" [(ngModel)]="contentSearch" placeholder="Search for...">
-                        <span class="input-group-btn">
-                            <button routerLink='/search' [queryParams]="{q: contentSearch}" class="btn btn-secondary"
-                                type="button">Go!</button>
-                        </span>
-                    </div>
+                    <form #searchForm="ngForm" (ngSubmit)="searchBooks(searchForm)">
+                        <div class="input-group">
+                            <input style="width: 300px;" type="text" id="contentSearch" name="contentSearch"
+                                class="form-control" [(ngModel)]="contentSearch" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button style="border:none;background-color: transparent;color: #0faafb;" type="submit"
+                                    class="btn btn-secondary"><i style="font-size: 20px;" class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" routerLink="home" href="javascript:void(0)">Home
@@ -29,8 +32,14 @@
                         <button style="background-color:transparent;color:#007bff;border: none;margin-top: 2px;"
                             type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             {{ auth.userProfile.name }}
+                            <img style="height: 40px;width: 40px;" src="{{ auth.userProfile.picture}}"
+                                class="rounded-circle" alt="Cinque Terre" width="304" height="236">
                         </button>
                         <div class="dropdown-menu">
+                            <a routerLink="shelves" href="javascript:void(0)" class="nav-link"
+                                href="javascript:void(0)">Shelves</a>
+                            <a routerLink="shelves" href="javascript:void(0)" class="nav-link"
+                                href="javascript:void(0)">Settings</a>
                             <a (click)="auth.logout()" class="nav-link" href="javascript:void(0)">Logout</a>
                         </div>
                     </div>
