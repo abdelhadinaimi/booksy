@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import * as auth0 from 'auth0-js';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   loggingIn: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private httpClient: HttpClient) {
     // If app auth token is not expired, request new token
     if (JSON.parse(localStorage.getItem('expires_at')) > Date.now()) {
       this.renewToken();
@@ -76,6 +77,9 @@ export class AuthService {
     // Update login status in loggedIn$ stream
     this.setLoggedIn(true);
     this.loggingIn = false;
+    this.sendAuth(profile).then(data => {
+      console.log(data);
+    });
   }
 
   private _clearExpiration() {
@@ -109,4 +113,14 @@ export class AuthService {
     });
   }
 
+  private get _authHeader(): string {
+    return `Bearer ${this.accessToken}`;
+  }
+
+  sendAuth(profile) {
+    console.log('sendAuth');
+    return this.httpClient.post(environment.API_URL + 'auth', profile, {
+      headers: new HttpHeaders().set('Authorization', this._authHeader)
+    }).toPromise();
+  }
 }

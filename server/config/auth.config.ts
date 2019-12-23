@@ -1,12 +1,13 @@
 import jwt from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
+import Logger from './logger.config';
 
 const authConfig = {
   domain: 'dev-ohvjdegt.eu.auth0.com',
   audience: 'https://booksy-api.herokuapp.com/',
 };
 
-export const checkJwt = jwt({
+const jwtHandler = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
@@ -18,3 +19,14 @@ export const checkJwt = jwt({
   issuer: `https://${authConfig.domain}/`,
   algorithm: ['RS256'],
 });
+
+const jwtErrorHandler = (err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(err.status).send({ message: err.message });
+    Logger.error(err);
+    return;
+  }
+  next();
+};
+
+export const checkJwt = [jwtHandler, jwtErrorHandler];

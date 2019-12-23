@@ -5,13 +5,14 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --configuration=production --outputPath=dist",
+    "build-dev": "ng build --outputPath=dist",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "~0.803.4",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/animations": "~8.2.5",
     "@angular/cli": "~8.3.4",
     "@angular/common": "~8.2.5",
@@ -23,6 +24,7 @@
     "@angular/platform-browser": "~8.2.5",
     "@angular/platform-browser-dynamic": "~8.2.5",
     "@angular/router": "~8.2.5",
+    "@ng-bootstrap/ng-bootstrap": "^5.1.4",
     "auth0-js": "^9.11.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

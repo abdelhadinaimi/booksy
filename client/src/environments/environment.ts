@@ -7,5 +7,5 @@ export const environment = {
     BASE_URL: 'http://localhost:4200',
     SCOPE: 'openid profile email'
   },
-  API_URL: "http://localhost:3000/api/v1/"
+  API_URL: 'http://localhost:3000/api/v1/'
 };

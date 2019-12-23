@@ -12,7 +12,8 @@ import { SearchComponent } from './components/search/search.component';
 import { AuthService } from './services/auth.service';
 import { FormsModule, NgForm} from '@angular/forms'
 import { BookService } from './services/book.service/book.service';
-import { BookdetailsComponent } from './components/books/bookdetails/bookdetails.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BookdetailsComponent } from './components/bookdetails/bookdetails.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import { BookdetailsComponent } from './components/books/bookdetails/bookdetails
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgbModule
+     
   ],
   providers: [AuthService,BookService],
   bootstrap: [AppComponent]

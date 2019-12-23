@@ -93,6 +93,11 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *        name: body
  *        schema:
  *          $ref: "#/definitions/ReviewDto"
+ *      - in: query
+ *        name: rid
+ *        schema:
+ *          type: string
+ *        description: recommendation id
  *    tags:
  *    - "book"
  *    summary: create a new review for the book
@@ -100,6 +105,8 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *    responses:
  *      '200':
  *        description: Success!
+ *    security:
+ *      - bearerAuth
  */
 route.put('/:bookId/reviews', reviewValidations, validate, putReview);
 /**
@@ -112,10 +119,17 @@ route.put('/:bookId/reviews', reviewValidations, validate, putReview);
  *        type: string
  *  patch:
  *    parameters:
+ *      - in: query
+ *        name: rid
+ *        schema:
+ *          type: string
+ *        description: recommendation id
  *      - in: body
  *        name: body
  *        schema:
  *          $ref: "#/definitions/ReviewDto"
+ *    security:
+ *      - bearerAuth
  *    tags:
  *    - "book"
  *    summary: updates review for the book
@@ -131,6 +145,8 @@ route.put('/:bookId/reviews', reviewValidations, validate, putReview);
  *    responses:
  *      '200':
  *        description: Success!
+ *    security:
+ *      - bearerAuth
  */
 route.patch('/:bookId/reviews', reviewValidations, validate, putReview);
 

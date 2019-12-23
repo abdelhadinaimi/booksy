@@ -2,4 +2,23 @@
 body {
     padding-top: 56px;
   }
-  
+
+  .class .tooltip-inner {
+    background: none;
+  border-radius: 0.25rem;
+  text-align: left;
+  width: 10.5rem;
+  z-index: 12;
+
+  }
+  .class .arrow::before {
+    border-top-color:none;
+    box-shadow: transparent;
+  }
+
+  .tooltip::after {
+    z-index: 10;
+  }
+  .checked {
+    color: orange;
+  }
