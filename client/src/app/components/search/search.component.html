@@ -60,10 +60,12 @@
     <div>
         <hr>
         <div class="row justify-content-center">
-            <div *ngIf="numberItems === 0"><h5>No books found</h5></div>
+            <div *ngIf="numberItems === 0">
+                <h5>No books found</h5>
+            </div>
             <div *ngFor="let book of books" style="margin-bottom: 5%;" class="col-md-2">
                 <div style="cursor: pointer;" class="card">
-                    <img (mouseover)="print(book.id)" [ngbTooltip]="tipContent" tooltipClass="class" placement="right"
+                    <img routerLink='/books/{{book.id}}' (mouseover)="print(book.id)" [ngbTooltip]="tipContent" tooltipClass="class" placement="right"
                         style="width: 100%;height: 190px;" src="{{book?.volumeInfo?.thumbnail}}" class="card-img-top"
                         alt="...">
 
@@ -77,8 +79,8 @@
                     <a class="page-link" href="javascript:void(0)"
                         (click)="advancedSearchBooks(searchBook,currentIndex-18)">Previous</a>
                 </li>
-                <li *ngFor="let in of counter(pagination) ;let i = index;" class="page-item"><a
-                        class="page-link active" href="javascript:void(0)"
+                <li *ngFor="let in of counter(pagination) ;let i = index;" class="page-item"><a class="page-link active"
+                        href="javascript:void(0)"
                         [ngStyle]="(currentIndex / 18 === i) && { 'background': '#007bff','color':'white'}"
                         (click)="advancedSearchBooks(searchBook,i*18);setCurrentIndex(i*18);">{{i+1}}</a>
                 </li>
@@ -99,9 +101,9 @@
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star"></span>
                 <span class="fa fa-star"></span></h6>
-            <p>Author(s): {{test.volumeInfo?.authors?.join(',')}}</p>
-            <p>Publisher: {{test.volumeInfo?.publisher}}</p>
-            <p>{{test.volumeInfo?.description?.substring(0,200)}}...</p>
+            <h6>Author(s): {{test.volumeInfo?.authors?.join(',')}}</h6>
+            <h6>Publisher: {{test.volumeInfo?.publisher}}</h6>
+            <h6>{{test.volumeInfo?.description?.substring(0,200)}}...</h6>
         </div>
     </div>
 </ng-template>

@@ -18,9 +18,12 @@ export class BookService {
    * Get the project list.
    */
   getBooks(query): Observable<any[]> {
-    console.log(query);
-    return this.httpClient.get<any[]>(environment.API_URL + 'books?q='+query,{
-      headers: new HttpHeaders().set('Authorization', this._authHeader)
-    });
+    return this.httpClient.get<any[]>(environment.API_URL + 'books?q='+query);
+  }
+  /**
+   * Get the project.
+   */
+  getBook(id): Observable<any> {
+    return this.httpClient.get<any>(environment.API_URL + 'books/' + id);
   }
 }
