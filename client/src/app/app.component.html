@@ -13,28 +13,28 @@
                             <input style="width: 300px;" type="text" id="contentSearch" name="contentSearch"
                                 class="form-control" [(ngModel)]="contentSearch" placeholder="Search for...">
                             <span class="input-group-btn">
-                                <button style="border:none;background-color: transparent;color: #0faafb;" type="submit"
-                                    class="btn btn-secondary"><i style="font-size: 20px;" class="fa fa-search"></i></button>
+                                <button style="box-shadow:none;border:none;background-color: transparent;color: #0faafb;" type="submit"
+                                    class="btn btn-secondary"><i style="font-size: 20px;"
+                                        class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </form>
                 </li>
-                <li class="nav-item active">
+                <li style="font-size: medium;" class="nav-item active">
                     <a class="nav-link" routerLink="home" href="javascript:void(0)">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li *ngIf="!auth.loggedIn" class="nav-item">
+                <li *ngIf="!auth.loggedIn" style="font-size: medium;" class="nav-item">
                     <a (click)="auth.login()" class="nav-link" href="javascript:void(0)">Login</a>
                 </li>
-                <li *ngIf="auth.loggedIn" class="nav-item">
+                <li *ngIf="auth.loggedIn" class="nav-item" style="font-size: medium;">
                     <div class="dropdown">
-                        <button style="background-color:transparent;color:#007bff;border: none;margin-top: 2px;"
-                            type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <a style="margin-top: 2px;" href="javascript:void(0)" class="nav-link dropdown-toggle" data-toggle="dropdown">
                             {{ auth.userProfile.name }}
                             <img style="height: 40px;width: 40px;" src="{{ auth.userProfile.picture}}"
                                 class="rounded-circle" alt="Cinque Terre" width="304" height="236">
-                        </button>
+                        </a>
                         <div class="dropdown-menu">
                             <a routerLink="shelves" href="javascript:void(0)" class="nav-link"
                                 href="javascript:void(0)">Shelves</a>
@@ -48,4 +48,5 @@
         </div>
     </div>
 </nav>
+<br>
 <router-outlet></router-outlet>
