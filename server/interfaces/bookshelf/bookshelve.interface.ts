@@ -1,7 +1,7 @@
 import { Volume } from '../book/book.interface';
+import { Document } from 'mongoose';
 
-export interface Bookshelf {
-  readonly _id: string;
+export interface IBookshelf extends Document{
   readonly name: string;
   readonly books: ShelvedBook[];
   readonly created_at: string;

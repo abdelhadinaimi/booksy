@@ -1,5 +1,6 @@
-import { Schema } from 'mongoose';
+import { Schema, Model, model } from 'mongoose';
 import bookModel from '../models/book.model';
+import { IBookshelf } from 'interfaces/bookshelf/bookshelve.interface';
 
 const BookshelfSchema: Schema = new Schema(
   {
@@ -18,4 +19,5 @@ const BookshelfSchema: Schema = new Schema(
   { timestamps: true },
 );
 
-export default { name: 'Bookshelf', schema: BookshelfSchema };
+export const Bookshelf : Model<IBookshelf> = model<IBookshelf>('Bookshelf', BookshelfSchema);
+

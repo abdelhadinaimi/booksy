@@ -24,12 +24,13 @@ const UserSchema = new Schema(
       type: [String],
       default: [],
     },
+    bookshelvs: [{
+      type: Schema.Types.ObjectId,
+        ref: 'Bookshelf',
+    }]
   },
   { timestamps: true },
 );
 
 export const User: Model<IUser> = model<IUser>('User', UserSchema);
 
-// To avoid circular dependency
-import bookshelfModel from './bookshelf.model';
-UserSchema.add({ bookshelves: [bookshelfModel.schema] });

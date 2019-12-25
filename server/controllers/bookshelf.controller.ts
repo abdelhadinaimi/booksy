@@ -1,11 +1,20 @@
 import { RequestHandler } from 'express';
+import  * as bookshelfRepo from '../repositories/bookshelf.repository';
+import { findBook } from 'repositories/googleBooks.repository';
 
 export const getAll: RequestHandler = (req, res) => {
+
   res.send('All the bookshelves');
 };
 
-export const getBookshelf: RequestHandler = (req, res) => {
-  res.send('Get the bookshelves');
+export const getBookshelf: RequestHandler = async (req, res) => {
+  const userId = '5df3d7070d77d5621f584081';
+  const bookshelfId = req.params.bookshelfId;
+  const findbookshelf = await bookshelfRepo.getBookshelfById({userId, bookshelfId});
+  if(findbookshelf.errors){
+    return res.status(400).json({ errors: findbookshelf.errors });
+  }
+  return res.json(findbookshelf.data);  
 };
 
 export const postBookshelf: RequestHandler = (req, res) => {
