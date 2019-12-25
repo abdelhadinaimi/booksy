@@ -8,7 +8,18 @@ import { Bookshelf } from '../models/bookshelf.model';
 
 
 export const getUserBookshelfs = async (userId: string): Promise<Result<IBookshelf[]>> => {
-  return { data: [], errors: [] };
+  const result: Result<IBookshelf[]> = { data: null, errors: null };
+  try {
+    const foundBookshelves: IBookshelf[] = await Bookshelf.find({ userId : userId });
+    if (foundBookshelves) {
+      result.data = foundBookshelves;
+    } else {
+      result.data = null;
+    }
+  } catch (error) {
+    result.errors = error.errors;
+  }
+  return result;
 };
 
 export const getBookshelfById = async (getBookshelfDto: OpBookshelfDto): Promise<Result<IBookshelf>> => {
