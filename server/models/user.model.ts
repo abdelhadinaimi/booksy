@@ -7,13 +7,9 @@ const UserSchema = new Schema(
       type: String,
       unique: true,
     },
-    familyName: {
+    name: {
       type: String,
-      maxlength: 50,
-    },
-    givenName: {
-      type: String,
-      maxlength: 50,
+      maxlength: 200,
     },
     picture: String,
     email: {
@@ -27,10 +23,9 @@ const UserSchema = new Schema(
     bookshelvs: [{
       type: Schema.Types.ObjectId,
         ref: 'Bookshelf',
-    }]
+    }],
   },
   { timestamps: true },
 );
 
 export const User: Model<IUser> = model<IUser>('User', UserSchema);
-

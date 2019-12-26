@@ -1,15 +1,26 @@
-import { RegisterUserDto } from '../interfaces/user/dto/register-user.dto';
+import { UserRequestDto } from '../interfaces/user/dto/user-request.dto';
 import { Result } from '../interfaces/result.interface';
 import { UpdateGenresDto } from '../interfaces/user/dto/update-genres.dto';
 import { IUser } from '../interfaces/user/user.interface';
 import { User } from '../models/user.model';
 import { errors } from '../common/errors.common';
-
-export const registerUser = async (registerUserDto: RegisterUserDto): Promise<Result<boolean>> => {
-  const result: Result<boolean> = { data: false, errors: null };
+import { Types } from 'mongoose';
+export const createUserIfNotExists = async (userRequestDto: UserRequestDto): Promise<Result<IUser>> => {
+  const result: Result<IUser> = { data: null, errors: null };
+  const foundUser = await findUserById(userRequestDto.sub);
+  if (foundUser.data) {
+    result.data = foundUser.data;
+    return result;
+  }
   try {
-    const createdUser = await new User(registerUserDto).save();
-    result.data = !!createdUser;
+    const userInfo = {
+      userId: userRequestDto.sub,
+      picture: userRequestDto.picture,
+      email: userRequestDto.email,
+      name: userRequestDto.name,
+    };
+    const createdUser = await new User(userInfo).save();
+    result.data = createdUser;
   } catch (error) {
     result.errors = error;
   }
@@ -29,8 +40,8 @@ export const updateUserGenres = async (updateGenresDto: UpdateGenresDto): Promis
 
 export const findUserById = async (id: string): Promise<Result<IUser>> => {
   const result: Result<IUser> = { data: null, errors: null };
-
-  const foundUser = await User.findById(id);
+  const objId = Types.ObjectId.isValid(id) ? id : new Types.ObjectId('123456789012'); // to avoid CastError
+  const foundUser = await User.findOne({ $or: [{ userId: id }, { _id: objId }] });
   if (foundUser) {
     result.data = foundUser;
   } else {

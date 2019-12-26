@@ -1,16 +1,21 @@
-import { registerUser, updateUserGenres } from '../repositories/users.repository';
-import { RegisterUserDto } from '../interfaces/user/dto/register-user.dto';
+import { createUserIfNotExists, updateUserGenres } from '../repositories/users.repository';
+import { UserRequestDto } from '../interfaces/user/dto/user-request.dto';
 import { Request, Response } from 'express';
 import { UpdateGenresDto } from '../interfaces/user/dto/update-genres.dto';
 
-export const postRegisterUser = async (req: Request, res: Response) => {
-  const registerUserDto: RegisterUserDto = req.body; // TODO get this stuff form the JWT
-  const result = await registerUser(registerUserDto);
+export const postLoginUser = async (req, res: Response) => {
+  const loginUserDto: UserRequestDto = {
+    sub: req.user.sub,
+    email: req.body.email,
+    picture: req.body.picture,
+    name: req.body.name,
+    nickname: req.body.nickname,
+  };
+  const result = await createUserIfNotExists(loginUserDto);
 
   if (result.errors) {
     return res.status(400).json({ errors: result.errors });
   }
-
   return res.json(result.data);
 };
 

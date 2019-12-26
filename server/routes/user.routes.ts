@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { postRegisterUser, patchUpdateUserGenres } from '../controllers/user.controller';
+import { patchUpdateUserGenres, postLoginUser } from '../controllers/user.controller';
+import jwt = require('express-jwt');
+import { checkJwt } from '../config/auth.config';
 const route = Router();
 
 /**
@@ -19,28 +21,7 @@ const route = Router();
  *      '200':
  *        description: Success!
  */
-route.post('/login', (req, res) => {
-  res.send('login');
-});
-
-/**
- * @swagger
- * /user/register:
- *  post:
- *    tags:
- *    - "user"
- *    summary: registers a new user to the system
- *    responses:
- *      '200':
- *        description: Success!
- *    parameters:
- *    - in: "body"
- *      name: "body"
- *      required: true
- *      schema:
- *        $ref: '#/definitions/User'
- */
-route.post('/register', postRegisterUser);
+route.post('/login', checkJwt, postLoginUser);
 
 /**
  * @swagger

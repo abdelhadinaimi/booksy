@@ -14,8 +14,8 @@ const rqs = recombee.requests;
 const client = new recombee.ApiClient(process.env.RECOMBEE_DB_NAME, process.env.RECOMBEE_API_KEY);
 
 const scenarios = {
-  recomendedBooks: 'recomended-books',
-  bookToBook: 'book-to-book',
+  recomendedBooks: 'user-books',
+  bookToBook: 'book-to-books',
 };
 
 const addproperties = (): Promise<any> => {

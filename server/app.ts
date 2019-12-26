@@ -25,12 +25,6 @@ import { checkJwt } from './config/auth.config';
 app.use('/api/v1/', routes);
 app.use('/api-docs', swagger);
 
-app.post('/api/v1/auth', checkJwt, (req, res) => {
-  // TODO register the user if not exists
-  console.log(req.user);
-  console.log(req.body);
-  res.json({hello: 'hrllo'});
-});
 // Serve built angular app
 app.use('/assets', express.static('assets', { maxAge: '1y' }));
 app.get('*.*', express.static('public/', { maxAge: '1y' }));
