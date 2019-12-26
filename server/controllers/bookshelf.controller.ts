@@ -36,6 +36,12 @@ export const putBookshelf: RequestHandler = (req, res) => {
   res.send('Put bookshelf');
 };
 
-export const deleteBookshelf: RequestHandler = (req, res) => {
-  res.send('Delete bookshelf');
+export const deleteBookshelf: RequestHandler = async (req, res) => {
+  const userId = '5df3d7070d77d5621f584081';
+  const bookshelfId = req.params.bookshelfId;
+  const findbookshelf = await bookshelfRepo.deleteBookshelf({userId,bookshelfId});
+  if(findbookshelf.errors){
+    return res.status(400).json({ errors: findbookshelf.errors });
+  }
+  return res.json(findbookshelf.data);  
 };
