@@ -1,4 +1,4 @@
-import { Bookshelf } from '../bookshelf/bookshelve.interface';
+import { IBookshelf } from '../bookshelf/bookshelve.interface';
 import { Document } from 'mongoose';
 
 export interface IUser extends Document {
@@ -8,5 +8,5 @@ export interface IUser extends Document {
   readonly picture?: string;
   readonly email: string;
   readonly genres?: string[];
-  readonly bookshelves?: Bookshelf[];
+  readonly bookshelves?: IBookshelf[];
 }
