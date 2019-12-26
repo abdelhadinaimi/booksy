@@ -20,7 +20,7 @@ const UserSchema = new Schema(
       type: [String],
       default: [],
     },
-    bookshelvs: [{
+    bookshelves: [{
       type: Schema.Types.ObjectId,
         ref: 'Bookshelf',
     }],

@@ -3,7 +3,7 @@ import  * as bookshelfRepo from '../repositories/bookshelf.repository';
 import { findBook } from 'repositories/googleBooks.repository';
 
 export const getAll: RequestHandler = async (req, res) => {
-  const userId = '5df3d7070d77d5621f584081';
+  const userId = (req as any).user.sub ;
   const findbookshelves = await bookshelfRepo.getUserBookshelfs(userId);
   if(findbookshelves.errors){
     return res.status(400).json({ errors: findbookshelves.errors });
@@ -12,7 +12,7 @@ export const getAll: RequestHandler = async (req, res) => {
 };
 
 export const getBookshelf: RequestHandler = async (req, res) => {
-  const userId = '5df3d7070d77d5621f584081';
+  const userId = (req as any).user.sub ;
   const bookshelfId = req.params.bookshelfId;
   const findbookshelf = await bookshelfRepo.getBookshelfById({userId, bookshelfId});
   if(findbookshelf.errors){
@@ -21,23 +21,26 @@ export const getBookshelf: RequestHandler = async (req, res) => {
   return res.json(findbookshelf.data);  
 };
 
-export const postBookshelf: RequestHandler = async (req, res) => {
-  const userId = '5df3d7070d77d5621f584081';
+export const postBookshelf: RequestHandler =  (req, res) => {
+};
+
+export const putBookshelf: RequestHandler = async (req, res) => {
+  const userId = (req as any).user.sub ;
   const name = req.params.name;
-  const createdBookesehlves = await bookshelfRepo.createBookshelf({userId,name});
+  try{
+   const createdBookesehlves = await bookshelfRepo.createBookshelf({userId,name});
   if (createdBookesehlves.errors) {
-    return res.status(400).json({ errors: createdBookesehlves.errors });
+     return res.status(400).json({ errors: createdBookesehlves.errors });
+   }
+
+   return res.json(createdBookesehlves.data);
+  }catch(err){
+    console.log(err);
+    return res.status(400).send();
   }
-
-  return res.json(createdBookesehlves.data);
 };
-
-export const putBookshelf: RequestHandler = (req, res) => {
-  res.send('Put bookshelf');
-};
-
 export const deleteBookshelf: RequestHandler = async (req, res) => {
-  const userId = '5df3d7070d77d5621f584081';
+  const userId = (req as any).user ? (req as any).user.sub.split('|')[1] : null;
   const bookshelfId = req.params.bookshelfId;
   const findbookshelf = await bookshelfRepo.deleteBookshelf({userId,bookshelfId});
   if(findbookshelf.errors){

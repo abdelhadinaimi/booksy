@@ -75,7 +75,7 @@ route.get('/', getAll);
  */
 route.get('/:bookshelfId', getBookshelf);
 
-route.put('/:bookshelfId', putBookshelf);
+route.put('/', putBookshelf);
 
 route.delete('/:bookshelfId', deleteBookshelf);
 

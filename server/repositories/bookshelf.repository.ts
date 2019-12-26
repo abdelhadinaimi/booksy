@@ -3,6 +3,7 @@ import { Result } from '../interfaces/result.interface';
 import { OpBookBookshelfDto } from '../interfaces/bookshelf/dto/op-book-bookshelf.dto';
 import { OpBookshelfDto } from '../interfaces/bookshelf/dto/op-bookshelf.dto';
 import { Bookshelf } from '../models/bookshelf.model';
+import { findUserById } from './users.repository';
 
 
 
@@ -10,15 +11,11 @@ import { Bookshelf } from '../models/bookshelf.model';
 export const getUserBookshelfs = async (userId: string): Promise<Result<IBookshelf[]>> => {
   const result: Result<IBookshelf[]> = { data: null, errors: null };
   try {
-    console.log(userId);
+
+    const user = await findUserById(userId);
+    const foundBookshelves: IBookshelf[] = (await findUserById(userId)).data.bookshelves;
+    result.data = foundBookshelves;
     
-    const foundBookshelves: IBookshelf[] = await Bookshelf.find({ userId : userId });
-    if (foundBookshelves) {
-      console.log(foundBookshelves);
-      result.data = foundBookshelves;
-    } else {
-      result.data = null;
-    }
   } catch (error) {
     result.errors = error.errors;
   }
@@ -27,12 +24,9 @@ export const getUserBookshelfs = async (userId: string): Promise<Result<IBookshe
 
 export const getBookshelfById = async (getBookshelfDto: OpBookshelfDto): Promise<Result<IBookshelf>> => {
   const result: Result<IBookshelf> = { data: null, errors: null };
-  console.log(getBookshelfDto.bookshelfId)
-  console.log()
   try {
-    const foundBookshelf: IBookshelf = await Bookshelf.findOne({ _id : getBookshelfDto.bookshelfId });
+    const foundBookshelf: IBookshelf = await Bookshelf.findOne({ _id: getBookshelfDto.bookshelfId });
     if (foundBookshelf) {
-      console.log(foundBookshelf);
       result.data = foundBookshelf;
     } else {
       result.data = null;
@@ -50,8 +44,11 @@ export const getBookshelfById = async (getBookshelfDto: OpBookshelfDto): Promise
 export const createBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<string>> => {
   const result = { data: null, errors: null };
   try {
-    const createdBookshelf = await new Bookshelf(opBookshelfDto).save();
-    result.data = createdBookshelf._id;
+    const bookshelf = new Bookshelf({ name: opBookshelfDto.name });
+    const userData = (await findUserById(opBookshelfDto.userId)).data;
+    userData.bookshelves.push(bookshelf);
+    await userData.save();
+
   } catch (error) {
     result.errors = error;
   }
@@ -65,12 +62,12 @@ export const updateBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<R
 export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
   const result = { data: null, errors: null };
   try {
-    const deletedBookshelf = await  Bookshelf.deleteOne({_id: opBookshelfDto.bookshelfId},(err)=>{
-      if(err){
+    const deletedBookshelf = await Bookshelf.deleteOne({ _id: opBookshelfDto.bookshelfId }, (err) => {
+      if (err) {
         result.errors = err;
       }
     })
-    
+
   } catch (error) {
     result.errors = error;
   }
