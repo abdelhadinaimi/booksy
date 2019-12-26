@@ -9,9 +9,7 @@
 
 # dependencies
 /node_modules
-
-# build
-
+/src/app/components/testdetail
 /public
 
 # profiling files

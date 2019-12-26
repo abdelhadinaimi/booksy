@@ -1,6 +1,6 @@
-<h2 class="my-4">
+<h3 class="my-4">
     <small>Search results</small>
-</h2>
+</h3>
 <form #searchBook="ngForm" (ngSubmit)="advancedSearchBooks(searchBook,0)">
     <div class="from row">
         <div class="form-group col  ">
@@ -24,7 +24,8 @@
 
         </div>
     </div>
-    <button type="submit" class="btn btn-secondary">Go!</button>
+    <button style="background-color:#0faafb;border-radius: 17px; color:white;font-weight: bold;border: none;"
+        type="submit" class="btn btn-secondary">Go</button>
 </form>
 <div *ngIf="waiting == true; then block else elseBlock"></div>
 <ng-template #block>
@@ -65,9 +66,9 @@
             </div>
             <div *ngFor="let book of books" style="margin-bottom: 5%;" class="col-md-2">
                 <div style="cursor: pointer;" class="card">
-                    <img routerLink='/books/{{book.id}}' (mouseover)="print(book.id)" [ngbTooltip]="tipContent" tooltipClass="class" placement="right"
-                        style="width: 100%;height: 190px;" src="{{book?.volumeInfo?.thumbnail}}" class="card-img-top"
-                        alt="...">
+                    <img routerLink='/books/{{book.id}}' (mouseover)="print(book.id)" [ngbTooltip]="tipContent"
+                        tooltipClass="class" placement="right" style="width: 100%;height: 190px;"
+                        src="{{book?.volumeInfo?.thumbnail}}" class="card-img-top" alt="...">
 
                 </div>
             </div>

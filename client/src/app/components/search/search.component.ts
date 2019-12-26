@@ -41,7 +41,7 @@ export class SearchComponent implements OnInit {
   searchBooks(q) {
     this.waiting = true;
     this.currentIndex = 0;
-    let content = (this.model.content === "") ? "" : this.model.content
+    let content = (this.model.content === "" || this.model.content === "undefined") ? "" : this.model.content
     let author = (this.model.author === undefined || this.model.author === "") ? "" : "+inauthor:" + this.model.author;
     let subject = (this.model.subject === undefined || this.model.subject === "") ? "" : "+subject:" + this.model.subject;
     let editor = (this.model.publisher === undefined || this.model.publisher === "") ? "" : "+inpublisher:" + this.model.publisher;

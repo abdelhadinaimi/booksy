@@ -7,13 +7,16 @@ import { AuthGuard } from './services/auth/auth.guard';
 import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
 import { BookdetailsComponent } from './components/bookdetails/bookdetails.component';
+import { TestdetailComponent } from './components/testdetail/testdetail.component';
+import { DetailshelfComponent } from './components/detailshelf/detailshelf.component';
 const routes: Routes = [
   {
     path: '', component: HomeComponent,
     children: [
-      {path: '', redirectTo: 'home',pathMatch: 'full'},
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: BooksComponent },
-      { path: 'shelves', component: ShelvesComponent },
+      { path: 'shelves', component: ShelvesComponent, canActivate: [AuthGuard]},
+      { path: 'shelves/:id', component: DetailshelfComponent },
       { path: 'search', component: SearchComponent },
       { path: 'callback', component: CallbackComponent },
       { path: 'books/:id', component: BookdetailsComponent }
@@ -26,6 +29,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     AuthGuard,
-   ]
+  ]
 })
 export class AppRoutingModule { }

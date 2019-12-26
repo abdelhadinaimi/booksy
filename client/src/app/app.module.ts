@@ -14,6 +14,8 @@ import { FormsModule, NgForm} from '@angular/forms'
 import { BookService } from './services/book.service/book.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookdetailsComponent } from './components/bookdetails/bookdetails.component';
+import { TestdetailComponent } from './components/testdetail/testdetail.component';
+import { DetailshelfComponent } from './components/detailshelf/detailshelf.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { BookdetailsComponent } from './components/bookdetails/bookdetails.compo
     CallbackComponent,
     SearchComponent,
     BookdetailsComponent,
+    TestdetailComponent,
+    DetailshelfComponent
   ],
   imports: [
     BrowserModule,
