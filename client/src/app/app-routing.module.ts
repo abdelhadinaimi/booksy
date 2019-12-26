@@ -7,7 +7,6 @@ import { AuthGuard } from './services/auth/auth.guard';
 import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
 import { BookdetailsComponent } from './components/bookdetails/bookdetails.component';
-import { TestdetailComponent } from './components/testdetail/testdetail.component';
 import { DetailshelfComponent } from './components/detailshelf/detailshelf.component';
 const routes: Routes = [
   {
