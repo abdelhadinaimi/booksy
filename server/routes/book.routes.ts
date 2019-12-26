@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { searchBooks, getBook } from '../controllers/book.controller';
 import { validate, bookSearchValidations, getBookValidations, reviewValidations } from '../config/validation.config';
 import { putReview } from '../controllers/review.controller';
+import { checkJwtOrIgnore } from '../config/auth.config';
 const route = Router();
 
 /**
@@ -76,8 +77,10 @@ route.get('/', bookSearchValidations, validate, searchBooks);
  *        description: Success!
  *        schema:
  *          $ref: "#/definitions/Book"
+ *    security:
+ *      - bearerAuth: []
  */
-route.get('/:bookId', getBookValidations, validate, getBook);
+route.get('/:bookId', checkJwtOrIgnore, getBookValidations, validate, getBook);
 
 /**
  * @swagger
@@ -106,7 +109,7 @@ route.get('/:bookId', getBookValidations, validate, getBook);
  *      '200':
  *        description: Success!
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  */
 route.put('/:bookId/reviews', reviewValidations, validate, putReview);
 /**
@@ -129,7 +132,7 @@ route.put('/:bookId/reviews', reviewValidations, validate, putReview);
  *        schema:
  *          $ref: "#/definitions/ReviewDto"
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  *    tags:
  *    - "book"
  *    summary: updates review for the book
@@ -146,7 +149,7 @@ route.put('/:bookId/reviews', reviewValidations, validate, putReview);
  *      '200':
  *        description: Success!
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  */
 route.patch('/:bookId/reviews', reviewValidations, validate, putReview);
 

@@ -29,4 +29,9 @@ const jwtErrorHandler = (err, req, res, next) => {
   next();
 };
 
+const jwtIgnore = (err, req, res, next) => {
+  next();
+};
+
+export const checkJwtOrIgnore = [jwtHandler, jwtIgnore];
 export const checkJwt = [jwtHandler, jwtErrorHandler];

@@ -19,7 +19,7 @@ const route = Router();
  *          items:
  *            $ref: "#/definitions/Bookshelf"
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  */
 route.get('/', getAll);
 
@@ -43,7 +43,7 @@ route.get('/', getAll);
  *        schema:
  *          $ref: "#/definitions/Bookshelf"
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  *  patch:
  *    tags:
  *    - "bookshelf"
@@ -61,7 +61,7 @@ route.get('/', getAll);
  *      '200':
  *        description: Success!
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  *  delete:
  *    tags:
  *    - "bookshelf"
@@ -71,7 +71,7 @@ route.get('/', getAll);
  *      '200':
  *        description: Success!
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  */
 route.get('/:bookshelfId', getBookshelf);
 
@@ -99,7 +99,7 @@ route.delete('/:bookshelfId', deleteBookshelf);
  *      '200':
  *        description: Success!
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  */
 route.post('/', postBookshelf);
 
@@ -125,7 +125,7 @@ route.post('/', postBookshelf);
  *      '200':
  *        description: Success!
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  */
 
 /**
@@ -158,7 +158,7 @@ route.post('/', postBookshelf);
  *      '200':
  *        description: Success!
  *    security:
- *      - bearerAuth
+ *      - bearerAuth: []
  */
 route.post('/', postBookshelf);
 export default route;
