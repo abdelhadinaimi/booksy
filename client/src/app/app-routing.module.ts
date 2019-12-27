@@ -19,6 +19,7 @@ const routes: Routes = [
       { path: 'search', component: SearchComponent },
       { path: 'callback', component: CallbackComponent },
       { path: 'books/:id', component: BookdetailsComponent }
+       //{ path: 'detailsbook', component: BookdetailsComponent }
     ]
   }
 ];
