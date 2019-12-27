@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BookshelfService {
-
+  shelves$ = new BehaviorSubject<any[]>([]);
   constructor(private auth: AuthService, private httpClient: HttpClient) { }
 
   private get _authHeader(): string {
@@ -17,10 +17,16 @@ export class BookshelfService {
   /**
    * Get all shelves.
    */
-  getShelves(): Observable<any[]> {
-    return this.httpClient.get<any[]>(environment.API_URL + 'bookshelves', {
-      headers: new HttpHeaders().set('Authorization', this._authHeader)
-    });
+  getShelves(): void {
+    this.auth.accessToken$.subscribe(t => {
+      if(!t) return;
+      return this.httpClient.get<any[]>(environment.API_URL + 'bookshelves', {
+        headers: new HttpHeaders().set('Authorization','Bearer '+t)
+      }).subscribe(data => {
+        this.shelves$.next(data);
+      })
+    })
+    
   }
 
   /**
@@ -48,7 +54,7 @@ export class BookshelfService {
     * 
     */
   deleteShelf(id): Observable<any> {
-    return this.httpClient.delete(environment.API_URL + 'shelves/' + id, {
+    return this.httpClient.delete(environment.API_URL + 'bookshelves/' + id, {
       headers: new HttpHeaders().set('Authorization', this._authHeader)
     });
   }
