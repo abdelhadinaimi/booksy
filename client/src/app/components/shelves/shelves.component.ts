@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BookshelfService } from '../../services/bookshelf.service/bookshelf.service';
 
 @Component({
   selector: 'app-shelves',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shelves.component.scss']
 })
 export class ShelvesComponent implements OnInit {
+  shelves: any[];
 
-  constructor() { }
+  constructor(private bookshelfService : BookshelfService) { }
 
   ngOnInit() {
+    this.bookshelfService.getShelves().subscribe(data => {
+      this.shelves = data;
+    })
   }
 
 }

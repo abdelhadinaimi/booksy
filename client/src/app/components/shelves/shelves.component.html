@@ -14,18 +14,10 @@
     </div>
 </form>
 <ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="#">Currently reading</a>
+    <li *ngFor="let shelf of shelves" class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="#">{{shelf}}</a>
         <span style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal"
             class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="#">Read</a>
-        <span style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="#">Read later</a>
-        <span style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
     </li>
 </ul>
 

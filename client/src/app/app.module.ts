@@ -15,6 +15,7 @@ import { BookService } from './services/book.service/book.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookdetailsComponent } from './components/bookdetails/bookdetails.component';
 import { DetailshelfComponent } from './components/detailshelf/detailshelf.component';
+import { TestdetailComponent } from './components/testdetail/testdetail.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DetailshelfComponent } from './components/detailshelf/detailshelf.compo
     CallbackComponent,
     SearchComponent,
     BookdetailsComponent,
-    DetailshelfComponent
+    DetailshelfComponent,
+    TestdetailComponent
   ],
   imports: [
     BrowserModule,
