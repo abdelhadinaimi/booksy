@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { getAll, postBookshelf, putBookshelf, getBookshelf, deleteBookshelf } from '../controllers/bookshelf.controller';
+import { getAll, postBookshelf, putBookshelf, getBookshelf, deleteBookshelf, updateBookshelf } from '../controllers/bookshelf.controller';
+import { bookshelfValidations, validate } from '../config/validation.config';
+
 
 const route = Router();
 
@@ -77,6 +79,8 @@ route.get('/:bookshelfId', getBookshelf);
 
 route.delete('/:bookshelfId', deleteBookshelf);
 
+route.patch('/:bookshelfId', bookshelfValidations, validate, updateBookshelf);
+
 /**
  * @swagger
  * /bookshelves/:
@@ -99,7 +103,7 @@ route.delete('/:bookshelfId', deleteBookshelf);
  *    security:
  *      - bearerAuth: []
  */
-route.put('/', putBookshelf);
+route.put('/', bookshelfValidations, validate, putBookshelf);
 
 /**
  * @swagger

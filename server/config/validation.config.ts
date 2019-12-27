@@ -40,3 +40,9 @@ export const validate = (req, res, next) => {
   }
   next();
 };
+
+export const bookshelfValidations = [
+  body('name')
+    .notEmpty()
+    .isLength({ max: 32, min: 3 })
+];

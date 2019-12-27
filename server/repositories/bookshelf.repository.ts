@@ -6,6 +6,7 @@ import { Bookshelf } from '../models/bookshelf.model';
 import { findUserById } from './users.repository';
 import { User } from '../models/user.model';
 
+
 export const getUserBookshelfs = async (userId: string): Promise<Result<IBookshelf[]>> => {
   const result: Result<IBookshelf[]> = { data: null, errors: null };
   try {
@@ -52,14 +53,26 @@ export const createBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<R
   return result;
 };
 
-export const updateBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
-  return { data: null, errors: null };
+export const updateBookshelfName = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
+
+  const result: Result<boolean> = { data: false, errors: null };
+  const newName = opBookshelfDto.name;
+  const bookshelfId = opBookshelfDto.bookshelfId;
+  try {
+    const updatedBookshelf = await Bookshelf.updateOne({ _id: bookshelfId }, {
+      name: newName
+    });
+    result.data = updatedBookshelf.nModified === 1;
+  } catch (err) {
+    result.errors = err;
+  }
+  return result;
 };
 
 export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
   const result = { data: null, errors: null };
   try {
-    const foundUser =  (await findUserById(opBookshelfDto.userId)).data;
+    const foundUser = (await findUserById(opBookshelfDto.userId)).data;
     foundUser.deleteOneBookshelf(opBookshelfDto.bookshelfId);
     const deletedBookshelf = await Bookshelf.deleteOne({ _id: opBookshelfDto.bookshelfId });
     result.data = deletedBookshelf.n === 1;
