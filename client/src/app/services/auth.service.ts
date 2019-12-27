@@ -18,6 +18,7 @@ export class AuthService {
     scope: environment.AUTH.SCOPE
   });
   accessToken: string;
+  accessToken$ = new BehaviorSubject<string>(this.accessToken);
   userProfile: any;
   expiresAt: number;
   // Create a stream of logged in status to communicate throughout app
@@ -73,6 +74,7 @@ export class AuthService {
     // Store expiration in local storage to access in constructor
     localStorage.setItem('expires_at', JSON.stringify(this.expiresAt));
     this.accessToken = authResult.accessToken;
+    this.accessToken$.next(this.accessToken);
     this.userProfile = profile;
     // Update login status in loggedIn$ stream
     this.setLoggedIn(true);
