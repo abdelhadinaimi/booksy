@@ -54,6 +54,7 @@ export const putBookshelf: RequestHandler = async (req, res) => {
     return res.status(400).send();
   }
 };
+
 export const deleteBookshelf: RequestHandler = async (req, res) => {
   const userId = (req as any).user.sub;
   const bookshelfId = req.params.bookshelfId;
@@ -62,4 +63,15 @@ export const deleteBookshelf: RequestHandler = async (req, res) => {
     return res.status(400).json({ errors: findbookshelf.errors });
   }
   return res.json(findbookshelf.data);
+};
+
+export const addBook: RequestHandler = async (req, res) => {
+  const userId = (req as any).user.sub;
+  const bookId =  req.body.bookId;
+  const bookshelfId = req.params.bookshelfId;
+  const addedBook = await bookshelfRepo.addBookToBookshelf({userId, bookId, bookshelfId });
+  if (addedBook.errors) {
+    return res.status(400).json({ errors: addedBook.errors });
+  }
+  return res.json(addedBook.data);
 };

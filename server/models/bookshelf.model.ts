@@ -10,12 +10,12 @@ const BookshelfSchema: Schema = new Schema(
       required: true,
     },
     books: [{
-      book: {
-        type: Schema.Types.ObjectId,
-        ref: bookModel.name,
-      },
-      numberOfReadPages: Number,
-    }],
+
+      type: Schema.Types.ObjectId,
+      ref: 'ShelvedBook',
+    },
+
+    ],
   },
   { timestamps: true },
 );

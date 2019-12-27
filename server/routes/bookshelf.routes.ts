@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAll, postBookshelf, putBookshelf, getBookshelf, deleteBookshelf, updateBookshelf } from '../controllers/bookshelf.controller';
+import { getAll, postBookshelf, putBookshelf, getBookshelf, deleteBookshelf, updateBookshelf ,addBook} from '../controllers/bookshelf.controller';
 import { bookshelfValidations, validate } from '../config/validation.config';
 
 
@@ -114,10 +114,13 @@ route.put('/', bookshelfValidations, validate, putBookshelf);
  *      schema:
  *        type: string
  *      description: ID of a bookshelf
- *    - in: path
- *      name: bookId
+ *    - in: body
+ *      name: body
  *      schema:
- *        type: string
+ *         type: object
+ *         properties:
+ *          bookId:
+ *             type: string
  *  put:
  *    tags:
  *    - "bookshelf"
@@ -129,7 +132,7 @@ route.put('/', bookshelfValidations, validate, putBookshelf);
  *    security:
  *      - bearerAuth: []
  */
-
+route.put('/:bookshelfId/books', addBook);
 /**
  * @swagger
  * /bookshelves/{bookshelfId}/books/{bookId}:
