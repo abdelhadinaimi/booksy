@@ -23,7 +23,7 @@ export const getUserBookshelfs = async (userId: string): Promise<Result<IBookshe
 export const getBookshelfById = async (getBookshelfDto: OpBookshelfDto): Promise<Result<IBookshelf>> => {
   const result: Result<IBookshelf> = { data: null, errors: null };
   try {
-    const foundBookshelf: IBookshelf = await Bookshelf.findOne({ _id: getBookshelfDto.bookshelfId });
+    const foundBookshelf: IBookshelf = await (await Bookshelf.findOne({ _id: getBookshelfDto.bookshelfId })).populate('books');
     if (foundBookshelf) {
       result.data = foundBookshelf;
     } else {

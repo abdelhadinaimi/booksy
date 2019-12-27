@@ -41,7 +41,7 @@ export const updateUserGenres = async (updateGenresDto: UpdateGenresDto): Promis
 export const findUserById = async (id: string): Promise<Result<IUser>> => {
   const result: Result<IUser> = { data: null, errors: null };
   const objId = Types.ObjectId.isValid(id) ? id : new Types.ObjectId('123456789012'); // to avoid CastError
-  const foundUser = await User.findOne({ $or: [{ userId: id }, { _id: objId }] });
+  const foundUser = await User.findOne({ $or: [{ userId: id }, { _id: objId }] }).populate('bookshelves');
   if (foundUser) {
     result.data = foundUser;
   } else {

@@ -80,7 +80,7 @@ route.delete('/:bookshelfId', deleteBookshelf);
 /**
  * @swagger
  * /bookshelves/:
- *  post:
+ *  put:
  *    tags:
  *    - "bookshelf"
  *    parameters:
@@ -99,7 +99,7 @@ route.delete('/:bookshelfId', deleteBookshelf);
  *    security:
  *      - bearerAuth: []
  */
-route.post('/', putBookshelf);
+route.put('/', putBookshelf);
 
 /**
  * @swagger

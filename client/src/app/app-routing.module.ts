@@ -8,7 +8,6 @@ import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
 import { BookdetailsComponent } from './components/bookdetails/bookdetails.component';
 import { DetailshelfComponent } from './components/detailshelf/detailshelf.component';
-import { TestdetailComponent } from './components/testdetail/testdetail.component';
 const routes: Routes = [
   {
     path: '', component: HomeComponent,

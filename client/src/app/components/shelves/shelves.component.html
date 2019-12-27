@@ -15,7 +15,7 @@
 </form>
 <ul class="list-group">
     <li *ngFor="let shelf of shelves" class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="#">{{shelf}}</a>
+        <a href="#">{{shelf.name}}</a>
         <span style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal"
             class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
     </li>
