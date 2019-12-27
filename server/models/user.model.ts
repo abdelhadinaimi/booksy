@@ -1,7 +1,7 @@
 import { Schema, Model, model } from 'mongoose';
 import { IUser } from '../interfaces/user/user.interface';
 
-const UserSchema = new Schema(
+const UserSchema: Schema = new Schema(
   {
     userId: {
       type: String,
@@ -22,10 +22,18 @@ const UserSchema = new Schema(
     },
     bookshelves: [{
       type: Schema.Types.ObjectId,
-        ref: 'Bookshelf',
+      ref: 'Bookshelf',
     }],
   },
   { timestamps: true },
 );
 
-export const User: Model<IUser> = model<IUser>('User', UserSchema);
+UserSchema.methods.deleteOneBookshelf = function(id: string) {
+  const index = this.bookshelves.indexOf(id);
+  if (index !== -1) {
+    this.bookshelves.splice(index, 1);
+    this.save();
+  }
+};
+
+export const User = model<IUser>('User', UserSchema);

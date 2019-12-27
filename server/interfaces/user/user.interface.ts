@@ -9,4 +9,5 @@ export interface IUser extends Document {
   readonly email: string;
   readonly genres?: string[];
   readonly bookshelves?: IBookshelf[];
+  readonly deleteOneBookshelf: (id: string) => void;
 }

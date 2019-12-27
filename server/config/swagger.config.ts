@@ -4,7 +4,7 @@ import swaggerUI from 'swagger-ui-express';
 // Extended: https://swagger.io/specification/#infoObject
 const swaggerOptions = {
   swaggerDefinition: {
-    openapi: '3.0.1',
+    swagger: '2.0',
     info: {
       title: 'Booksy',
       version: 'alpha-0.0.1',
@@ -199,13 +199,11 @@ const swaggerOptions = {
       },
     },
     basePath: '/api/v1',
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        name: 'Authorization',
+        in: 'header',
       },
     },
   },

@@ -13,16 +13,16 @@ Booksy is a social cataloging application that allows its users to find books an
 
 | ID | Description | Difficulty | Priority  | State |
 |:-:|--|:-:|:-:|:-:|
-| #1 | A user can create an account | 2 | HIGH | DOING |
+| #1 | A user can create an account | 2 | HIGH | DONE |
 | #2 | A user can choose the book genres he likes and the system gives him personalized suggestions | 3 | LOW | TODO |
-| #3 | A user can check the detailed book page| 1 | HIGH | TODO |
+| #3 | A user can check the detailed book page| 1 | HIGH | DOING |
 | #4 | Show the most popular books for the genres that the user likes | 2 | LOW | TODO |
-| #5 | A user can search and filter books by genre, title, author, year...| 1 | HIGH | TODO |
-| #6 | A user can create shelves with a name, by default there will be a "To read", "read" and "reading" shelves| 1 | HIGH | TODO |
-| #7 | A user can add a book to his shelves| 1 | HIGH | TODO |
-| #8|  A user can update his reading status on the "Reading" shelf| 1 | HIGH | TODO |
-| #9 | A user can write reviews on books if the book is in his bookshelf from 0 to 5 | 1 | LOW | TODO |
-| #10 | A user can login using Auth0| 2 | HIGH | DOING |
+| #5 | A user can search and filter books by genre, title, author, year...| 1 | HIGH | DONE |
+| #6 | A user can create shelves with a name, by default there will be a "To read", "read" and "reading" shelves| 1 | HIGH | DOING |
+| #7 | A user can add a book to his shelves| 1 | HIGH | DOING |
+| #8|  A user can update his reading status on the "Reading" shelf| 1 | HIGH | DOING |
+| #9 | A user can write reviews on books if the book is in his bookshelf from 0 to 5 | 1 | LOW | DOING |
+| #10 | A user can login using Auth0| 2 | HIGH | DONE |
 
 ## Developement
 This application uses an [Express.js](https://expressjs.com/) Backend coupled with an [Angular](https://angular.io/) front.
@@ -36,6 +36,8 @@ To run the app on a local developement environement do as follows :
 ## Installation
 To run the app just run `docker-compose up`  (you need to have Docker installed).
 
+## Documentation
+The API docs are available [here](https://booksy-api.herokuapp.com/api-docs/).
 
 ## Authors (Group 2 Team 3)
 - Abdelhadi Naimi
