@@ -75,14 +75,12 @@ route.get('/', getAll);
  */
 route.get('/:bookshelfId', getBookshelf);
 
-route.put('/', putBookshelf);
-
 route.delete('/:bookshelfId', deleteBookshelf);
 
 /**
  * @swagger
  * /bookshelves/:
- *  put:
+ *  post:
  *    tags:
  *    - "bookshelf"
  *    parameters:
@@ -101,7 +99,7 @@ route.delete('/:bookshelfId', deleteBookshelf);
  *    security:
  *      - bearerAuth: []
  */
-route.post('/', postBookshelf);
+route.post('/', putBookshelf);
 
 /**
  * @swagger
