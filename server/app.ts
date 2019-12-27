@@ -15,13 +15,12 @@ loadEnvVariables();
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 app.use(cookieParser());
 
 import routes from './routes/app.routes';
-import { checkJwt } from './config/auth.config';
 app.use('/api/v1/', routes);
 app.use('/api-docs', swagger);
 
