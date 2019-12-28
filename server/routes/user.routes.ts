@@ -20,6 +20,8 @@ const route = Router();
  *    responses:
  *      '200':
  *        description: Success!
+ *    security:
+ *      - bearerAuth: []
  */
 route.post('/login', checkJwt, postLoginUser);
 
@@ -36,6 +38,8 @@ route.post('/login', checkJwt, postLoginUser);
  *   responses:
  *    default:
  *      description: "successful operation"
+ *      security:
+ *        - bearerAuth: []
  */
 route.get('/logout', (req, res) => {
   res.send('logout');

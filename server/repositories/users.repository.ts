@@ -5,6 +5,7 @@ import { IUser } from '../interfaces/user/user.interface';
 import { User } from '../models/user.model';
 import { errors } from '../common/errors.common';
 import { Types } from 'mongoose';
+
 export const createUserIfNotExists = async (userRequestDto: UserRequestDto): Promise<Result<IUser>> => {
   const result: Result<IUser> = { data: null, errors: null };
   const foundUser = await findUserById(userRequestDto.sub);

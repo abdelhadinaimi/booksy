@@ -123,3 +123,9 @@ export const getRecommendBooksFromBook = async (bookId: string, userId: string, 
   }
   return result;
 };
+
+export const mergeUsers = (targetUserId: string, sourceUserId: string): Promise<any> => {
+  return client.send(new rqs.MergeUsers(targetUserId, sourceUserId, {
+    cascadeCreate: true,
+  }));
+};
