@@ -6,8 +6,8 @@ import { ShelvesComponent } from './components/shelves/shelves.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { CallbackComponent } from './components/callback/callback.component';
 import { SearchComponent } from './components/search/search.component';
-import { BookdetailsComponent } from './components/bookdetails/bookdetails.component';
 import { DetailshelfComponent } from './components/detailshelf/detailshelf.component';
+import { DetailbookComponent } from './components/detailbook/detailbook/detailbook.component';
 const routes: Routes = [
   {
     path: '', component: HomeComponent,
@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'shelves/:id', component: DetailshelfComponent },
       { path: 'search', component: SearchComponent },
       { path: 'callback', component: CallbackComponent },
-      { path: 'books/:id', component: BookdetailsComponent }
+      { path: 'books/:id', component: DetailbookComponent }
        //{ path: 'detailsbook', component: BookdetailsComponent }
     ]
   }

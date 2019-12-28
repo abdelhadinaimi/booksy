@@ -1,0 +1,134 @@
+<div *ngIf="waiting == true; then block else elseBlock"></div>
+<ng-template #block>
+    <div class="row justify-content-center" style="align-items: center;height: 50%;">
+        <div class="spinner-grow text-primary" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-secondary" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-success" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-danger" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-warning" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-info" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-light" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+<ng-template #elseBlock>
+    <br>
+    <div class="row justify-centent-center">
+        <div class="col-md-3">
+            <img *ngIf="book?.volume?.volumeInfo?.thumbnail" style="width: 100%;height: 300px;"
+                src="{{book?.volume?.volumeInfo?.thumbnail}}" class="card-img-top" alt="...">
+            <div class="dropdown row justify-content-center mt-2 mb-2">
+                <button style="font-weight: bold;" class="btn btn-success dropdown-toggle" type="button"
+                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add to shelf
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+            <br>
+            <h6 style="text-align: center;">Recommended books</h6>
+            <div style="text-align: center;" class="row">
+                <div>
+                    <img *ngFor="let similar of book?.recommendations?.volumes" (click)="navigateBook(similar.id)"
+                        (mouseover)="print(similar.id)" [ngbTooltip]="tipContent" tooltipClass="class" placement="right"
+                        style="width: 45%;height: 170px;cursor: pointer;" src="{{similar?.volumeInfo?.thumbnail}}"
+                        class="card-img-top p-1" alt="...">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <h4 class="card-title">{{book?.volume?.volumeInfo?.title}}</h4>
+                    <h6> <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span></h6>
+                    <h6>Author(s): {{book?.volume?.volumeInfo?.authors?.join(',')}}</h6>
+                    <h6>Publisher: {{book?.volume?.volumeInfo?.publisher}}</h6>
+                    <h6>{{book?.volume?.volumeInfo?.description}}</h6>
+                </div>
+            </div>
+            <br>
+            <h6 *ngIf="myReview">Update your review:</h6>
+            <h6 *ngIf="!myReview">Give a review:</h6>
+            <form #reviewForm="ngForm" (ngSubmit)="createReview(reviewForm)">
+                <div class="rate">
+                    <input [attr.checked]="myReview && myReview.rating === 5 ? 'checked' : null" type="radio" id="star5"
+                        name="rate" value="5" />
+                    <label (click)="setRating(5)" for="star5" title="text">5 stars</label>
+                    <input [attr.checked]="myReview && myReview.rating === 4 ? 'checked' : null" type="radio" id="star4"
+                        name="rate" value="4" />
+                    <label (click)="setRating(4)" for="star4" title="text">4 stars</label>
+                    <input [attr.checked]="myReview && myReview.rating === 3 ? 'checked' : null" type="radio" id="star3"
+                        name="rate" value="3" />
+                    <label (click)="setRating(3)" for="star3" title="text">3 stars</label>
+                    <input [attr.checked]="myReview && myReview.rating === 2 ? 'checked' : null" type="radio" id="star2"
+                        name="rate" value="2" />
+                    <label (click)="setRating(2)" for="star2" title="text">2 stars</label>
+                    <input [attr.checked]="myReview && myReview.rating === 1 ? 'checked' : null" type="radio" id="star1"
+                        name="rate" value="1" />
+                    <label (click)="setRating(1)" for="star1" title="text">1 star</label>
+                </div>
+                <div class="form-group">
+                    <textarea style="resize: none;" class="form-control" placeholder="Write a review ..." id="content"
+                        name="content" rows="3" [(ngModel)]="model.content"></textarea>
+                </div>
+                <button *ngIf="myReview" type="submit" class="btn btn-success">Update</button>&nbsp;
+                <button *ngIf="myReview" type="submit" class="btn btn-danger" (click)="deleteReview()">Delete</button>
+                <button *ngIf="!myReview" type="submit" class="btn btn-success">Add</button>
+            </form>
+            <br>
+            <h6 *ngIf="book?.reviews.length === 0">No reviews for this book</h6>
+            <h6 *ngIf="book?.reviews.length !== 0">Reviews:</h6>
+            <div *ngFor="let review of book?.reviews" class="card">
+                <div class="card-header">
+                    {{review.writer.name}}
+                    <span class="mr-2"></span>
+
+                    <span *ngFor="let i of [1,2,3,4,5]"
+                        [ngClass]="review.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span>
+                </div>
+                <div class="card-body">
+                    <p>{{review.reviewText}}</p>
+                    <footer class="blockquote-footer">at {{review.updatedAt | date}}</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #tipContent>
+    <div class="card" style="width: 18rem;">
+        <div style="background-color: black;" class="card-body">
+            <h5 class="card-title">{{test.volumeInfo?.title}}</h5>
+            <h6> <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span></h6>
+            <p>Author(s): {{test.volumeInfo?.authors?.join(',')}}</p>
+            <p>Publisher: {{test.volumeInfo?.publisher}}</p>
+        </div>
+    </div>
+</ng-template>
