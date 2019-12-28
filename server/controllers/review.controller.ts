@@ -3,11 +3,12 @@ import { AddReviewDto } from '../interfaces/review/dto/add-review.dto';
 import * as reviewRepo from '../repositories/reviews.repository';
 import { UpdateReviewDto } from '../interfaces/review/dto/update-review.dto';
 import { sendRatingInteraction, UserInteractionDto } from '../repositories/recombee.repository';
+import { prepareAuth0UserId } from '../common/helper.common';
 
 export const putReview = async (req: Request, res: Response) => {
   const addReviewDto: AddReviewDto = {
     bookId: req.params.bookId,
-    userId: '5df3d7070d77d5621f584083',
+    userId: (req as any).user.sub,
     rating: req.body.rating,
     reviewText: req.body.reviewText,
   };
@@ -20,7 +21,7 @@ export const putReview = async (req: Request, res: Response) => {
   const rating = Number.parseInt(addReviewDto.rating, 10);
   const ratingInteraction: UserInteractionDto = {
     bookId: addReviewDto.bookId,
-    userId: addReviewDto.userId,
+    userId: prepareAuth0UserId(addReviewDto.userId),
     rating,
     recommId: req.query.rid,
   };

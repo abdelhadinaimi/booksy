@@ -27,7 +27,7 @@ export const findBook = async (query: FindBookDto): Promise<Result<Volumes>> => 
 export const findBookById = async (id: string): Promise<Result<Volume>> => {
   const result: Result<Volume> = { data: null, errors: null };
   try {
-    const foundBook: Volume = await Book.findOne({ id });
+    const foundBook: Volume = await (Book.findOne({ id }).populate('reviews.writer', 'name'));
     if (foundBook) {
       result.data = foundBook;
     } else {

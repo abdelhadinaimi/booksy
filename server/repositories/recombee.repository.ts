@@ -2,6 +2,9 @@ import * as recombee from 'recombee-api-client';
 import { Volume } from '../interfaces/book/book.interface';
 import { Result } from '../interfaces/result.interface';
 import { Recommendations, RecommendedBooks } from '../interfaces/book/recommendation.interface';
+import { parseRecombeeRecommendation, noImagelink } from '../common/helper.common';
+
+const RECOMBEE_DB_NAME = 'booksy-api-dev';
 
 export interface UserInteractionDto {
   userId: string;
@@ -11,7 +14,7 @@ export interface UserInteractionDto {
 }
 
 const rqs = recombee.requests;
-const client = new recombee.ApiClient(process.env.RECOMBEE_DB_NAME, process.env.RECOMBEE_API_KEY);
+const client = new recombee.ApiClient(RECOMBEE_DB_NAME, process.env.RECOMBEE_API_KEY);
 
 const scenarios = {
   recomendedBooks: 'user-books',
@@ -37,7 +40,7 @@ const createItemValues = (book: Volume) => {
   if (!volumeInfo) {
     return null;
   }
-  const thumbnail = volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail : null;
+  const thumbnail = volumeInfo.thumbnail !== noImagelink ? volumeInfo.thumbnail : null;
   return new rqs.SetItemValues(book.id, {
     title: volumeInfo.title,
     subtitle: volumeInfo.subtitle,
@@ -113,7 +116,7 @@ export const getRecommendBooksFromBook = async (bookId: string, userId: string, 
       cascadeCreate: true,
     }));
     result.data.rid = requestResult.recommId;
-    result.data.volumes = requestResult.recomms.map(v => ({ id: v.id, volumeInfo: v.values }));
+    result.data.volumes = requestResult.recomms.map(parseRecombeeRecommendation);
 
   } catch (error) {
     result.errors = error;

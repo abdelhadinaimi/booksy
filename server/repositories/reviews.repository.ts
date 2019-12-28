@@ -9,16 +9,21 @@ const Book = model('Book');
 
 export const addReview = async (addReviewDto: AddReviewDto): Promise<Result<boolean>> => {
   const result: Result<boolean> = { data: false, errors: null };
+  const foundUserResult = await findUserById(addReviewDto.userId);
+  if (foundUserResult.errors) {
+    result.errors = foundUserResult.errors;
+    return result;
+  }
   // check if user has already posted a review
   const foundBook = await Book.findOne({
     'id': addReviewDto.bookId,
-    'reviews.writer': addReviewDto.userId,
+    'reviews.writer': foundUserResult.data._id,
   });
   if (foundBook) {
     const updateResult = await Book.updateOne(
       {
         'id': addReviewDto.bookId,
-        'reviews.writer': addReviewDto.userId,
+        'reviews.writer': foundUserResult.data._id,
       },
       {
         $set: {
@@ -30,15 +35,10 @@ export const addReview = async (addReviewDto: AddReviewDto): Promise<Result<bool
     return result;
   }
   // if not, create a new review
-  const foundUserResult = await findUserById(addReviewDto.userId);
-  if (foundUserResult.errors) {
-    result.errors = foundUserResult.errors;
-    return result;
-  }
   const review: Review = {
     rating: addReviewDto.rating,
     reviewText: addReviewDto.reviewText,
-    writer: addReviewDto.userId,
+    writer: foundUserResult.data._id,
   };
   try {
     const updateResult = await Book.updateOne({ id: addReviewDto.bookId }, { $push: { reviews: review } });

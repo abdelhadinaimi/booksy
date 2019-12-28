@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { searchBooks, getBook } from '../controllers/book.controller';
 import { validate, bookSearchValidations, getBookValidations, reviewValidations } from '../config/validation.config';
 import { putReview } from '../controllers/review.controller';
-import { checkJwtOrIgnore } from '../config/auth.config';
+import { checkJwt, checkJwtOrIgnore } from '../config/auth.config';
 const route = Router();
 
 /**
@@ -111,7 +111,7 @@ route.get('/:bookId', checkJwtOrIgnore, getBookValidations, validate, getBook);
  *    security:
  *      - bearerAuth: []
  */
-route.put('/:bookId/reviews', reviewValidations, validate, putReview);
+route.put('/:bookId/reviews', checkJwt, reviewValidations, validate, putReview);
 /**
  * @swagger
  * /books/{bookId}/reviews/:
@@ -151,6 +151,6 @@ route.put('/:bookId/reviews', reviewValidations, validate, putReview);
  *    security:
  *      - bearerAuth: []
  */
-route.patch('/:bookId/reviews', reviewValidations, validate, putReview);
+route.patch('/:bookId/reviews', checkJwt, reviewValidations, validate, putReview);
 
 export default route;
