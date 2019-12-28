@@ -1,6 +1,7 @@
 import jwt from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
 import Logger from './logger.config';
+import { RequestHandler } from 'express';
 
 const authConfig = {
   domain: 'dev-ohvjdegt.eu.auth0.com',
@@ -30,6 +31,16 @@ const jwtErrorHandler = (err, req, res, next) => {
 };
 
 const jwtIgnore = (err, req, res, next) => {
+  next();
+};
+
+export const cookieMiddleware: RequestHandler = (req, res, next) => {
+  const cookie = req.cookies.sess;
+  if (!cookie) {
+    const radnNum = Math.random().toString();
+    const cookieID = Math.random().toString().substring(2, radnNum.length);
+    res.cookie('sess', cookieID, { maxAge: 36288000, httpOnly: true });
+  }
   next();
 };
 

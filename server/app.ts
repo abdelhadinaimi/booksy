@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 import Logger from './config/logger.config';
 import swagger from './config/swagger.config';
 import methodOverride from 'method-override';
+import { cookieMiddleware } from './config/auth.config';
 import { buildConnection } from './config/database.config';
 import { loadEnvVariables } from './config/dotenv.config';
 import bodyParser from 'body-parser';
@@ -19,8 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 app.use(cookieParser());
-
+app.use(cookieMiddleware);
 import routes from './routes/app.routes';
+
 app.use('/api/v1/', routes);
 app.use('/api-docs', swagger);
 
