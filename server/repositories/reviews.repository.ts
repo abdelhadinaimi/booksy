@@ -3,7 +3,7 @@ import { Result } from '../interfaces/result.interface';
 import { model } from 'mongoose';
 import { findUserById } from './users.repository';
 import { Review } from '../interfaces/review/review.interface';
-import { UpdateReviewDto } from '../interfaces/review/dto/update-review.dto';
+import { DeleteReviewDto } from '../interfaces/review/dto/delete-review.dto';
 
 const Book = model('Book');
 
@@ -46,5 +46,25 @@ export const addReview = async (addReviewDto: AddReviewDto): Promise<Result<bool
   } catch (error) {
     result.errors = error;
   }
+  return result;
+};
+
+export const deleteReview = async (deleteReviewDto: DeleteReviewDto): Promise<Result<boolean>> => {
+  const result: Result<boolean> = { data: false, errors: null };
+  const foundUserResult = await findUserById(deleteReviewDto.userId);
+  if (foundUserResult.errors) {
+    result.errors = foundUserResult.errors;
+    return result;
+  }
+  try {
+    const updateResult = await Book.updateOne(
+      { id: deleteReviewDto.bookId },
+      { $pull: { reviews: { writer: foundUserResult.data._id } } },
+    );
+    result.data = updateResult.nModified === 1;
+  } catch (error) {
+    result.errors = error;
+  }
+
   return result;
 };

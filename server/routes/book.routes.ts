@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { searchBooks, getBook } from '../controllers/book.controller';
 import { validate, bookSearchValidations, getBookValidations, reviewValidations } from '../config/validation.config';
-import { putReview } from '../controllers/review.controller';
+import { putReview, deleteReview } from '../controllers/review.controller';
 import { checkJwt, checkJwtOrIgnore } from '../config/auth.config';
 const route = Router();
 
@@ -152,5 +152,6 @@ route.put('/:bookId/reviews', checkJwt, reviewValidations, validate, putReview);
  *      - bearerAuth: []
  */
 route.patch('/:bookId/reviews', checkJwt, reviewValidations, validate, putReview);
+route.delete('/:bookId/reviews', checkJwt, deleteReview);
 
 export default route;
