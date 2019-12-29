@@ -75,3 +75,14 @@ export const addBook: RequestHandler = async (req, res) => {
   }
   return res.json(addedBook.data);
 };
+
+export const removeBook: RequestHandler = async (req, res) => {
+  const userId = (req as any).user.sub;
+  const bookshelfId = req.params.bookshelfId;
+  const bookId = req.params.bookId;
+  const removedBook = await bookshelfRepo.removeBookFromBookshelf({userId, bookId, bookshelfId });
+  if (removedBook.errors) {
+    return res.status(400).json({ errors: removedBook.errors });
+  }
+  return res.json(removedBook.data);
+};

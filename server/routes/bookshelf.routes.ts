@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAll, postBookshelf, putBookshelf, getBookshelf, deleteBookshelf, updateBookshelf ,addBook} from '../controllers/bookshelf.controller';
+import { getAll, postBookshelf, putBookshelf, getBookshelf, deleteBookshelf, updateBookshelf ,addBook, removeBook} from '../controllers/bookshelf.controller';
 import { bookshelfValidations, validate } from '../config/validation.config';
 
 
@@ -78,6 +78,33 @@ route.get('/', getAll);
 route.get('/:bookshelfId', getBookshelf);
 
 route.delete('/:bookshelfId', deleteBookshelf);
+
+/**
+ * @swagger
+ * /bookshelves/{bookshelfId}/books/{bookId}:
+ *  parameters:
+ *    - in: path
+ *      name: bookshelfId
+ *      schema:
+ *        type: string
+ *      description: ID of a bookshelf
+ *    - in: path
+ *      name: bookId
+ *      schema:
+ *        type: string
+ *      description: ID of a book
+ *  delete:
+ *    tags:
+ *    - "bookshelf"
+ *    summary: remove a book from bookshelf
+ *    description: removes a book
+ *    responses:
+ *      '200':
+ *        description: Success!
+ *    security:
+ *      - bearerAuth: []
+ */
+route.delete('/bookshelves/:bookshelfId/books/:bookId', removeBook);
 
 route.patch('/:bookshelfId', bookshelfValidations, validate, updateBookshelf);
 
