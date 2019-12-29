@@ -4,7 +4,9 @@ import { UpdateGenresDto } from '../interfaces/user/dto/update-genres.dto';
 import { IUser } from '../interfaces/user/user.interface';
 import { User } from '../models/user.model';
 import { errors } from '../common/errors.common';
+import { defaultBookShelves } from '../common/helper.common';
 import { Types } from 'mongoose';
+import { createBookshelf } from './bookshelf.repository';
 
 export const createUserIfNotExists = async (userRequestDto: UserRequestDto): Promise<Result<IUser>> => {
   const result: Result<IUser> = { data: null, errors: null };
@@ -21,6 +23,11 @@ export const createUserIfNotExists = async (userRequestDto: UserRequestDto): Pro
       name: userRequestDto.name,
     };
     const createdUser = await new User(userInfo).save();
+    Promise.all(defaultBookShelves.map(b => createBookshelf({ userId: createdUser._id, name: b })))
+      .catch(error => {
+        // tslint:disable-next-line: no-console
+        console.error(error);
+      });
     result.data = createdUser;
   } catch (error) {
     result.errors = error;

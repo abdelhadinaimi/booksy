@@ -2,6 +2,8 @@ import { Volume, VolumeCore } from '../interfaces/book/book.interface';
 import { books_v1 } from 'googleapis/build/src/apis/books/v1';
 import { Recommendation } from '../interfaces/book/recommendation.interface';
 
+export const defaultBookShelves = ['read', 'reading', 'to read'];
+
 export const noImagelink = 'assets/img/no_book_cover.jpg';
 
 export const parseRecombeeRecommendation = (data: Recommendation): Volume => {

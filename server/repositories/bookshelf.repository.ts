@@ -69,7 +69,7 @@ export const updateBookshelfName = async (opBookshelfDto: OpBookshelfDto): Promi
   const bookshelfId = opBookshelfDto.bookshelfId;
   try {
     const updatedBookshelf = await Bookshelf.updateOne({ _id: bookshelfId }, {
-      name: newName
+      name: newName,
     });
     result.data = updatedBookshelf.nModified === 1;
   } catch (err) {
@@ -101,13 +101,10 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
       return { data: false, errors: ['book not found'] };
     }
 
-    
-
     const user = (await findUserById(opBookBookshelfDto.userId)).data;
     if (!user) {
       return { data: false, errors: ['user not found'] };
     }
-    
 
     const foundBookshelf = user.bookshelves.find(b => b._id.toString() === bookshelfId);
     if (!foundBookshelf) {
@@ -115,7 +112,7 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
     }
     const myBook = await new ShelvedBookModel({ book: foundbook.data._id, numberOfReadPages: 0 }).save();
     const updatedbook = await foundBookshelf.updateOne({ $push: { books: myBook._id } });
-    
+
     result.data = updatedbook.nModified === 1;
 
   } catch (err) {
@@ -124,7 +121,7 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
   return result;
 
 };
-//Remove from Shelvedbook and bookshelf array
+// Remove from Shelvedbook and bookshelf array
 export const removeBookFromBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto): Promise<Result<boolean>> => {
   return { data: false, errors: [] };
 };
