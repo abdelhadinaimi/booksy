@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { BookService } from '../../../services/book.service/book.service';
 import { AuthService } from '../../../services/auth.service';
+import { BookshelfService } from '../../../services/bookshelf.service/bookshelf.service';
 
 @Component({
   selector: 'app-detailbook',
@@ -21,22 +22,29 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   };
   myReview: any;
   test: any;
-  constructor(private router: ActivatedRoute, private navigateRouter: Router, private bookService: BookService, private auth: AuthService) { }
+  shelves = [];
+  constructor(private router: ActivatedRoute, private navigateRouter: Router, private bookService: BookService
+    , private shelfService: BookshelfService, private auth: AuthService) { }
 
   ngOnInit() {
     this.bookId = this.router.snapshot.paramMap.get('id');
     this.waiting = true;
     this.getBook(this.bookId);
-
-
+    this.getShelves();
   }
 
+  getShelves() {
+    this.shelfService.getShelves();
+    this.shelfService.shelves$.subscribe(data => {
+      this.shelves = data;
+    })
+  }
   getBook(id) {
     this.bookService.getBook(id);
     this.subscription = this.bookService.book$.asObservable().subscribe(data => {
       if (!data) return;
       this.book = data;
-      this.myReview = data.reviews.find(r => r.writer.name === this.auth.userProfile.name);
+      this.myReview = data.reviews.find(r => (this.auth.userProfile && r.writer.name === this.auth.userProfile.name));
       if (this.myReview !== undefined) {
         this.model.content = this.myReview.reviewText;
         this.model.rating = parseInt(this.myReview.rating)
@@ -49,14 +57,15 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   }
   createReview(form: NgForm) {
     this.bookService.addReview(this.bookId, { reviewText: form.value.content, rating: this.model.rating }).subscribe(data => {
-      this.bookService.getBook(this.bookId);
+      this.getBook(this.bookId);
       form.reset();
     })
   }
 
   deleteReview() {
     this.bookService.deleteReview(this.bookId).subscribe(data => {
-      this.bookService.getBook(this.bookId);
+      this.getBook(this.bookId);
+      this.model.content = '';
     })
   }
 
@@ -78,7 +87,7 @@ export class DetailbookComponent implements OnInit, OnDestroy {
 
   navigateBook(id) {
     this.model.content = '';
-    this.book = null; 
+    this.book = null;
     this.bookService.book$.next(null);
     this.navigateRouter.navigate(['/books/' + id]);
     window.scroll(0, 0);

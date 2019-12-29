@@ -32,7 +32,7 @@ export const searchBooks = async (req: Request, res: Response) => {
 export const getBook = async (req: Request, res: Response) => {
   const { bookId } = req.params;
   const { rid } = req.query; // recommendation Id
-  const userId = prepareAuth0UserId((req as any).user?.sub) || req.cookies.sess || '';
+  const userId = prepareAuth0UserId((req as any).user?.sub) || req.cookies.sess || "noId";
   const result = { reviews: [], rating: 0, volume: { id: '', volumeInfo: {} }, recommendations: {} };
   if (!bookId) {
     return res.status(400).json();

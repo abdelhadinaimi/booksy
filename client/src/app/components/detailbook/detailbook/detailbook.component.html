@@ -33,18 +33,16 @@
         <div class="col-md-3">
             <img *ngIf="book?.volume?.volumeInfo?.thumbnail" style="width: 100%;height: 300px;"
                 src="{{book?.volume?.volumeInfo?.thumbnail}}" class="card-img-top" alt="...">
-            <div class="dropdown row justify-content-center mt-2 mb-2">
+            <div *ngIf="auth.loggedIn" class="dropdown row justify-content-center mt-2 mb-2">
                 <button style="font-weight: bold;" class="btn btn-success dropdown-toggle" type="button"
                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Add to shelf
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a *ngFor="let shelf of shelves" class="dropdown-item" href="#">{{shelf?.name}}</a>
                 </div>
             </div>
-            <br>
+            <hr>
             <h6 style="text-align: center;">Recommended books</h6>
             <div style="text-align: center;" class="row">
                 <div>
@@ -59,20 +57,18 @@
             <div class="card" style="width: 100%;">
                 <div class="card-body">
                     <h4 class="card-title">{{book?.volume?.volumeInfo?.title}}</h4>
-                    <h6> <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span></h6>
-                    <h6>Author(s): {{book?.volume?.volumeInfo?.authors?.join(',')}}</h6>
+                    <span *ngFor="let i of [1,2,3,4,5]"
+                        [ngClass]="book?.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span>
+                    <span class="ml-2">({{book?.rating}} of 5)</span>
+                    <h6 class="mt-2">Author(s): {{book?.volume?.volumeInfo?.authors?.join(',')}}</h6>
                     <h6>Publisher: {{book?.volume?.volumeInfo?.publisher}}</h6>
                     <h6>{{book?.volume?.volumeInfo?.description}}</h6>
                 </div>
             </div>
             <br>
-            <h6 *ngIf="myReview">Update your review:</h6>
-            <h6 *ngIf="!myReview">Give a review:</h6>
-            <form #reviewForm="ngForm" (ngSubmit)="createReview(reviewForm)">
+            <h6 *ngIf="auth.loggedIn && myReview">Update your review:</h6>
+            <h6 *ngIf="auth.loggedIn && !myReview">Give a review:</h6>
+            <form *ngIf="auth.loggedIn" #reviewForm="ngForm" (ngSubmit)="createReview(reviewForm)">
                 <div class="rate">
                     <input [attr.checked]="myReview && myReview.rating === 5 ? 'checked' : null" type="radio" id="star5"
                         name="rate" value="5" />
@@ -95,13 +91,13 @@
                         name="content" rows="3" [(ngModel)]="model.content"></textarea>
                 </div>
                 <button *ngIf="myReview" type="submit" class="btn btn-success">Update</button>&nbsp;
-                <button *ngIf="myReview" type="submit" class="btn btn-danger" (click)="deleteReview()">Delete</button>
+                <button *ngIf="myReview" type="button" class="btn btn-danger" (click)="deleteReview()">Delete</button>
                 <button *ngIf="!myReview" type="submit" class="btn btn-success">Add</button>
             </form>
             <br>
             <h6 *ngIf="book?.reviews.length === 0">No reviews for this book</h6>
             <h6 *ngIf="book?.reviews.length !== 0">Reviews:</h6>
-            <div *ngFor="let review of book?.reviews" class="card">
+            <div *ngFor="let review of book?.reviews" class="card mb-2">
                 <div class="card-header">
                     {{review.writer.name}}
                     <span class="mr-2"></span>
@@ -122,11 +118,8 @@
     <div class="card" style="width: 18rem;">
         <div style="background-color: black;" class="card-body">
             <h5 class="card-title">{{test.volumeInfo?.title}}</h5>
-            <h6> <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span></h6>
+            <span *ngFor="let i of [1,2,3,4,5]"
+                [ngClass]="test?.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span>
             <p>Author(s): {{test.volumeInfo?.authors?.join(',')}}</p>
             <p>Publisher: {{test.volumeInfo?.publisher}}</p>
         </div>

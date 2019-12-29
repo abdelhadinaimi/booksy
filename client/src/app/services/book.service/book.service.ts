@@ -30,14 +30,19 @@ export class BookService {
 
   getBook(id): void {
     this.auth.accessToken$.subscribe(t => {
-      if (!t) return;
-      return this.httpClient.get<any>(environment.API_URL + 'books/' + id, {
-        headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
-      }).subscribe(data => {
-        this.book$.next(data);
-      })
+      if (!t) {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id).subscribe(data => {
+          this.book$.next(data);
+        })
+      }
+      else {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id, {
+          headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
+        }).subscribe(data => {
+          this.book$.next(data);
+        })
+      }
     })
-
   }
 
   addReview(idBook, review) {

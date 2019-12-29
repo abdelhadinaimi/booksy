@@ -96,11 +96,8 @@
     <div class="card" style="width: 18rem;">
         <div style="background-color: black;" class="card-body">
             <h5 class="card-title">{{test.volumeInfo?.title}}</h5>
-            <h6> <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span></h6>
+            <span *ngFor="let i of [1,2,3,4,5]"
+                [ngClass]="test?.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span>
             <h6>Author(s): {{test.volumeInfo?.authors?.join(',')}}</h6>
             <h6>Publisher: {{test.volumeInfo?.publisher}}</h6>
             <h6>{{test.volumeInfo?.description?.substring(0,200)}}...</h6>
