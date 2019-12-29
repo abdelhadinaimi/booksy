@@ -1,4 +1,4 @@
-import { Volume, VolumeCore } from '../interfaces/book/book.interface';
+import { Volume } from '../interfaces/book/book.interface';
 import { books_v1 } from 'googleapis/build/src/apis/books/v1';
 import { Recommendation } from '../interfaces/book/recommendation.interface';
 
@@ -7,7 +7,12 @@ export const defaultBookShelves = ['read', 'reading', 'to read'];
 export const noImagelink = 'assets/img/no_book_cover.jpg';
 
 export const parseRecombeeRecommendation = (data: Recommendation): Volume => {
-  return { id: data.id, volumeInfo: data.values };
+  return {
+    id: data.id, volumeInfo: {
+      ...data.values,
+      thumbnail: data.values.thumbnail ? data.values.thumbnail : noImagelink,
+    },
+  };
 };
 
 export const parseGoogleApiVolume = (data: books_v1.Schema$Volume): Volume => {
