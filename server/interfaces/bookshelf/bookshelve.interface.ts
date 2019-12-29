@@ -9,6 +9,7 @@ export interface IBookshelf extends Document {
 }
 
 export interface IShelvedBook extends Document {
+  readonly id: string;
   readonly book: Volume;
   readonly numberOfReadPages: number;
 }

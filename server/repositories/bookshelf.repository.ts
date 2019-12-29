@@ -51,7 +51,11 @@ export const createBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<R
   const result = { data: null, errors: null };
   const newName = opBookshelfDto.name;
   try {
-    const isUniqueName = await Bookshelf.findOne({ name: newName });
+    const user = (await findUserById(opBookshelfDto.userId)).data;
+    if (!user) {
+      return { data: null, errors: ['user not found'] };
+    }
+    const isUniqueName = await user.bookshelves.find(b => b.name === newName);
     if (isUniqueName) {
 
       return { data: null, errors: ['that name is not unique'] };
@@ -78,7 +82,11 @@ export const updateBookshelfName = async (opBookshelfDto: OpBookshelfDto): Promi
   const newName = opBookshelfDto.name;
   const bookshelfId = opBookshelfDto.bookshelfId;
   try {
-    const isUniqueName = await Bookshelf.findOne({ name: newName });
+    const user = (await findUserById(opBookshelfDto.userId)).data;
+    if (!user) {
+      return { data: false, errors: ['user not found'] };
+    }
+    const isUniqueName = await user.bookshelves.find(b => b.name === newName);
     if (isUniqueName) {
 
       return { data: false, errors: ['that name is not unique'] };
@@ -131,11 +139,12 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
     if (!foundBookshelf) {
       return { data: false, errors: ['bookShelf not found'] };
     }
-    const bookAlreadyIn = (await Bookshelf.findOne({ _id: bookshelfId, books: { book: { id: bookId } } }));
+    const bookAlreadyIn = foundBookshelf.books.find(b => b.id.toString() === bookId);
+    console.log(bookAlreadyIn);
     if (bookAlreadyIn) {
       return { data: false, errors: ['book already inserted'] };
     }
-    const myBook = await new ShelvedBookModel({ book: foundbook.data._id, numberOfReadPages: 0 }).save();
+    const myBook = await new ShelvedBookModel({ book: foundbook.data._id, numberOfReadPages: 0, id: foundbook.data._id }).save();
     const updatedbook = await foundBookshelf.updateOne({ $push: { books: myBook._id } });
 
     result.data = updatedbook.nModified === 1;

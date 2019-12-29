@@ -3,7 +3,7 @@ import { IShelvedBook } from '../interfaces/bookshelf/bookshelve.interface';
 
 
 const ShelvedBookSchema: Schema = new Schema(
-    {
+    {   id : String,
         book: {
             type: Schema.Types.ObjectId,
             ref: 'Book',
