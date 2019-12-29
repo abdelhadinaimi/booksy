@@ -116,7 +116,7 @@ export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<R
   }
   return result;
 };
-// check if the book is not already in the bookshelf and is not on another one 
+// check if the book is not already in the bookshelf and is not on another one
 
 export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto): Promise<Result<boolean>> => {
   const result: Result<boolean> = { data: false, errors: null };
@@ -164,9 +164,10 @@ export const removeBookFromBookshelf = async (opBookBookshelfDto: OpBookBookshel
     const shelvedbooks = await ShelvedBookModel.find({ _id: { $in: foundBookshelf.books } });
     const foundshelvedbook = shelvedbooks.find(sb => sb.book._id.toString() === foundbook.data._id.toString());
     await ShelvedBookModel.deleteOne({ _id: foundshelvedbook._id });
-    const myIndex = foundBookshelf.books.indexOf(foundshelvedbook);
-    foundBookshelf.books.splice(myIndex);
-    await user.updateOne({_id :opBookBookshelfDto.userId},{$pull : {'bookshelves.books': foundshelvedbook._id.toString() }})
+    // const myIndex = foundBookshelf.books.indexOf(foundshelvedbook);
+    // foundBookshelf.books.splice(myIndex);
+    foundBookshelf.books = foundBookshelf.books.filter(b => b._id.toString() !== foundshelvedbook._id.toString());
+    foundBookshelf.save();
     return { data: true, errors: null };
   } catch (err) {
     return { data: false, errors: [err] };
