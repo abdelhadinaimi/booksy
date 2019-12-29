@@ -24,7 +24,7 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   test: any;
   shelves = [];
   constructor(private router: ActivatedRoute, private navigateRouter: Router, private bookService: BookService
-    , private shelfService: BookshelfService, public auth: AuthService) { }
+    ,         private shelfService: BookshelfService, public auth: AuthService) { }
 
   ngOnInit() {
     this.bookId = this.router.snapshot.paramMap.get('id');
@@ -37,44 +37,45 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     this.shelfService.getShelves();
     this.shelfService.shelves$.subscribe(data => {
       this.shelves = data;
-    })
+    });
   }
   getBook(id) {
     this.bookService.getBook(id);
     this.subscription = this.bookService.book$.asObservable().subscribe(data => {
-      if (!data) return;
+      if (!data) { return; }
       this.book = data;
       this.myReview = data.reviews.find(r => (this.auth.userProfile && r.writer.name === this.auth.userProfile.name));
       if (this.myReview !== undefined) {
         this.model.content = this.myReview.reviewText;
-        this.model.rating = parseInt(this.myReview.rating)
+        this.model.rating = parseInt(this.myReview.rating);
       }
-      if (this.book.volume.volumeInfo.description !== undefined)
+      if (this.book.volume.volumeInfo.description !== undefined) {
         this.book.volume.volumeInfo.description = this.book.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, " ");
+      }
       this.waiting = false;
 
-    })
+    });
   }
   createReview(form: NgForm) {
     this.bookService.addReview(this.bookId, { reviewText: form.value.content, rating: this.model.rating }).subscribe(data => {
       this.getBook(this.bookId);
       form.reset();
-    })
+    });
   }
 
   deleteReview() {
     this.bookService.deleteReview(this.bookId).subscribe(data => {
       this.getBook(this.bookId);
       this.model.content = '';
-    })
+    });
   }
 
   setRating(v) {
     this.model.rating = v;
   }
   print(test) {
-    let bookToRecommend = this.book.recommendations.volumes.find(b => b.id === test);
-    this.test = bookToRecommend
+    const bookToRecommend = this.book.recommendations.volumes.find(b => b.id === test);
+    this.test = bookToRecommend;
     console.log(bookToRecommend);
   }
 
@@ -91,6 +92,7 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     this.bookService.book$.next(null);
     this.navigateRouter.navigate(['/books/' + id]);
     window.scroll(0, 0);
+    this.bookId = id;
     this.getBook(id);
   }
 
