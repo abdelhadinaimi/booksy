@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookshelfService } from '../../services/bookshelf.service/bookshelf.service';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shelves',
@@ -13,7 +14,7 @@ export class ShelvesComponent implements OnInit {
   shelfName;
   idToDelete: any;
   validationError: boolean;
-  constructor(private bookshelfService: BookshelfService) { }
+  constructor(private bookshelfService: BookshelfService, private router: Router) { }
 
   ngOnInit() {
     this.getShelves();
@@ -22,7 +23,9 @@ export class ShelvesComponent implements OnInit {
   getShelves() {
     this.bookshelfService.getShelves();
     this.bookshelfService.shelves$.subscribe(data => {
+      if(!data || data.length === 0) return;
       this.shelves = data;
+      this.router.navigate(['shelves/'+data[0]._id]);
     })
   }
   createShelf(form: NgForm) {

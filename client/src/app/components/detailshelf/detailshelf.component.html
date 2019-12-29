@@ -1,5 +1,5 @@
 <h3 class="my-4">
-    <small>Currenty reading</small>
+    <small>{{shelf?.name}}</small>
 </h3>
 <form>
     <div class="form-group">
@@ -10,26 +10,26 @@
         </div>
     </div>
 </form>
-<div class="card mb-3">
-    <div class="row align-items-center">
-        <div class="col-md-2"><img style="width: 100%;"
-                src="http://books.google.com/books/content?id=JeikJKI7QoEC&printsec=frontcover&img=1&zoom=6&edge=curl&imgtk=AFLRE70lRW8SbAa7h-IJFTXy9YajE_NuIIHsUwK96sMZtZJ0Y9z9wA_7QWVRdtBj1VIo1SVufGoGkhTGHlPn3jI9n4rdoEAi98oKtUHOuqArDXC91TR9hwKYhJhnhFXyXtUtLZOKeMMX&source=gbs_api"
+<div *ngFor="let book of shelf?.books" class="card mb-3">
+    <div class="row">
+        <div class="col-md-2"><img style="min-width: 90px;max-width: 90px;min-height: 100%;max-height: 100%;"
+                src="{{book?.book?.volumeInfo?.thumbnail}}"
                 class="card-img-top" alt="..."></div>
         <div class="col-md-6">
             <div class="card-body">
-                <h5 class="card-title">Ce que le jour doit à la nuit</h5>
+                <h5 class="card-title">{{book?.book?.volumeInfo?.title}}</h5>
                 <h6> <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
                     <span class="fa fa-star"></span></h6>
-                <h6>Publisher: Yasmina KHADR1</h6>
-                <h6>Read pages: 71 of 299</h6>
+                <h6>Authors: {{book?.book?.volumeInfo?.authors.join(',')}}</h6>
+                <h6>Read pages: {{book?.numberOfReadPages}} of 299</h6>
             </div>
         </div>
         <div class="col-md-4">
             <div class="row justify-content-center" style="height: 100%; align-items: center;">
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <button style="width: 100%;" type="submit" data-toggle="modal" data-target="#setPagesModal"
                         class="btn btn-info mb-1">Read pages</button>
                     <div class="dropdown">

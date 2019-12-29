@@ -8,7 +8,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BookshelfService {
-  shelves$ = new BehaviorSubject<any[]>([]);
+  shelves$ = new BehaviorSubject<any[]>(null);
+  oneShelve$ = new BehaviorSubject<any>(null);
+
   constructor(private auth: AuthService, private httpClient: HttpClient) { }
 
   private get _authHeader(): string {
@@ -33,14 +35,20 @@ export class BookshelfService {
     * Get shelf by id
     * 
     */
-  getShelf(id): Observable<any> {
-    return this.httpClient.get<any>(environment.API_URL + 'bookshelves/' + id, {
-      headers: new HttpHeaders().set('Authorization', this._authHeader)
-    });
+  getShelf(id): void {
+    this.auth.accessToken$.subscribe(t => {
+      if(!t) return;
+      return this.httpClient.get<any>(environment.API_URL + 'bookshelves/' + id, {
+        headers: new HttpHeaders().set('Authorization','Bearer '+t)
+      }).subscribe(data => {
+        this.oneShelve$.next(data);
+      })
+    })
+    
   }
 
   /**
-     * Get shelf by id
+     * create shelf
      * 
      */
   createShelf(shelf): Observable<any> {
@@ -50,7 +58,7 @@ export class BookshelfService {
   }
 
   /**
-    * Get shelf by id
+    * delete shelf by id
     * 
     */
   deleteShelf(id): Observable<any> {

@@ -1,44 +1,58 @@
-<h3 class="my-4">
-    <small>My shelves</small>
-</h3>
-<form #newShelf="ngForm" (ngSubmit)="createShelf(newShelf)">
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-10">
-                <input type="text" class="form-control" [(ngModel)]="shelfName" name="name" id="name" placeholder="Add a new shelf">
-                <label style="color: red;" *ngIf="validationError" >Name must be between 3 and 32 caracters</label>
+<div class="row">
+    <div class="col-md-4">
+        <h3 class="my-4">
+            <small>My shelves</small>
+        </h3>
+        <form #newShelf="ngForm" (ngSubmit)="createShelf(newShelf)">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" [(ngModel)]="shelfName" name="name" id="name"
+                            placeholder="Add a new shelf">
+                        <label style="color: red;" *ngIf="validationError">Name must be between 3 and 32
+                            caracters</label>
+                    </div>
+                    <div class="col">
+                        <button style="width: 100%;" type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <button style="width: 100%;" type="submit" class="btn btn-primary">Add</button>
+        </form>
+        <ul class="list-group">
+            <li *ngFor="let shelf of shelves" class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="javascript:void(0)" routerLink="{{shelf?._id}}" >{{shelf.name}}</a>
+                <span style="cursor: pointer;" (click)="setIDtoDelete(shelf._id)" data-toggle="modal"
+                    data-target="#exampleModal" class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
+            </li>
+        </ul>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this shelf ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" (click)="deleteShelf()" data-dismiss="modal"
+                            class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</form>
-<ul class="list-group">
-    <li *ngFor="let shelf of shelves" class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="#">{{shelf.name}}</a>
-        <span style="cursor: pointer;" (click)="setIDtoDelete(shelf._id)" data-toggle="modal" data-target="#exampleModal"
-            class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
-    </li>
-</ul>
+    <div class="col-md-8">
+        <!--<h3 class="my-4">
+            <small>My shelves</small>
+        </h3>-->
+        <router-outlet></router-outlet>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this shelf ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" (click)="deleteShelf()" data-dismiss="modal" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
     </div>
 </div>
