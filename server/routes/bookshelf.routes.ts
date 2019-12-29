@@ -192,5 +192,5 @@ route.put('/:bookshelfId/books', addBook);
  *    security:
  *      - bearerAuth: []
  */
-route.post('/', postBookshelf);
+route.post('/:bookshelfId/books/:bookId', postBookshelf);
 export default route;

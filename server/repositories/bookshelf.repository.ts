@@ -164,8 +164,6 @@ export const removeBookFromBookshelf = async (opBookBookshelfDto: OpBookBookshel
     const shelvedbooks = await ShelvedBookModel.find({ _id: { $in: foundBookshelf.books } });
     const foundshelvedbook = shelvedbooks.find(sb => sb.book._id.toString() === foundbook.data._id.toString());
     await ShelvedBookModel.deleteOne({ _id: foundshelvedbook._id });
-    // const myIndex = foundBookshelf.books.indexOf(foundshelvedbook);
-    // foundBookshelf.books.splice(myIndex);
     foundBookshelf.books = foundBookshelf.books.filter(b => b._id.toString() !== foundshelvedbook._id.toString());
     foundBookshelf.save();
     return { data: true, errors: null };
@@ -175,5 +173,18 @@ export const removeBookFromBookshelf = async (opBookBookshelfDto: OpBookBookshel
 };
 // update the shelvedbook
 export const updateBookReading = async (opBookBookshelfDto: OpBookBookshelfDto): Promise<Result<boolean>> => {
-  return { data: false, errors: [] };
+  const numberOfReadPages = opBookBookshelfDto.numberOfReadPages;
+  const bookId = opBookBookshelfDto.bookId;
+  const bookshelfId = opBookBookshelfDto.bookshelfId;
+  try {
+    const foundbook = await findBookById(bookId);
+    const user = (await findUserById(opBookBookshelfDto.userId)).data;
+    const foundBookshelf = user.bookshelves.find(b => b._id.toString() === bookshelfId);
+    const shelvedbooks = await ShelvedBookModel.find({ _id: { $in: foundBookshelf.books } });
+    const foundshelvedbook = shelvedbooks.find(sb => sb.book._id.toString() === foundbook.data._id.toString());
+    await ShelvedBookModel.updateOne({ _id: foundshelvedbook._id }, { numberOfReadPages: numberOfReadPages });
+    return { data: true, errors: null };
+  }catch(err){
+    return { data: false, errors: [err] };
+  }
 };

@@ -37,7 +37,22 @@ export const updateBookshelf: RequestHandler = async (req, res) => {
   return res.json(updatedBookshelf.data);
 };
 
-export const postBookshelf: RequestHandler = (req, res) => {
+export const postBookshelf: RequestHandler = async (req, res) => {
+  const bookId =  req.params.bookId;
+  const userId = (req as any).user.sub;
+  const bookshelfId = req.params.bookshelfId;
+  const numberOfReadPages = req.body.numberOfReadPages;
+   
+  try {
+    const updatedBook = await bookshelfRepo.updateBookReading({userId,bookId,bookshelfId,numberOfReadPages});
+    if (updatedBook.errors) {
+      return res.status(400).json({ errors: updatedBook.errors });
+    }
+
+    return res.json(updatedBook.data);
+  } catch (err) {
+    return res.status(400).send();
+  }
 };
 
 export const putBookshelf: RequestHandler = async (req, res) => {
