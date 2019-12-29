@@ -33,6 +33,7 @@ export const findBookById = async (id: string): Promise<Result<Volume>> => {
     } else {
       const requestResult = await booksClient.volumes.get({ volumeId: id });
       result.data = parseGoogleApiVolume(requestResult.data);
+      await saveBook(result.data);
     }
   } catch (error) {
     result.errors = error.errors;

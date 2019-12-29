@@ -3,12 +3,9 @@ import { Result } from '../interfaces/result.interface';
 import { OpBookBookshelfDto } from '../interfaces/bookshelf/dto/op-book-bookshelf.dto';
 import { OpBookshelfDto } from '../interfaces/bookshelf/dto/op-bookshelf.dto';
 import { Bookshelf } from '../models/bookshelf.model';
-import { BookSchema } from '../models/book.model';
 import { findUserById } from './users.repository';
 import { findBookById } from './googleBooks.repository';
-import { User } from '../models/user.model';
 import { model } from 'mongoose';
-import { books } from 'googleapis/build/src/apis/books';
 import { ShelvedBookModel } from '../models/shelvedBook.model';
 import { defaultBookShelves } from '../common/helper.common';
 
@@ -106,10 +103,11 @@ export const updateBookshelfName = async (opBookshelfDto: OpBookshelfDto): Promi
 export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
   const result = { data: null, errors: null };
   try {
-    if (defaultBookShelves.includes(opBookshelfDto.name)) {
+    const foundUser = (await findUserById(opBookshelfDto.userId)).data;
+    const bookshelf = foundUser.bookshelves.find(b => b._id.toString() === opBookshelfDto.bookshelfId);
+    if (defaultBookShelves.includes(bookshelf.name)) {
       return { data: false, errors: ['cannot delete default shelves'] };
     }
-    const foundUser = (await findUserById(opBookshelfDto.userId)).data;
     foundUser.deleteOneBookshelf(opBookshelfDto.bookshelfId);
     const deletedBookshelf = await Bookshelf.deleteOne({ _id: opBookshelfDto.bookshelfId });
     result.data = deletedBookshelf.n === 1;
@@ -139,12 +137,12 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
     if (!foundBookshelf) {
       return { data: false, errors: ['bookShelf not found'] };
     }
-    const bookAlreadyIn = foundBookshelf.books.find(b => b.id.toString() === bookId);
-    console.log(bookAlreadyIn);
+    const shelvedbooks = await ShelvedBookModel.find({ _id: { $in: foundBookshelf.books } });
+    const bookAlreadyIn = shelvedbooks.find(sb => sb.book._id.toString() === foundbook.data._id.toString());
     if (bookAlreadyIn) {
       return { data: false, errors: ['book already inserted'] };
     }
-    const myBook = await new ShelvedBookModel({ book: foundbook.data._id, numberOfReadPages: 0, id: foundbook.data._id }).save();
+    const myBook = await new ShelvedBookModel({ book: foundbook.data._id, numberOfReadPages: 0, id: foundbook.data.id }).save();
     const updatedbook = await foundBookshelf.updateOne({ $push: { books: myBook._id } });
 
     result.data = updatedbook.nModified === 1;
