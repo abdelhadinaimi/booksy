@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export interface IBookshelf extends Document {
   readonly name: string;
-  readonly books: IShelvedBook[];
+  books: IShelvedBook[];
   readonly created_at: string;
   readonly updated_at: string;
 }
