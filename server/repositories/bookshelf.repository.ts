@@ -10,6 +10,7 @@ import { User } from '../models/user.model';
 import { model } from 'mongoose';
 import { books } from 'googleapis/build/src/apis/books';
 import { ShelvedBookModel } from '../models/shelvedBook.model';
+import { defaultBookShelves } from '../common/helper.common';
 
 const bookModel = model('Book');
 
@@ -30,7 +31,7 @@ export const getUserBookshelfs = async (userId: string): Promise<Result<IBookshe
 export const getBookshelfById = async (getBookshelfDto: OpBookshelfDto): Promise<Result<IBookshelf>> => {
   const result: Result<IBookshelf> = { data: null, errors: null };
   try {
-    const foundBookshelf: IBookshelf = await Bookshelf.findOne({ _id: getBookshelfDto.bookshelfId }).populate({ path: 'books', populate: {path: 'book'} });
+    const foundBookshelf: IBookshelf = await Bookshelf.findOne({ _id: getBookshelfDto.bookshelfId }).populate({ path: 'books', populate: { path: 'book' } });
     if (foundBookshelf) {
       result.data = foundBookshelf;
     } else {
@@ -48,12 +49,20 @@ export const getBookshelfById = async (getBookshelfDto: OpBookshelfDto): Promise
  */
 export const createBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<string>> => {
   const result = { data: null, errors: null };
+  const newName = opBookshelfDto.name;
   try {
-    const bookshelf = await new Bookshelf({ name: opBookshelfDto.name }).save();
-    const userData = (await findUserById(opBookshelfDto.userId)).data;
-    userData.bookshelves.push(bookshelf._id);
-    await userData.save();
-    result.data = bookshelf._id;
+    const isUniqueName = await Bookshelf.findOne({ name: newName });
+    if (isUniqueName) {
+
+      return { data: null, errors: ['that name is not unique'] };
+
+    } else {
+      const bookshelf = await new Bookshelf({ name: opBookshelfDto.name }).save();
+      const userData = (await findUserById(opBookshelfDto.userId)).data;
+      userData.bookshelves.push(bookshelf._id);
+      await userData.save();
+      result.data = bookshelf._id;
+    }
   } catch (error) {
     result.errors = error;
   }
@@ -61,6 +70,7 @@ export const createBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<R
 };
 /**
  * check if the name is unique
+ * the name of the bookshelf is not in default
  */
 export const updateBookshelfName = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
 
@@ -68,10 +78,17 @@ export const updateBookshelfName = async (opBookshelfDto: OpBookshelfDto): Promi
   const newName = opBookshelfDto.name;
   const bookshelfId = opBookshelfDto.bookshelfId;
   try {
-    const updatedBookshelf = await Bookshelf.updateOne({ _id: bookshelfId }, {
-      name: newName,
-    });
-    result.data = updatedBookshelf.nModified === 1;
+    const isUniqueName = await Bookshelf.findOne({ name: newName });
+    if (isUniqueName) {
+
+      return { data: false, errors: ['that name is not unique'] };
+
+    } else {
+      const updatedBookshelf = await Bookshelf.updateOne({ _id: bookshelfId }, {
+        name: newName,
+      });
+      result.data = updatedBookshelf.nModified === 1;
+    }
   } catch (err) {
     result.errors = err;
   }
@@ -81,6 +98,9 @@ export const updateBookshelfName = async (opBookshelfDto: OpBookshelfDto): Promi
 export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<Result<boolean>> => {
   const result = { data: null, errors: null };
   try {
+    if (defaultBookShelves.includes(opBookshelfDto.name)) {
+      return { data: false, errors: ['cannot delete default shelves'] };
+    }
     const foundUser = (await findUserById(opBookshelfDto.userId)).data;
     foundUser.deleteOneBookshelf(opBookshelfDto.bookshelfId);
     const deletedBookshelf = await Bookshelf.deleteOne({ _id: opBookshelfDto.bookshelfId });
@@ -90,6 +110,7 @@ export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<R
   }
   return result;
 };
+// check if the book is not already in the bookshelf
 
 export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto): Promise<Result<boolean>> => {
   const result: Result<boolean> = { data: false, errors: null };
@@ -109,6 +130,10 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
     const foundBookshelf = user.bookshelves.find(b => b._id.toString() === bookshelfId);
     if (!foundBookshelf) {
       return { data: false, errors: ['bookShelf not found'] };
+    }
+    const bookAlreadyIn = (await Bookshelf.findOne({ _id: bookshelfId, books: { book: { id: bookId } } }));
+    if (bookAlreadyIn) {
+      return { data: false, errors: ['book already inserted'] };
     }
     const myBook = await new ShelvedBookModel({ book: foundbook.data._id, numberOfReadPages: 0 }).save();
     const updatedbook = await foundBookshelf.updateOne({ $push: { books: myBook._id } });
