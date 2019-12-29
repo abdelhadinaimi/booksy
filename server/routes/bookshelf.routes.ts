@@ -104,7 +104,7 @@ route.delete('/:bookshelfId', deleteBookshelf);
  *    security:
  *      - bearerAuth: []
  */
-route.delete('/bookshelves/:bookshelfId/books/:bookId', removeBook);
+route.delete('/:bookshelfId/books/:bookId', removeBook);
 
 route.patch('/:bookshelfId', bookshelfValidations, validate, updateBookshelf);
 

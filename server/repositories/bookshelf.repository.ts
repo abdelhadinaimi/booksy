@@ -116,7 +116,7 @@ export const deleteBookshelf = async (opBookshelfDto: OpBookshelfDto): Promise<R
   }
   return result;
 };
-// check if the book is not already in the bookshelf
+// check if the book is not already in the bookshelf and is not on another one 
 
 export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto): Promise<Result<boolean>> => {
   const result: Result<boolean> = { data: false, errors: null };
@@ -157,18 +157,20 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
 export const removeBookFromBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto): Promise<Result<boolean>> => {
   const bookId = opBookBookshelfDto.bookId;
   const bookshelfId = opBookBookshelfDto.bookshelfId;
-  try{
+  try {
     const foundbook = await findBookById(bookId);
     const user = (await findUserById(opBookBookshelfDto.userId)).data;
     const foundBookshelf = user.bookshelves.find(b => b._id.toString() === bookshelfId);
     const shelvedbooks = await ShelvedBookModel.find({ _id: { $in: foundBookshelf.books } });
     const foundshelvedbook = shelvedbooks.find(sb => sb.book._id.toString() === foundbook.data._id.toString());
-    await ShelvedBookModel.deleteOne({ _id: foundshelvedbook });
-    return { data: true, errors: [] };
-  }catch(err){
+    await ShelvedBookModel.deleteOne({ _id: foundshelvedbook._id });
+    const myIndex = foundBookshelf.books.indexOf(foundshelvedbook);
+    foundBookshelf.books.splice(myIndex);
+    await user.updateOne({_id :opBookBookshelfDto.userId},{$pull : {'bookshelves.books': foundshelvedbook._id.toString() }})
+    return { data: true, errors: null };
+  } catch (err) {
     return { data: false, errors: [err] };
   }
-  return { data: false, errors: [] };
 };
 // update the shelvedbook
 export const updateBookReading = async (opBookBookshelfDto: OpBookBookshelfDto): Promise<Result<boolean>> => {
