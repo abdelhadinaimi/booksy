@@ -1,4 +1,5 @@
 import { Review } from '../review/review.interface';
+import { Document } from 'mongoose';
 
 export interface VolumeCore {
   title?: string;
