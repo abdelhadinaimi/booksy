@@ -24,7 +24,7 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   test: any;
   shelves = [];
   constructor(private router: ActivatedRoute, private navigateRouter: Router, private bookService: BookService
-    , private shelfService: BookshelfService, private auth: AuthService) { }
+    , private shelfService: BookshelfService, public auth: AuthService) { }
 
   ngOnInit() {
     this.bookId = this.router.snapshot.paramMap.get('id');
