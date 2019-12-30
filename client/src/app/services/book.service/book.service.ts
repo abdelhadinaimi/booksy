@@ -29,41 +29,41 @@ export class BookService {
     return this.httpClient.get<any>(environment.API_URL + 'books/' + id);
   }*/
 
-  getBook(id): void {
+  getBook(id, rid = null): void {
     this.auth.accessToken$.subscribe(t => {
+      const ridQuery = rid ? '?rid=' + rid : '';
       if (!t) {
-        return this.httpClient.get<any>(environment.API_URL + 'books/' + id).subscribe(data => {
+        return this.httpClient.get<any>(`${environment.API_URL}books/${id}${ridQuery}`).subscribe(data => {
           this.book$.next(data);
-        })
-      }
-      else {
-        return this.httpClient.get<any>(environment.API_URL + 'books/' + id, {
+        });
+      } else {
+        return this.httpClient.get<any>(`${environment.API_URL}books/${id}${ridQuery}`, {
           headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
         }).subscribe(data => {
           this.book$.next(data);
-        })
+        });
       }
-    })
+    });
   }
 
   getBookWithRating(id): void {
     this.auth.accessToken$.subscribe(t => {
       if (!t) {
-        return this.httpClient.get<any>(environment.API_URL + 'books/' + id).subscribe(data => {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id + '?short=true').subscribe(data => {
           this.bookWithRating$.next(data);
-        })
-      }
-      else {
-        return this.httpClient.get<any>(environment.API_URL + 'books/' + id, {
+        });
+      } else {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id + '?short=true', {
           headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
         }).subscribe(data => {
           this.bookWithRating$.next(data);
-        })
+        });
       }
-    })
+    });
   }
 
-  addReview(idBook, review) {
+  addReview(idBook, review, rid = null) {
+    const ridQuery = rid ? '?rid=' + rid : '';
     return this.httpClient.put(environment.API_URL + 'books/' + idBook + '/reviews/', review,
       { headers: new HttpHeaders().set('Authorization', this._authHeader) });
   }
