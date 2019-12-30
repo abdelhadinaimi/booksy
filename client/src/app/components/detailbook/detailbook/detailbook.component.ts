@@ -23,19 +23,21 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   myReview: any;
   test: any;
   shelves = [];
-  successMessage: boolean = false;
+  successMessage = false;
   errorMessage: any;
   error: boolean;
+  rid: string;
   constructor(private router: ActivatedRoute, private navigateRouter: Router, private bookService: BookService
-    , private shelfService: BookshelfService, public auth: AuthService) { }
+    ,         private shelfService: BookshelfService, public auth: AuthService) { }
 
   ngOnInit() {
     this.router.params.subscribe(
       params => {
-        this.bookId = params['id'];
+        this.bookId = params.id;
         this.waiting = true;
-        if (this.bookId)
+        if (this.bookId) {
           this.getBook(this.bookId);
+        }
         this.getShelves();
         this.waiting = false;
       }
@@ -50,7 +52,8 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     });
   }
   getBook(id) {
-    this.bookService.getBook(id);
+    console.log(this.rid);
+    this.bookService.getBook(id, this.rid);
     this.subscription = this.bookService.book$.asObservable().subscribe(data => {
       if (!data) { return; }
       this.book = data;
@@ -60,7 +63,7 @@ export class DetailbookComponent implements OnInit, OnDestroy {
         this.model.rating = parseInt(this.myReview.rating);
       }
       if (this.book.volume.volumeInfo.description !== undefined) {
-        this.book.volume.volumeInfo.description = this.book.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, " ");
+        this.book.volume.volumeInfo.description = this.book.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, ' ');
       }
       this.waiting = false;
 
@@ -89,12 +92,13 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     this.test = null;
     this.bookService.getBookWithRating(id);
     this.bookService.bookWithRating$.subscribe(data => {
-      if (!data) return;
+      if (!data) { return; }
       this.test = data;
-      if (this.test.volume.volumeInfo.description !== undefined)
-        this.test.volume.volumeInfo.description = this.test.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, " ");
+      if (this.test.volume.volumeInfo.description !== undefined) {
+        this.test.volume.volumeInfo.description = this.test.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, ' ');
+      }
 
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -106,12 +110,15 @@ export class DetailbookComponent implements OnInit, OnDestroy {
 
   navigateBook(id) {
     this.model.content = '';
+    if (this.book) {
+      this.rid = this.book.recommendations.rid;
+    }
+    console.log(this.rid);
     this.book = null;
     this.bookService.book$.next(null);
     this.navigateRouter.navigate(['/books/' + id]);
     window.scroll(0, 0);
     this.bookId = id;
-    this.getBook(id);
   }
 
   addBookToShelf(idShelf) {
@@ -130,7 +137,7 @@ export class DetailbookComponent implements OnInit, OnDestroy {
           this.error = false;
         }, 2000);
       }
-    )
+    );
   }
 
 }
