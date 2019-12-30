@@ -9,6 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class BookService {
   book$ = new BehaviorSubject<any>(null);
+  bookWithRating$ = new BehaviorSubject<any>(null);
 
   constructor(private auth: AuthService, private httpClient: HttpClient) { }
 
@@ -40,6 +41,23 @@ export class BookService {
           headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
         }).subscribe(data => {
           this.book$.next(data);
+        })
+      }
+    })
+  }
+
+  getBookWithRating(id): void {
+    this.auth.accessToken$.subscribe(t => {
+      if (!t) {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id).subscribe(data => {
+          this.bookWithRating$.next(data);
+        })
+      }
+      else {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id, {
+          headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
+        }).subscribe(data => {
+          this.bookWithRating$.next(data);
         })
       }
     })

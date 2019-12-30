@@ -23,19 +23,29 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   myReview: any;
   test: any;
   shelves = [];
+  successMessage: boolean = false;
+  errorMessage: any;
+  error: boolean;
   constructor(private router: ActivatedRoute, private navigateRouter: Router, private bookService: BookService
-    ,         private shelfService: BookshelfService, public auth: AuthService) { }
+    , private shelfService: BookshelfService, public auth: AuthService) { }
 
   ngOnInit() {
-    this.bookId = this.router.snapshot.paramMap.get('id');
-    this.waiting = true;
-    this.getBook(this.bookId);
-    this.getShelves();
+    this.router.params.subscribe(
+      params => {
+        this.bookId = params['id'];
+        this.waiting = true;
+        if (this.bookId)
+          this.getBook(this.bookId);
+        this.getShelves();
+        this.waiting = false;
+      }
+    );
+
   }
 
   getShelves() {
-    this.shelfService.getShelves();
-    this.shelfService.shelves$.subscribe(data => {
+    this.shelfService.getShelvesForBook();
+    this.shelfService.shelvesForBook$.subscribe(data => {
       this.shelves = data;
     });
   }
@@ -73,10 +83,18 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   setRating(v) {
     this.model.rating = v;
   }
-  print(test) {
-    const bookToRecommend = this.book.recommendations.volumes.find(b => b.id === test);
-    this.test = bookToRecommend;
-    console.log(bookToRecommend);
+
+  print(id) {
+    this.bookService.bookWithRating$.next(null);
+    this.test = null;
+    this.bookService.getBookWithRating(id);
+    this.bookService.bookWithRating$.subscribe(data => {
+      if (!data) return;
+      this.test = data;
+      if (this.test.volume.volumeInfo.description !== undefined)
+        this.test.volume.volumeInfo.description = this.test.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, " ");
+
+    })
   }
 
   ngOnDestroy() {
@@ -96,6 +114,24 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     this.getBook(id);
   }
 
+  addBookToShelf(idShelf) {
+    this.shelfService.addBookToShelf(idShelf, this.bookId).subscribe(data => {
+      this.successMessage = true;
+      console.log(data);
+      setTimeout(() => {
+        this.successMessage = false;
+      }, 2000);
+
+    },
+      err => {
+        this.error = true;
+        this.errorMessage = err.error.errors[0];
+        setTimeout(() => {
+          this.error = false;
+        }, 2000);
+      }
+    )
+  }
 
 }
 

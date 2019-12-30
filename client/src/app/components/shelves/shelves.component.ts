@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BookshelfService } from '../../services/bookshelf.service/bookshelf.service';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-shelves',
@@ -14,18 +15,23 @@ export class ShelvesComponent implements OnInit {
   shelfName;
   idToDelete: any;
   validationError: boolean;
+  errorMessage: boolean;
+  errorMessageContent: any;
   constructor(private bookshelfService: BookshelfService, private router: Router) { }
 
   ngOnInit() {
-    this.getShelves();
+    this.getShelves(true);
   }
 
-  getShelves() {
-    this.bookshelfService.getShelves();
+  getShelves(redirect) {
+    this.bookshelfService.getShelves(redirect);
     this.bookshelfService.shelves$.subscribe(data => {
-      if(!data || data.length === 0) return;
-      this.shelves = data;
-      this.router.navigate(['shelves/'+data[0]._id]);
+      if (!data || !data.data || data.data.length === 0) {
+        return;
+      }
+      this.shelves = data.data;
+      if (data.redirect)
+        this.router.navigate(['shelves/' + data.data[0]._id])
     })
   }
   createShelf(form: NgForm) {
@@ -35,22 +41,26 @@ export class ShelvesComponent implements OnInit {
     }
     else {
       this.validationError = false;
-      this.bookshelfService.createShelf(form.value).subscribe(d => {
-        this.getShelves();
+      this.bookshelfService.createShelf(form.value).subscribe(data => {
+        this.getShelves(false);
         form.reset();
+      }, err => {
+        this.errorMessage = true;
+        this.errorMessageContent = err.error.errors[0];
+        setTimeout(() => {
+          this.errorMessage = false;
+        }, 2000);
       })
     }
   }
 
   deleteShelf() {
     this.bookshelfService.deleteShelf(this.idToDelete).subscribe(d => {
-      this.getShelves();
+      this.getShelves(true);
     })
   }
 
   setIDtoDelete(id) {
     this.idToDelete = id;
   }
-
-
 }

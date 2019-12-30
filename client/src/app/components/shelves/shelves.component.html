@@ -9,8 +9,6 @@
                     <div class="col-md-8">
                         <input type="text" class="form-control" [(ngModel)]="shelfName" name="name" id="name"
                             placeholder="Add a new shelf">
-                        <label style="color: red;" *ngIf="validationError">Name must be between 3 and 32
-                            caracters</label>
                     </div>
                     <div class="col">
                         <button style="width: 100%;" type="submit" class="btn btn-primary">Add</button>
@@ -18,11 +16,19 @@
                 </div>
             </div>
         </form>
+        <label style="color: red;" *ngIf="validationError">Name must be between 3 and 32
+            caracters</label>
+        <label style="color: red;" *ngIf="errorMessage">{{errorMessageContent}}
+        </label>
         <ul class="list-group">
             <li *ngFor="let shelf of shelves" class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="javascript:void(0)" routerLink="{{shelf?._id}}" >{{shelf.name}}</a>
-                <span style="cursor: pointer;" (click)="setIDtoDelete(shelf._id)" data-toggle="modal"
-                    data-target="#exampleModal" class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
+                <a href="javascript:void(0)" routerLink="{{shelf?._id}}">{{shelf.name | titlecase}}
+                    <span style="font-weight: bold;"
+                        class="badge badge-primary badge-pill">{{shelf?.books.length}}</span>
+                </a>
+                <span *ngIf="!['read','to read','reading'].includes(shelf?.name)" style="cursor: pointer;" (click)="setIDtoDelete(shelf._id)"
+                    data-toggle="modal" data-target="#exampleModal" class="badge badge-danger badge-pill"><i
+                        class="fa fa-times"></i></span>
             </li>
         </ul>
 

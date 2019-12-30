@@ -14,15 +14,16 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: BooksComponent },
+      { path: 'search', component: SearchComponent },
+      { path: 'callback', component: CallbackComponent },
+      { path: 'books/:id', component: DetailbookComponent },
+      { path: 'test/:testID', component: BooksComponent },
+
       {
         path: 'shelves', component: ShelvesComponent, canActivate: [AuthGuard],
         children: [
-          { path: ':id', component: DetailshelfComponent }]
+          { path: ':shelfId', component: DetailshelfComponent }]
       },
-      { path: 'search', component: SearchComponent },
-      { path: 'callback', component: CallbackComponent },
-      { path: 'books/:id', component: DetailbookComponent }
-      //{ path: 'detailsbook', component: BookdetailsComponent }
     ]
   }
 ];

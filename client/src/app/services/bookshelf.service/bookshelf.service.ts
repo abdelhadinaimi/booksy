@@ -8,7 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BookshelfService {
-  shelves$ = new BehaviorSubject<any[]>(null);
+  shelves$ = new BehaviorSubject<any>(null);
+  shelvesForBook$ = new BehaviorSubject<any[]>(null);
   oneShelve$ = new BehaviorSubject<any>(null);
 
   constructor(private auth: AuthService, private httpClient: HttpClient) { }
@@ -19,16 +20,28 @@ export class BookshelfService {
   /**
    * Get all shelves.
    */
-  getShelves(): void {
+  getShelves(redirect: boolean): void {
     this.auth.accessToken$.subscribe(t => {
-      if(!t) return;
+      if (!t) return;
       return this.httpClient.get<any[]>(environment.API_URL + 'bookshelves', {
-        headers: new HttpHeaders().set('Authorization','Bearer '+t)
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
       }).subscribe(data => {
-        this.shelves$.next(data);
+        this.shelves$.next({ data, redirect });
       })
     })
-    
+
+  }
+
+  getShelvesForBook(): void {
+    this.auth.accessToken$.subscribe(t => {
+      if (!t) return;
+      return this.httpClient.get<any[]>(environment.API_URL + 'bookshelves', {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
+      }).subscribe(data => {
+        this.shelvesForBook$.next(data);
+      })
+    })
+
   }
 
   /**
@@ -37,14 +50,14 @@ export class BookshelfService {
     */
   getShelf(id): void {
     this.auth.accessToken$.subscribe(t => {
-      if(!t) return;
+      if (!t) return;
       return this.httpClient.get<any>(environment.API_URL + 'bookshelves/' + id, {
-        headers: new HttpHeaders().set('Authorization','Bearer '+t)
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
       }).subscribe(data => {
         this.oneShelve$.next(data);
       })
     })
-    
+
   }
 
   /**
@@ -63,6 +76,36 @@ export class BookshelfService {
     */
   deleteShelf(id): Observable<any> {
     return this.httpClient.delete(environment.API_URL + 'bookshelves/' + id, {
+      headers: new HttpHeaders().set('Authorization', this._authHeader)
+    });
+  }
+
+  /**
+    * add book to shelf
+    * 
+    */
+  addBookToShelf(idShelf, bookId): Observable<any> {
+    return this.httpClient.put(environment.API_URL + 'bookshelves/' + idShelf + '/books', { bookId }, {
+      headers: new HttpHeaders().set('Authorization', this._authHeader)
+    });
+  }
+
+  /**
+      * delete book from shelf
+      * 
+      */
+  deleteBookFromShelf(idShelf, bookId): Observable<any> {
+    return this.httpClient.delete(environment.API_URL + 'bookshelves/' + idShelf + '/books/' + bookId, {
+      headers: new HttpHeaders().set('Authorization', this._authHeader)
+    });
+  }
+
+  /**
+      * update read pages in shelved book
+      * 
+      */
+  updateReadPages(idShelf, bookId, numberOfReadPages): Observable<any> {
+    return this.httpClient.post(environment.API_URL + 'bookshelves/' + idShelf + '/books/' + bookId, {numberOfReadPages}, {
       headers: new HttpHeaders().set('Authorization', this._authHeader)
     });
   }

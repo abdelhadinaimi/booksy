@@ -30,7 +30,7 @@
                 </li>
                 <li *ngIf="auth.loggedIn" class="nav-item">
                     <a routerLink="shelves" href="javascript:void(0)"  class="nav-link"
-                        href="javascript:void(0)"><i class="fas fa-book"></i> Shelves</a>
+                        href="javascript:void(0)"><i class="fas fa-book"></i> My books</a>
                 </li>
                 <li *ngIf="!auth.loggedIn" class="nav-item">
                     <a (click)="auth.login()"  class="nav-link"

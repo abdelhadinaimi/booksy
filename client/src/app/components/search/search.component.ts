@@ -103,8 +103,16 @@ export class SearchComponent implements OnInit {
     this.currentIndex = parseInt(i);
   }
 
-  print(test) {
-    let book = this.books.find(b => b.id === test);
-    this.test = book;
+  print(id) {
+    this.bookService.bookWithRating$.next(null);
+    this.test = null;
+    this.bookService.getBookWithRating(id);
+    this.bookService.bookWithRating$.subscribe(data => {
+      if(!data) return;
+      this.test = data;
+      if (this.test.volume.volumeInfo.description !== undefined)
+      this.test.volume.volumeInfo.description = this.test.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, " ");
+
+    }) 
   }
 }

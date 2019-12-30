@@ -1,5 +1,5 @@
 <h3 class="my-4">
-    <small>{{shelf?.name}}</small>
+    <small>{{shelf?.name | titlecase }}</small>
 </h3>
 <form>
     <div class="form-group">
@@ -12,37 +12,49 @@
 </form>
 <div *ngFor="let book of shelf?.books" class="card mb-3">
     <div class="row">
-        <div class="col-md-2"><img style="min-width: 90px;max-width: 90px;min-height: 100%;max-height: 100%;"
-                src="{{book?.book?.volumeInfo?.thumbnail}}"
-                class="card-img-top" alt="..."></div>
+        <div class="col-md-2"><img routerLink="/books/{{book?.id}}"
+                style="min-width: 90px;max-width: 90px;min-height: 100%;max-height: 100%;cursor: pointer;"
+                src="{{book?.book?.volumeInfo?.thumbnail}}" class="card-img-top" alt="..."></div>
         <div class="col-md-6">
             <div class="card-body">
                 <h5 class="card-title">{{book?.book?.volumeInfo?.title}}</h5>
-                <h6> <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span></h6>
                 <h6>Authors: {{book?.book?.volumeInfo?.authors.join(',')}}</h6>
-                <h6>Read pages: {{book?.numberOfReadPages}} of 299</h6>
+                <h6>Read pages: {{book?.numberOfReadPages}} of {{book?.book?.volumeInfo?.pageCount}}</h6>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                        [ngStyle]="setProgress(book.numberOfReadPages,book.book.volumeInfo.pageCount)"
+                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="row justify-content-center" style="height: 100%; align-items: center;">
                 <div class="col-md-10">
                     <button style="width: 100%;" type="submit" data-toggle="modal" data-target="#setPagesModal"
-                        class="btn btn-info mb-1">Read pages</button>
+                        class="btn btn-info mb-1"
+                        (click)="setIDToUpdate(book?.numberOfReadPages,book?.book?.id,book?.book?.volumeInfo?.pageCount)">Read
+                        pages</button>
                     <div class="dropdown">
-                        <button style="width: 100%;" class="btn btn-success dropdown-toggle mb-1" type="button"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Move to shelf
-                        </button>
-                        <button style="width: 100%;" data-toggle="modal" data-target="#exampleModal" type="button"
-                            class="btn btn-danger mb-1">Delete</button>
+                        <div *ngIf="waitForMove && book?.book?.id === movedBook; else elseBlock">
+                            <button style="width: 100%;" class="btn btn-success dropdown-toggle mb-1" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="sr-only">Loading...</span> Loading...</button>
+                        </div>
+                        <ng-template #elseBlock>
+                            <button style="width: 100%;" class="btn btn-success dropdown-toggle mb-1" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Move to shelf
+                            </button>
+                        </ng-template>
+                        <button style="width: 100%;" data-toggle="modal" (click)="setIDTodelete(book?.book?.id)"
+                            data-target="#deleteBookModal" type="button" class="btn btn-danger mb-1">Delete</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a *ngFor="let shelf of shelves" class="dropdown-item"
+                                (click)="moveToShelf(shelf?._id,book?.book?.id)"
+                                href="javascript:void(0)">{{shelf?.name | titlecase}}</a>
                         </div>
                     </div>
                 </div>
@@ -50,7 +62,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="deleteBookModal"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -65,7 +77,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" (click)="deleteBookFromShelf()" data-dismiss="modal"
+                    class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>
@@ -78,10 +91,12 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="formGroupExampleInput">Read pages</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" value="0">
+                    <input [(ngModel)]="readPages" type="number" class="form-control" id="formGroupExampleInput"
+                        value="0">
                 </div>
                 <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-info">Confirm</button>
+                <button type="button" class="btn btn-info" (click)="updateReadPages()"
+                    data-dismiss="modal">Confirm</button>
             </div>
         </div>
     </div>

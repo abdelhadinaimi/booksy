@@ -39,9 +39,13 @@
                     Add to shelf
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a *ngFor="let shelf of shelves" class="dropdown-item" href="#">{{shelf?.name}}</a>
+                    <a *ngFor="let shelf of shelves" (click)="addBookToShelf(shelf._id)" class="dropdown-item"
+                        href="javascript:void(0)">{{shelf?.name | titlecase}}</a>
                 </div>
             </div>
+            <p *ngIf="successMessage" style="color: green; text-align: center;border-color: green;">The Book has added
+                to the shelf</p>
+            <p *ngIf="error" style="color: red; text-align: center;border-color: green;">{{errorMessage}}</p>
             <hr>
             <h6 style="text-align: center;">Recommended books</h6>
             <div style="text-align: center;" class="row">
@@ -116,12 +120,41 @@
 
 <ng-template #tipContent>
     <div class="card" style="width: 18rem;">
-        <div style="background-color: black;" class="card-body">
-            <h5 class="card-title">{{test.volumeInfo?.title}}</h5>
-            <span *ngFor="let i of [1,2,3,4,5]"
-                [ngClass]="test?.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span>
-            <p>Author(s): {{test.volumeInfo?.authors?.join(',')}}</p>
-            <p>Publisher: {{test.volumeInfo?.publisher}}</p>
+        <div *ngIf="!test" style="background-color: black;" class="card-body">
+            <div class="row justify-content-center" style="align-items: center;height: 50%;">
+                <div class="spinner-grow text-primary" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-secondary" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-danger" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-warning" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-info" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-light" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-dark" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="test" style="background-color: black;" class="card-body">
+            <h5 class="card-title"><b>{{test?.volume?.volumeInfo?.title}}</b></h5>
+            <h6><span *ngFor="let i of [1,2,3,4,5]"
+                    [ngClass]="test?.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span></h6>
+            <h6><b>Author(s): {{test?.volume?.volumeInfo?.authors?.join(',')}}</b></h6>
+            <h6><b>Publisher: {{test?.volume?.volumeInfo?.publisher}}</b></h6>
+            <h6><b>{{test?.volume?.volumeInfo?.description?.substring(0,200)}}...</b></h6>
         </div>
     </div>
 </ng-template>
