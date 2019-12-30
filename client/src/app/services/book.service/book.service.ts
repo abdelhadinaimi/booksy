@@ -34,33 +34,31 @@ export class BookService {
       if (!t) {
         return this.httpClient.get<any>(environment.API_URL + 'books/' + id).subscribe(data => {
           this.book$.next(data);
-        })
-      }
-      else {
+        });
+      } else {
         return this.httpClient.get<any>(environment.API_URL + 'books/' + id, {
           headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
         }).subscribe(data => {
           this.book$.next(data);
-        })
+        });
       }
-    })
+    });
   }
 
   getBookWithRating(id): void {
     this.auth.accessToken$.subscribe(t => {
       if (!t) {
-        return this.httpClient.get<any>(environment.API_URL + 'books/' + id).subscribe(data => {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id + '?short=true').subscribe(data => {
           this.bookWithRating$.next(data);
-        })
-      }
-      else {
-        return this.httpClient.get<any>(environment.API_URL + 'books/' + id, {
+        });
+      } else {
+        return this.httpClient.get<any>(environment.API_URL + 'books/' + id + '?short=true', {
           headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
         }).subscribe(data => {
           this.bookWithRating$.next(data);
-        })
+        });
       }
-    })
+    });
   }
 
   addReview(idBook, review) {

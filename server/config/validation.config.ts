@@ -21,6 +21,10 @@ export const getBookValidations = [
     .isLength({ max: 12, min: 12 }),
   param('rid')
     .optional(),
+  param('short')
+    .optional()
+    .isBoolean()
+    .toBoolean(),
 ];
 
 export const reviewValidations = [
@@ -44,5 +48,5 @@ export const validate = (req, res, next) => {
 export const bookshelfValidations = [
   body('name')
     .notEmpty()
-    .isLength({ max: 32, min: 3 })
+    .isLength({ max: 32, min: 3 }),
 ];

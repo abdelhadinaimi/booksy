@@ -60,12 +60,20 @@ route.get('/', bookSearchValidations, validate, searchBooks);
  *      name: bookId
  *      schema:
  *        type: string
+ *      required: true
  *      description: the id of a book
  *    - in: query
  *      name: rid
  *      schema:
  *        type: string
  *      description: recommendation id
+ *    - in: query
+ *      name: short
+ *      schema:
+ *        type: boolean
+ *      allowEmptyValue: true
+ *      default: false
+ *      description: if true send only book info, rating and no recomendations
  *  get:
  *    tags:
  *    - "book"
