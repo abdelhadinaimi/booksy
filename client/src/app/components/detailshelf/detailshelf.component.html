@@ -5,12 +5,13 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-12">
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search a book">
+                <input type="text" name="filterContent" [ngModel]="filterContent" (ngModelChange)="filterBooks($event)"
+                    class="form-control" id="formGroupExampleInput" placeholder="Filter by title or author">
             </div>
         </div>
     </div>
 </form>
-<div *ngFor="let book of shelf?.books" class="card mb-3">
+<div *ngFor="let book of books" class="card mb-3">
     <div class="row">
         <div class="col-md-2"><img routerLink="/books/{{book?.id}}"
                 style="min-width: 90px;max-width: 90px;min-height: 100%;max-height: 100%;cursor: pointer;"

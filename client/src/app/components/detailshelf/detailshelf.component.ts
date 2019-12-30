@@ -18,6 +18,8 @@ export class DetailshelfComponent implements OnInit {
   waitForMove: boolean = false;
   movedBook: any;
   currentCount: number;
+  filterContent;
+  books: any;
 
 
   constructor(private router: ActivatedRoute, private shelfService: BookshelfService) { }
@@ -46,6 +48,7 @@ export class DetailshelfComponent implements OnInit {
     this.shelfService.oneShelve$.subscribe(data => {
       if (!data) return;
       this.shelf = data;
+      this.books = data.books;
     })
   }
 
@@ -59,7 +62,7 @@ export class DetailshelfComponent implements OnInit {
       this.shelfService.getShelves(false);
     })
   }
-  
+
   setIDToUpdate(n, id, count) {
     this.currentCount = parseInt(count);
     this.readPages = parseInt(n);
@@ -92,5 +95,16 @@ export class DetailshelfComponent implements OnInit {
       'width': Math.ceil(parseInt(read) * 100 / parseInt(count)) + '%',
     };
     return styles;
+  }
+
+  filterBooks(content) {
+    content = content.toLowerCase();
+    if (content === "") {
+      this.books = this.shelf.books;
+    }
+    else {
+      this.books = this.shelf.books.filter(b => b.book.volumeInfo.title.toLowerCase().includes(content)
+        || b.book.volumeInfo.authors.join(',').toLowerCase().includes(content));
+    }
   }
 }
