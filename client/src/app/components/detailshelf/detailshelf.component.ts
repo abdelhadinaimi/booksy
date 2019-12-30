@@ -46,7 +46,6 @@ export class DetailshelfComponent implements OnInit {
     this.shelfService.oneShelve$.subscribe(data => {
       if (!data) return;
       this.shelf = data;
-      console.log("books = ", data.books);
     })
   }
 
@@ -60,12 +59,7 @@ export class DetailshelfComponent implements OnInit {
       this.shelfService.getShelves(false);
     })
   }
-
-
-  updateShelf(nPages) {
-    console.log(nPages);
-  }
-
+  
   setIDToUpdate(n, id, count) {
     this.currentCount = parseInt(count);
     this.readPages = parseInt(n);

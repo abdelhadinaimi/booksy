@@ -65,6 +65,7 @@
                         [ngClass]="book?.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span>
                     <span class="ml-2">({{book?.rating}} of 5)</span>
                     <h6 class="mt-2">Author(s): {{book?.volume?.volumeInfo?.authors?.join(',')}}</h6>
+                    <h6>Publication date: {{book?.volume?.volumeInfo?.publishedDate}}</h6>
                     <h6>Publisher: {{book?.volume?.volumeInfo?.publisher}}</h6>
                     <h6>{{book?.volume?.volumeInfo?.description}}</h6>
                 </div>
