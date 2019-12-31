@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { searchBooks, getBook } from '../controllers/book.controller';
+import { searchBooks, getBook, getRecommendBooksToUser } from '../controllers/book.controller';
 import { validate, bookSearchValidations, getBookValidations, reviewValidations } from '../config/validation.config';
 import { putReview, deleteReview } from '../controllers/review.controller';
 import { checkJwt, checkJwtOrIgnore } from '../config/auth.config';
@@ -51,6 +51,29 @@ const route = Router();
  *                $ref: "#/definitions/Volume"
  */
 route.get('/', bookSearchValidations, validate, searchBooks);
+
+/**
+ * @swagger
+ * /books/recommendations:
+ *  get:
+ *    tags:
+ *    - "book"
+ *    summary: get a list of recomendations to the user
+ *    description: get a list of recomendations to the user
+ *    parameters:
+ *      - in: query
+ *        name: category
+ *        schema:
+ *          type: string
+ *        description: A categorie of books to get recomendations from
+ *        required: true
+ *    responses:
+ *      '200':
+ *        description: Success!
+ *    security:
+ *      - bearerAuth: []
+ */
+route.get('/recommendations', checkJwtOrIgnore, getRecommendBooksToUser);
 
 /**
  * @swagger

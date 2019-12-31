@@ -99,12 +99,21 @@ export const sendViewInteraction = (userInteraction: UserInteractionDto): Promis
 };
 
 // TODO add favorite genre to filter
-export const getRecommendBooksToUser = (userId: string, count: number): Promise<Result<Recommendations>> => {
-  return client.send(new rqs.RecommendItemsToUser(userId, count, {
-    scenario: scenarios.recomendedBooks,
-    returnProperties: true,
-    cascadeCreate: true,
-  }));
+export const getRecommendBooksToUser = async (userId: string, category: string, count: number): Promise<Result<RecommendedBooks>> => {
+  const result: Result<RecommendedBooks> = { data: { rid: null, volumes: [] }, errors: null };
+  try {
+    const requestResult: Recommendations = await client.send(new rqs.RecommendItemsToUser(userId, count, {
+      returnProperties: true,
+      cascadeCreate: true,
+      filter: `'categories' <= select(lambda 'x': lower('x') ~ ".*${category}.*", 'categories')`,
+    }));
+    result.data.rid = requestResult.recommId;
+    result.data.volumes = requestResult.recomms.map(parseRecombeeRecommendation);
+
+  } catch (error) {
+    result.errors = error;
+  }
+  return result;
 };
 
 export const getRecommendBooksFromBook = async (bookId: string, userId: string, count: number): Promise<Result<RecommendedBooks>> => {
