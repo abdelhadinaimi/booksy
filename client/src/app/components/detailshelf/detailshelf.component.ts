@@ -18,6 +18,8 @@ export class DetailshelfComponent implements OnInit {
   waitForMove: boolean = false;
   movedBook: any;
   currentCount: number;
+  filterContent;
+  books: any;
 
 
   constructor(private router: ActivatedRoute, private shelfService: BookshelfService) { }
@@ -46,7 +48,7 @@ export class DetailshelfComponent implements OnInit {
     this.shelfService.oneShelve$.subscribe(data => {
       if (!data) return;
       this.shelf = data;
-      console.log("books = ", data.books);
+      this.books = data.books;
     })
   }
 
@@ -59,11 +61,6 @@ export class DetailshelfComponent implements OnInit {
       this.getShelf(this.shelfID);
       this.shelfService.getShelves(false);
     })
-  }
-
-
-  updateShelf(nPages) {
-    console.log(nPages);
   }
 
   setIDToUpdate(n, id, count) {
@@ -98,5 +95,16 @@ export class DetailshelfComponent implements OnInit {
       'width': Math.ceil(parseInt(read) * 100 / parseInt(count)) + '%',
     };
     return styles;
+  }
+
+  filterBooks(content) {
+    content = content.toLowerCase();
+    if (content === "") {
+      this.books = this.shelf.books;
+    }
+    else {
+      this.books = this.shelf.books.filter(b => b.book.volumeInfo.title.toLowerCase().includes(content)
+        || b.book.volumeInfo.authors.join(',').toLowerCase().includes(content));
+    }
   }
 }

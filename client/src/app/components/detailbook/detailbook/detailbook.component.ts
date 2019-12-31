@@ -57,6 +57,7 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     this.subscription = this.bookService.book$.asObservable().subscribe(data => {
       if (!data) { return; }
       this.book = data;
+      console.log(data);
       this.myReview = data.reviews.find(r => (this.auth.userProfile && r.writer.name === this.auth.userProfile.name));
       if (this.myReview !== undefined) {
         this.model.content = this.myReview.reviewText;
@@ -124,7 +125,6 @@ export class DetailbookComponent implements OnInit, OnDestroy {
   addBookToShelf(idShelf) {
     this.shelfService.addBookToShelf(idShelf, this.bookId).subscribe(data => {
       this.successMessage = true;
-      console.log(data);
       setTimeout(() => {
         this.successMessage = false;
       }, 2000);
