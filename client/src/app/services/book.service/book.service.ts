@@ -10,6 +10,8 @@ import { AuthService } from '../auth.service';
 export class BookService {
   book$ = new BehaviorSubject<any>(null);
   bookWithRating$ = new BehaviorSubject<any>(null);
+  popularBooks$ = new BehaviorSubject<any>(null);
+  recommandedBooks$ = new BehaviorSubject<any>(null);
 
   constructor(private auth: AuthService, private httpClient: HttpClient) { }
 
@@ -23,11 +25,8 @@ export class BookService {
     return this.httpClient.get<any[]>(environment.API_URL + 'books?q=' + query);
   }
   /**
-   * Get the project.
+   * Get the book by id.
    */
-  /*getBook(id): Observable<any> {
-    return this.httpClient.get<any>(environment.API_URL + 'books/' + id);
-  }*/
 
   getBook(id, rid = null): void {
     this.auth.accessToken$.subscribe(t => {
@@ -46,6 +45,9 @@ export class BookService {
     });
   }
 
+  /**
+     * Get the book by id with rating .
+     */
   getBookWithRating(id): void {
     this.auth.accessToken$.subscribe(t => {
       if (!t) {
@@ -62,14 +64,59 @@ export class BookService {
     });
   }
 
+  /**
+     * add a review to the book.
+     */
   addReview(idBook, review, rid = null) {
     const ridQuery = rid ? '?rid=' + rid : '';
     return this.httpClient.put(environment.API_URL + 'books/' + idBook + '/reviews/', review,
       { headers: new HttpHeaders().set('Authorization', this._authHeader) });
   }
 
+  /**
+   * delete a review.
+   */
   deleteReview(idBook) {
     return this.httpClient.delete(environment.API_URL + 'books/' + idBook + '/reviews/',
       { headers: new HttpHeaders().set('Authorization', this._authHeader) });
+  }
+
+  /**
+   * get recommanded books
+   */
+  getRecommandedBooks(): void {
+    this.auth.accessToken$.subscribe(t => {
+      if (!t) {
+        return this.httpClient.get<any>(`${environment.API_URL}books/recommendations`).subscribe(data => {
+          this.recommandedBooks$.next(data);
+        });
+      } else {
+        return this.httpClient.get<any>(`${environment.API_URL}books/recommendations`, {
+          headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
+        }).subscribe(data => {
+          this.recommandedBooks$.next(data);
+        });
+      }
+    });
+  }
+
+
+  /**
+   * get popular books
+   */
+  getPopularBooks(): void {
+    this.auth.accessToken$.subscribe(t => {
+      if (!t) {
+        return this.httpClient.get<any>(`${environment.API_URL}books/popular`).subscribe(data => {
+          this.popularBooks$.next(data);
+        });
+      } else {
+        return this.httpClient.get<any>(`${environment.API_URL}books/popular`, {
+          headers: new HttpHeaders().set('Authorization', 'Bearer ' + t)
+        }).subscribe(data => {
+          this.popularBooks$.next(data);
+        });
+      }
+    });
   }
 }

@@ -77,7 +77,7 @@ export const getBook = async (req: Request, res: Response) => {
 export const getRecommendBooksToUser = async (req: Request, res: Response) => {
   const userId = prepareAuth0UserId((req as any).user?.sub) || req.cookies.sess || 'noId';
   const category = (req.query?.category || '').toLowerCase();
-  const result = await recombeeRepo.getRecommendBooksToUser(userId, category, 20);
+  const result = await recombeeRepo.getRecommendBooksToUser(userId, category, 18);
   if (result.errors) {
     return res.status(400).json({ errors: result.errors });
   }
@@ -85,7 +85,7 @@ export const getRecommendBooksToUser = async (req: Request, res: Response) => {
 };
 
 export const getPopularBooks = async (req: Request, res: Response) => {
-  const result = await booksRepo.getPopularBooks(10);
+  const result = await booksRepo.getPopularBooks(6);
   if (result.errors) {
     return res.status(400).json({ errors: result.errors });
   }

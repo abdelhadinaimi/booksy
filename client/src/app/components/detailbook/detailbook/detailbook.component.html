@@ -31,7 +31,7 @@
     <br>
     <div class="row justify-centent-center">
         <div class="col-md-3">
-            <img *ngIf="book?.volume?.volumeInfo?.thumbnail" style="width: 100%;height: 300px;"
+            <img *ngIf="book?.volume?.volumeInfo?.thumbnail" style="width: 100%;height: 300px;border:solid;border-color: beige;"
                 src="{{book?.volume?.volumeInfo?.thumbnail}}" class="card-img-top" alt="...">
             <div *ngIf="auth.loggedIn" class="dropdown row justify-content-center mt-2 mb-2">
                 <button style="font-weight: bold;" class="btn btn-success dropdown-toggle" type="button"
@@ -52,7 +52,7 @@
                 <div>
                     <img *ngFor="let similar of book?.recommendations?.volumes" (click)="navigateBook(similar.id)"
                         (mouseover)="print(similar.id)" [ngbTooltip]="tipContent" tooltipClass="class" placement="right"
-                        style="width: 45%;height: 170px;cursor: pointer;" src="{{similar?.volumeInfo?.thumbnail}}"
+                        style="width: 45%;height: 170px;cursor: pointer;border:solid;border-color: beige;" src="{{similar?.volumeInfo?.thumbnail}}"
                         class="card-img-top p-1" alt="...">
                 </div>
             </div>

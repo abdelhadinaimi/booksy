@@ -1,140 +1,129 @@
-<h5 class="my-3" style="font-weight: bold;">Recommanded books for you</h5>
-<div>
-    <hr>
-    <div class="row justify-content-center">
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+<div *ngIf="waitingForPopular == true; then ratedBlock else notYetBlock"></div>
+<ng-template #ratedBlock>
+    <div class="row justify-content-center" style="align-items: center;height: 200%;">
+        <div class="spinner-grow text-primary" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+        <div class="spinner-grow text-secondary" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+        <div class="spinner-grow text-success" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+        <div class="spinner-grow text-danger" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+        <div class="spinner-grow text-warning" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+        <div class="spinner-grow text-info" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+        <div class="spinner-grow text-light" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
+        <div class="spinner-grow text-dark" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-        <div class="col-md-2 mb-3">
-            <div class="card">
-                <img style="width: 100%;height: 50%;"
-                    src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg" class="card-img-top"
-                    alt="...">
-            </div>
-        </div>
-
-
     </div>
+</ng-template>
+<ng-template #notYetBlock>
     <div>
-        <h5 class="my-4" style="font-weight: bold;" >Most rated books</h5>
+        <h5 class="my-4" style="font-weight: bold;">Most rated books</h5>
+        <hr>
+        <div class="row justify-content-center mb-4">
+            <div *ngFor="let book of popularBooks" class="col-md-2 mb-3">
+                <div class="card">
+                    <img style="width: 100%;height: 190px;cursor: pointer;border:solid;border-color: beige;" routerLink='/books/{{book.id}}'
+                        src="{{book?.volumeInfo?.thumbnail}}" (mouseover)="print(book.id)" [ngbTooltip]="tipContent"
+                        tooltipClass="class" placement="right" class="card-img-top" alt="...">
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<h5 class="my-3" style="font-weight: bold;">Recommanded books for you</h5>
+<div *ngIf="waitingForRecommanded == true; then block else elseBlock"></div>
+<ng-template #block>
+    <div class="row justify-content-center" style="align-items: center;height: 200%;">
+        <div class="spinner-grow text-primary" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-secondary" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-success" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-danger" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-warning" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-info" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-light" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark" style="width: 3rem;height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+<ng-template #elseBlock>
+    <div>
         <hr>
         <div class="row justify-content-center">
-            <div class="col-md-2">
+            <div *ngFor="let book of recommandedBooks" class="col-md-2 mb-3">
                 <div class="card">
-                    <img style="width: 100%;height: 50%;"
-                        src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg"
-                        class="card-img-top" alt="...">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <img style="width: 100%;height: 50%;"
-                        src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg"
-                        class="card-img-top" alt="...">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <img style="width: 100%;height: 50%;"
-                        src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg"
-                        class="card-img-top" alt="...">
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="card">
-                    <img style="width: 100%;height: 50%;"
-                        src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg"
-                        class="card-img-top" alt="...">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <img style="width: 100%;height: 50%;"
-                        src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg"
-                        class="card-img-top" alt="...">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <img style="width: 100%;height: 50%;"
-                        src="https://i.pinimg.com/236x/82/79/74/827974d98ed5dabfbeecbdae890caebf.jpg"
-                        class="card-img-top" alt="...">
+                    <img style="width: 100%;height: 190px;cursor: pointer;border:solid;border-color: beige;" routerLink='/books/{{book.id}}'
+                        src="{{book?.volumeInfo?.thumbnail}}" (mouseover)="print(book.id)" [ngbTooltip]="tipContent"
+                        tooltipClass="class" placement="right" class="card-img-top" alt="...">
                 </div>
             </div>
         </div>
     </div>
+</ng-template>
+
+<ng-template #tipContent>
+    <div class="card" style="width: 18rem;">
+        <div *ngIf="!test" style="background-color: black;" class="card-body">
+            <div class="row justify-content-center" style="align-items: center;height: 50%;">
+                <div class="spinner-grow text-primary" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-secondary" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-danger" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-warning" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-info" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-light" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-dark" style="width: 3rem;height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="test" style="background-color: black;" class="card-body">
+            <h5 class="card-title"><b>{{test?.volume?.volumeInfo?.title}}</b></h5>
+            <h6><span *ngFor="let i of [1,2,3,4,5]"
+                    [ngClass]="test?.rating >= i ? 'fa fa-star checked': 'fa fa-star'"></span></h6>
+            <h6><b>Author(s): {{test?.volume?.volumeInfo?.authors?.join(',')}}</b></h6>
+            <h6><b>Publisher: {{test?.volume?.volumeInfo?.publisher}}</b></h6>
+            <h6><b>{{test?.volume?.volumeInfo?.description?.substring(0,200)}}...</b></h6>
+        </div>
+    </div>
+</ng-template>
