@@ -83,3 +83,11 @@ export const getRecommendBooksToUser = async (req: Request, res: Response) => {
   }
   return res.json(result);
 };
+
+export const getPopularBooks = async (req: Request, res: Response) => {
+  const result = await booksRepo.getPopularBooks(10);
+  if (result.errors) {
+    return res.status(400).json({ errors: result.errors });
+  }
+  return res.json(result.data);
+};

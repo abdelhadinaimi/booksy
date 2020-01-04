@@ -58,3 +58,15 @@ export const saveBook = async (book: Volume): Promise<Result<boolean>> => {
   }
   return result;
 };
+
+export const getPopularBooks = async (count: number): Promise<Result<Volumes>> => {
+  const result: Result<Volumes> = { data: { items: [], totalItems: 0 }, errors: null };
+  try {
+    const foundBooks: Volume[] = await Book.find().sort({ rating: -1 }).limit(count);
+    result.data.items = foundBooks;
+    result.data.totalItems = foundBooks.length;
+  } catch (error) {
+    result.errors = error.errors;
+  }
+  return result;
+};

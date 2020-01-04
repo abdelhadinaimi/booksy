@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { searchBooks, getBook, getRecommendBooksToUser } from '../controllers/book.controller';
+import { searchBooks, getBook, getRecommendBooksToUser, getPopularBooks } from '../controllers/book.controller';
 import { validate, bookSearchValidations, getBookValidations, reviewValidations } from '../config/validation.config';
 import { putReview, deleteReview } from '../controllers/review.controller';
 import { checkJwt, checkJwtOrIgnore } from '../config/auth.config';
@@ -66,7 +66,6 @@ route.get('/', bookSearchValidations, validate, searchBooks);
  *        schema:
  *          type: string
  *        description: A categorie of books to get recomendations from
- *        required: true
  *    responses:
  *      '200':
  *        description: Success!
@@ -74,6 +73,22 @@ route.get('/', bookSearchValidations, validate, searchBooks);
  *      - bearerAuth: []
  */
 route.get('/recommendations', checkJwtOrIgnore, getRecommendBooksToUser);
+
+/**
+ * @swagger
+ * /books/popular:
+ *  get:
+ *    tags:
+ *    - "book"
+ *    summary: get a list of popular to the user
+ *    description: get a list of popular to the user
+ *    responses:
+ *      '200':
+ *        description: Success!
+ *    security:
+ *      - bearerAuth: []
+ */
+route.get('/popular', checkJwtOrIgnore, getPopularBooks);
 
 /**
  * @swagger

@@ -105,7 +105,7 @@ export const getRecommendBooksToUser = async (userId: string, category: string, 
     const requestResult: Recommendations = await client.send(new rqs.RecommendItemsToUser(userId, count, {
       returnProperties: true,
       cascadeCreate: true,
-      filter: `'categories' <= select(lambda 'x': lower('x') ~ ".*${category}.*", 'categories')`,
+      filter: category ? `'categories' <= select(lambda 'x': lower('x') ~ ".*${category}.*", 'categories')` : null,
     }));
     result.data.rid = requestResult.recommId;
     result.data.volumes = requestResult.recomms.map(parseRecombeeRecommendation);
