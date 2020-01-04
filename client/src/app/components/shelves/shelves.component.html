@@ -1,8 +1,7 @@
 <div class="row">
     <div class="col-md-4">
-        <h3 class="my-4">
-            <small>My shelves</small>
-        </h3>
+        <h5 class="my-3" style="font-weight: bold;">My shelves</h5>
+
         <form #newShelf="ngForm" (ngSubmit)="createShelf(newShelf)">
             <div class="form-group">
                 <div class="row">
@@ -26,9 +25,9 @@
                     <span style="font-weight: bold;"
                         class="badge badge-primary badge-pill">{{shelf?.books.length}}</span>
                 </a>
-                <span *ngIf="!['read','to read','reading'].includes(shelf?.name)" style="cursor: pointer;" (click)="setIDtoDelete(shelf._id)"
-                    data-toggle="modal" data-target="#exampleModal" class="badge badge-danger badge-pill"><i
-                        class="fa fa-times"></i></span>
+                <span *ngIf="!['read','to read','reading'].includes(shelf?.name)" style="cursor: pointer;"
+                    (click)="setIDtoDelete(shelf._id)" data-toggle="modal" data-target="#exampleModal"
+                    class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
             </li>
         </ul>
 

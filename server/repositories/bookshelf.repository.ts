@@ -140,7 +140,7 @@ export const addBookToBookshelf = async (opBookBookshelfDto: OpBookBookshelfDto)
     const shelvedbooks = await ShelvedBookModel.find({ _id: { $in: foundBookshelf.books } });
     const bookAlreadyIn = shelvedbooks.find(sb => sb.book._id.toString() === foundbook.data._id.toString());
     if (bookAlreadyIn) {
-      return { data: false, errors: ['book already inserted'] };
+      return { data: false, errors: ['Book already inserted'] };
     }
     const myBook = await new ShelvedBookModel({ book: foundbook.data._id, numberOfReadPages: 0, id: foundbook.data.id }).save();
     const updatedbook = await foundBookshelf.updateOne({ $push: { books: myBook._id } });

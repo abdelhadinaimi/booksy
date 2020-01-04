@@ -52,12 +52,10 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     });
   }
   getBook(id) {
-    console.log(this.rid);
     this.bookService.getBook(id, this.rid);
     this.subscription = this.bookService.book$.asObservable().subscribe(data => {
       if (!data) { return; }
       this.book = data;
-      console.log(data);
       this.myReview = data.reviews.find(r => (this.auth.userProfile && r.writer.name === this.auth.userProfile.name));
       if (this.myReview !== undefined) {
         this.model.content = this.myReview.reviewText;
@@ -114,7 +112,6 @@ export class DetailbookComponent implements OnInit, OnDestroy {
     if (this.book) {
       this.rid = this.book.recommendations.rid;
     }
-    console.log(this.rid);
     this.book = null;
     this.bookService.book$.next(null);
     this.navigateRouter.navigate(['/books/' + id]);
