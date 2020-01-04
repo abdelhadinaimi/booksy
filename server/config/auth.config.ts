@@ -39,7 +39,7 @@ export const cookieMiddleware: RequestHandler = (req, res, next) => {
   if (!cookie) {
     const radnNum = Math.random().toString();
     const cookieID = Math.random().toString().substring(2, radnNum.length);
-    res.cookie('sess', cookieID, { maxAge: 36288000, httpOnly: true });
+    res.cookie('sess', cookieID, { maxAge: 604800000, httpOnly: true });
   }
   next();
 };

@@ -71,9 +71,15 @@ export const getBook = async (req: Request, res: Response) => {
       console.log(error);
     });
 
-  return res.json(result); // TODO add rating, reviews
+  return res.json(result);
 };
 
 export const getRecommendBooksToUser = async (req: Request, res: Response) => {
-
+  const userId = prepareAuth0UserId((req as any).user?.sub) || req.cookies.sess || 'noId';
+  const category = (req.query?.category || '').toLowerCase();
+  const result = await recombeeRepo.getRecommendBooksToUser(userId, category, 20);
+  if (result.errors) {
+    return res.status(400).json({ errors: result.errors });
+  }
+  return res.json(result);
 };
