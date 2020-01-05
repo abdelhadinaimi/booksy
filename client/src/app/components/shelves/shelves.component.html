@@ -4,14 +4,16 @@
 
         <form #newShelf="ngForm" (ngSubmit)="createShelf(newShelf)">
             <div class="form-group">
-                <div class="row">
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" [(ngModel)]="shelfName" name="name" id="name"
-                            placeholder="Add a new shelf">
+                <div class="row justify-content-left align-items-center">
+                    <div class="col-md-9">
+                        <input type="text" style="width: 100%;" class="form-control" [(ngModel)]="shelfName" name="name"
+                            id="name" placeholder="Add a new shelf">
                     </div>
-                    <div class="col">
-                        <button style="width: 100%;" type="submit" class="btn btn-primary">Add</button>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn"><i style="font-size: 28px; color: #008cba;"
+                                class="fa fa-plus-circle"></i></button>
                     </div>
+
                 </div>
             </div>
         </form>
@@ -20,9 +22,11 @@
         <label style="color: red;" *ngIf="errorMessage">{{errorMessageContent}}
         </label>
         <ul class="list-group">
-            <li *ngFor="let shelf of shelves" class="list-group-item d-flex justify-content-between align-items-center">
+            <li *ngFor="let shelf of shelves" routerLinkActive="active-shelf"
+                style="border-style: none; border-bottom-style: solid;"
+                class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="javascript:void(0)" routerLink="{{shelf?._id}}">{{shelf.name | titlecase}}
-                    <span style="font-weight: bold;"
+                    <span style="font-weight: bold; float: left; margin-right: 5pt; padding-left: 2pt;"
                         class="badge badge-primary badge-pill">{{shelf?.books.length}}</span>
                 </a>
                 <span *ngIf="!['read','to read','reading'].includes(shelf?.name)" style="cursor: pointer;"
@@ -30,7 +34,6 @@
                     class="badge badge-danger badge-pill"><i class="fa fa-times"></i></span>
             </li>
         </ul>
-
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
