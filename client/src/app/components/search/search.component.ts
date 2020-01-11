@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit {
 
   searchBooks(q) {
     this.waiting = true;
-    this.currentIndex = this.startIndex != "0" ? (parseInt(this.startIndex)) : 0;
+    this.currentIndex = this.startIndex !== '0' && this.startIndex !== undefined ? parseInt(this.startIndex) : 0;
     console.log(this.currentIndex);
     let content = (this.model.content === "" || this.model.content === undefined) ? "" : this.model.content
     let author = (this.model.author === undefined || this.model.author === "") ? "" : "+inauthor:" + this.model.author;
@@ -53,8 +53,10 @@ export class SearchComponent implements OnInit {
     let maxResults = "&maxResults=18";
     let index = (this.startIndex === undefined || this.startIndex === "") ? "&startIndex=" + 0 : "&startIndex=" + this.startIndex;
     let query = content + author + subject + editor + index + maxResults;
-    let urlQuery = query.replace(/\+/g, '&')
-    this.location.replaceState('search?q=' + urlQuery.replace(/\:/g, '='));
+    let urlQuery = query.replace(/\+/g, '&');
+    let newState = 'search?q=' + urlQuery.replace(/\:/g, '=');
+    this.location.replaceState(newState);
+    history.pushState(null, 'Booksy', newState);
     this.bookService.getBooks(query).subscribe(
       res => {
         this.waiting = false;
@@ -82,7 +84,9 @@ export class SearchComponent implements OnInit {
     let index = "&startIndex=" + startIndex;
     let query = content + author + subject + editor + index + maxResults;
     let urlQuery = query.replace(/\+/g, '&')
-    this.location.replaceState('search?q=' + urlQuery.replace(/\:/g, '='));
+    let newState = 'search?q=' + urlQuery.replace(/\:/g, '=');
+    this.location.replaceState(newState);
+    history.pushState(null, 'Booksy', newState);
     this.bookService.getBooks(query).subscribe(
       res => {
         this.waiting = false;
