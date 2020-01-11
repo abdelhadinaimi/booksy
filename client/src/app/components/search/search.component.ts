@@ -26,6 +26,7 @@ export class SearchComponent implements OnInit {
   waiting: boolean = false;
   array = [];
   maxPages: number;
+  startIndex: any;
   constructor(private location: Location, private route: ActivatedRoute, private bookService: BookService) { }
 
   ngOnInit() {
@@ -34,6 +35,7 @@ export class SearchComponent implements OnInit {
       this.model.author = params['inauthor'];
       this.model.subject = params['subject'];
       this.model.publisher = params['inpublisher'];
+      this.startIndex = params['startIndex'];
       let maxResults = "&maxResults=18";
       this.searchBooks(params['q'] + maxResults);
     });
@@ -42,13 +44,14 @@ export class SearchComponent implements OnInit {
 
   searchBooks(q) {
     this.waiting = true;
-    this.currentIndex = 0;
+    this.currentIndex = this.startIndex != "0" ? (parseInt(this.startIndex)) : 0;
+    console.log(this.currentIndex);
     let content = (this.model.content === "" || this.model.content === undefined) ? "" : this.model.content
     let author = (this.model.author === undefined || this.model.author === "") ? "" : "+inauthor:" + this.model.author;
     let subject = (this.model.subject === undefined || this.model.subject === "") ? "" : "+subject:" + this.model.subject;
     let editor = (this.model.publisher === undefined || this.model.publisher === "") ? "" : "+inpublisher:" + this.model.publisher;
     let maxResults = "&maxResults=18";
-    let index = "&startIndex=" + 0;
+    let index = (this.startIndex === undefined || this.startIndex === "") ? "&startIndex=" + 0 : "&startIndex=" + this.startIndex;
     let query = content + author + subject + editor + index + maxResults;
     let urlQuery = query.replace(/\+/g, '&')
     this.location.replaceState('search?q=' + urlQuery.replace(/\:/g, '='));
@@ -88,10 +91,10 @@ export class SearchComponent implements OnInit {
         this.pages = Math.floor(parseInt(this.numberItems + this.currentIndex) / 18);
         this.pagination = this.pages < 10 ? this.pages : 10;
         if ((this.pages > 10 && parseInt(startIndex) >= 90)) {
-            this.counter((parseInt(startIndex) / 18) - 4, (parseInt(startIndex) / 18) + 6);
-            if(this.currentIndex + 18 >= this.numberItems || this.currentIndex + 18 >= this.numberItems ) {
-              this.counter((parseInt(startIndex) / 18) - 4, (parseInt(startIndex) / 18) + 1);
-            }
+          this.counter((parseInt(startIndex) / 18) - 4, (parseInt(startIndex) / 18) + 6);
+          if (this.currentIndex + 18 >= this.numberItems || this.currentIndex + 18 >= this.numberItems) {
+            this.counter((parseInt(startIndex) / 18) - 4, (parseInt(startIndex) / 18) + 1);
+          }
         }
         else {
           this.counter(0, this.pagination);
