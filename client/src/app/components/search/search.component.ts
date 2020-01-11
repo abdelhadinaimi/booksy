@@ -24,6 +24,8 @@ export class SearchComponent implements OnInit {
   test;
   cpt: number = 0;
   waiting: boolean = false;
+  array = [];
+  maxPages: number;
   constructor(private location: Location, private route: ActivatedRoute, private bookService: BookService) { }
 
   ngOnInit() {
@@ -56,8 +58,8 @@ export class SearchComponent implements OnInit {
         this.books = res['items'];
         this.numberItems = res['totalItems']
         this.pages = Math.floor(parseInt(this.numberItems + this.currentIndex) / 18);
-        this.pagination = this.pages < 10 ? this.pages : 10
-
+        this.pagination = this.pages < 10 ? this.pages : 10;
+        this.counter(0, this.pagination);
       },
       err => {
         this.books = [];
@@ -84,8 +86,16 @@ export class SearchComponent implements OnInit {
         this.books = res['items'];
         this.numberItems = res['totalItems']
         this.pages = Math.floor(parseInt(this.numberItems + this.currentIndex) / 18);
-        this.pagination = this.pages < 10 ? this.pages : 10
-
+        this.pagination = this.pages < 10 ? this.pages : 10;
+        if ((this.pages > 10 && parseInt(startIndex) >= 90)) {
+            this.counter((parseInt(startIndex) / 18) - 4, (parseInt(startIndex) / 18) + 6);
+            if(this.currentIndex + 18 >= this.numberItems || this.currentIndex + 18 >= this.numberItems ) {
+              this.counter((parseInt(startIndex) / 18) - 4, (parseInt(startIndex) / 18) + 1);
+            }
+        }
+        else {
+          this.counter(0, this.pagination);
+        }
       },
       err => {
         this.books = [];
@@ -95,8 +105,11 @@ export class SearchComponent implements OnInit {
       });
   }
 
-  counter(i: number) {
-    return new Array(i);
+  counter(start: number, end: number) {
+    this.array = [];
+    for (let k = start; k < end; k++) {
+      this.array.push(k);
+    }
   }
 
   setCurrentIndex(i) {
@@ -108,11 +121,11 @@ export class SearchComponent implements OnInit {
     this.test = null;
     this.bookService.getBookWithRating(id);
     this.bookService.bookWithRating$.subscribe(data => {
-      if(!data) return;
+      if (!data) return;
       this.test = data;
       if (this.test.volume.volumeInfo.description !== undefined)
-      this.test.volume.volumeInfo.description = this.test.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, " ");
+        this.test.volume.volumeInfo.description = this.test.volume.volumeInfo.description.replace(/<\/?[^>]+>/ig, " ");
 
-    }) 
+    })
   }
 }
