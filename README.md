@@ -16,7 +16,7 @@ Booksy is a social cataloging application that allows its users to find books an
 | #1 | A user can create an account | 2 | HIGH | DONE |
 | #2 | A user can choose the book genres he likes and the system gives him personalized suggestions | 3 | LOW | TODO |
 | #3 | A user can check the detailed book page| 1 | HIGH | DONE |
-| #4 | Show the most popular books for the genres that the user likes | 2 | LOW | TODO |
+| #4 | Show the most popular books for the genres that the user likes | 2 | LOW | DONE |
 | #5 | A user can search and filter books by genre, title, author, year...| 1 | HIGH | DONE |
 | #6 | A user can create shelves with a name, by default there will be a "To read", "read" and "reading" shelves| 1 | HIGH | DONE |
 | #7 | A user can add a book to his shelves| 1 | HIGH | DONE |
