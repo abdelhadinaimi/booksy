@@ -13,17 +13,16 @@ Booksy is a social cataloging application that allows its users to find books an
 
 | ID | Description | Difficulty | Priority  | State |
 |:-:|--|:-:|:-:|:-:|
-| #1 | A user can create an account | 2 | HIGH | DONE |
-| #2 | A user can choose the book genres he likes and the system gives him personalized suggestions | 3 | LOW | TODO |
-| #3 | A user can check the detailed book page| 1 | HIGH | DONE |
-| #4 | Show the most popular books for the genres that the user likes | 2 | LOW | DONE |
-| #5 | A user can search and filter books by genre, title, author, year...| 1 | HIGH | DONE |
-| #6 | A user can create shelves with a name, by default there will be a "To read", "read" and "reading" shelves| 1 | HIGH | DONE |
-| #7 | A user can add a book to his shelves| 1 | HIGH | DONE |
-| #8|  A user can update his reading status on the "Reading" shelf| 1 | HIGH | DONE |
-| #9 | A user can write reviews on books from 0 to 5 | 1 | LOW | DONE |
-| #10 | A user can login using Auth0| 2 | HIGH | DONE |
-| #11 | A user can get suggestions on the books he is currently viewning.| 2 | HIGH | DONE |
+| #1 | A user can create an account.| 2 | HIGH | DONE |
+| #2 | A user can check the detailed book page.| 1 | HIGH | DONE |
+| #3 | A user can check the most rated books.| 2 | LOW | DONE |
+| #4 | A user can search and filter books by genre, title, author,content,...| 1 | HIGH | DONE |
+| #5 | A user can create shelves with a name, by default there will be a "To read", "read" and "reading" shelves.| 1 | HIGH | DONE |
+| #6 | A user can add a book to his shelves.| 1 | HIGH | DONE |
+| #7 | A user can update his reading status.| 1 | HIGH | DONE |
+| #8 | A user can write reviews on books from 0 to 5.| 1 | LOW | DONE |
+| #9 | A user can login using Auth0.| 2 | HIGH | DONE |
+| #10 | A user can get suggestions on the books he is currently viewning.| 2 | HIGH | DONE |
 
 ## Developement
 This application uses an [Express.js](https://expressjs.com/) Backend coupled with an [Angular](https://angular.io/) front.
@@ -35,7 +34,9 @@ To run the app on a local developement environement do as follows :
 - You need to have a Google API key linked to the Google Book's API and add to the `.env` file (see `.env.example`).
 
 ## Installation
-To run the app just run `docker-compose up`  (you need to have Docker installed).
+- To run the app just run `docker-compose up`  (you need to have Docker installed).
+- The application is also deployed on: https://booksy-api.herokuapp.com
+
 
 ## Documentation
 The API docs are available [here](https://booksy-api.herokuapp.com/api-docs/).
